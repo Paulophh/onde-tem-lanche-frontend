@@ -19,12 +19,19 @@ export const Nav = styled.nav`
     display: flex;
     gap: 6rem;
     align-items: center;
+    width: 981px;
+    height: 69px;
+    flex-shrink: 0;
   }
 
   li a {
-    text-decoration: none;
-    color: #000; 
+    color: rgba(0, 0,0);
+    font-family: 'Ubuntu', sans-serif, Arial;
     font-size: 26px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration: none;
   }
 `;
 
