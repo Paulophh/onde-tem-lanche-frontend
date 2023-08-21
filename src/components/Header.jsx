@@ -20,13 +20,13 @@ const Nav = styled.nav`
     margin: 0;
     display: flex;
     gap: 5rem;
+    align-items: center;
   }
 
   li a {
     text-decoration: none;
     color: #000; 
     font-size: 26px;
-    
   }
 `;
 
