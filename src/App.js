@@ -1,6 +1,5 @@
 import './App.css';
-import Header from './components/Header';
-import Index from './pages/Index';
+import Index from './pages/Index/Index';
 
 function App() {
   return (

@@ -17,7 +17,7 @@ export const Nav = styled.nav`
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 5rem;
+    gap: 6rem;
     align-items: center;
   }
 
