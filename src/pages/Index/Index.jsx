@@ -5,12 +5,12 @@ import { PageContainer } from './styles';
 
 const Index = () => {
   return (
-  <>
-    <Header />
-  <PageContainer>
-    <BarraDeBusca />
-  </PageContainer>
-  </>
+    <>
+      <Header />
+      <PageContainer>
+        <BarraDeBusca />
+      </PageContainer>
+    </>
   );
 }
 

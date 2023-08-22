@@ -1,8 +1,8 @@
-import { HeaderContainer, LogoImg, Nav, UserIcon } from "./styles";
 import React from 'react';
 
+import { HeaderContainer, LogoImg, Nav, UserIcon } from "./styles";
 
-import logo from '../../images/logo.svg';
+import logo from '../../assets/images/logo.svg';
 
 const Header = () => {
   return (
@@ -19,7 +19,7 @@ const Header = () => {
             <a href='#'>
               <LogoImg src={logo} alt='logo' />
             </a>
-          </li>  
+          </li>
           <li>
             <a href='#'>Reservas</a>
           </li>
