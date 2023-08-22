@@ -7,9 +7,9 @@ const Index = () => {
   return (
   <>
     <Header />
-  <PageContainer>
-    <BarraDeBusca />
-  </PageContainer>
+    <PageContainer>
+      <BarraDeBusca />
+    </PageContainer>
   </>
   );
 }

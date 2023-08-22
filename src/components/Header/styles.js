@@ -9,6 +9,7 @@ export const HeaderContainer = styled.header`
   align-items: center;
   text-align: center;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  
 `;
 
 export const Nav = styled.nav`
@@ -19,9 +20,9 @@ export const Nav = styled.nav`
     display: flex;
     gap: 6rem;
     align-items: center;
-    width: 981px;
     height: 69px;
     flex-shrink: 0;
+    
   }
 
   li a {
