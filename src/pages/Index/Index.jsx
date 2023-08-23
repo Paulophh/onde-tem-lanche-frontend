@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import BarraDeBusca from '../../components/BarraDeBusca';
 import { PageContainer } from './styles';
 import Highlights from '../../components/Highlights';
+import Footer from '../../components/Footer'
 
 const Index = () => {
   return (
@@ -12,6 +13,7 @@ const Index = () => {
         <BarraDeBusca />
         <Highlights/>
       </PageContainer>
+      <Footer/>
       
     </>
   );
