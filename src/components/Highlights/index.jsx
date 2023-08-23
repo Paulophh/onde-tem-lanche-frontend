@@ -1,9 +1,15 @@
 import React from 'react';
+import { HighlightsLinhas, DestaquesParagrafo } from "./styles";
+
 
 const Highlights = () => {
     return (
-        <div>
-
-        </div>
-    )
+     <HighlightsLinhas>
+    <DestaquesParagrafo>
+        Destaques
+    </DestaquesParagrafo>
+     </HighlightsLinhas>
+    );
 }
+
+export default Highlights;

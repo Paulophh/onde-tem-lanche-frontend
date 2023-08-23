@@ -1,12 +1,19 @@
 import React from 'react';
 import { SearchBarContainer } from './styles';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai'
+import { IoMdOptions } from 'react-icons/io'
+import { Button } from './styles';
 
 const BarraDeBusca = () => {
   return (
     <SearchBarContainer>
+      <Button>
+      <IoMdOptions size={20}/>
+      </Button>
+      <input placeholder=" Busque por restaurante ou pratos" />
+      <Button>
       <AiOutlineSearch size={20} />
-      <input placeholder="busque por restaurante ou pratos" />
+      </Button>
     </SearchBarContainer>
   );
 }
