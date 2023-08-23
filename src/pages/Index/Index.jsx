@@ -4,6 +4,7 @@ import BarraDeBusca from '../../components/BarraDeBusca';
 import { PageContainer } from './styles';
 import Highlights from '../../components/Highlights';
 import Footer from '../../components/Footer'
+import FoodCategories from '../../components/FoodCategory';
 
 const Index = () => {
   return (
@@ -13,6 +14,7 @@ const Index = () => {
         <BarraDeBusca />
         <Highlights/>
       </PageContainer>
+      <FoodCategories/>
       <Footer/>
       
     </>
