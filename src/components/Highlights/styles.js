@@ -12,8 +12,8 @@ margin-top: 30px;
 
 export const DestaquesParagrafo = styled.p`
     position: absolute; 
-    font-size: 2.6rem;
-    top: -1.5rem; 
+    font-size: 4.6rem;
+    top: -30px; 
     margin-left: 50px;
     background-color: ${props => props.theme.colors['white']};
  
