@@ -7,7 +7,12 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 90vw;
+  min-width: 300px;
   max-width: 400px;
+
+  @media only screen and (min-width: 600px) {
+    min-width: 400px;
+  }
 `;
 
 export const RestaurantImageContainer = styled.div`
