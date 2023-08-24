@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const HighlightsLinhas = styled.div`
     width: 100%;
-    margin-top: 30px;
+    margin-top: 40px;
     border: 1px solid ${props => props.theme.colors['orange']};
 
     @media only screen and (min-width: 830px) {

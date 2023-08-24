@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PageContainer } from './styles';
+import { HighlightsCardsContainer, PageContainer } from './styles';
 
 import Footer from '../../components/Footer'
 import Header from "../../components/Header";
@@ -15,7 +15,12 @@ const mockedRestaurant = {
   starRating: 4
 }
 
+
 const Index = () => {
+  const restaurants = [];
+  for (let i = 0; i <= 9; i++) {
+    restaurants.push(mockedRestaurant);
+  }
 
   return (
     <>
@@ -25,9 +30,16 @@ const Index = () => {
         <Highlights
           text='Destaques'
         />
-        <HighlightsCard
-          restaurant={mockedRestaurant}
-        />
+        <HighlightsCardsContainer>
+          {
+            restaurants.map((rest, index) => (
+              <HighlightsCard
+                key={`${rest.name}-${index}`}
+                restaurant={rest}
+              />
+            ))
+          }
+        </HighlightsCardsContainer>
         {/* <Footer /> */}
       </PageContainer>
 
