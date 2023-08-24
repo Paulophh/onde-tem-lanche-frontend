@@ -20,14 +20,14 @@ const Index = () => {
   return (
     <>
       <Header />
-      {/* <PageContainer>
+      / <PageContainer>
         <BarraDeBusca />
         <Highlights />
       </PageContainer>
       <HighlightsCard
         restaurant={mockedRestaurant}
       />
-      <Footer /> */}
+      <Footer /> /
 
     </>
   );
