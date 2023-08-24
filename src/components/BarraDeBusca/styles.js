@@ -25,3 +25,15 @@ export const SearchBarContainer = styled.div`
     background-color: transparent;
   }
 `;
+
+export const Button = styled.button `
+
+background-color: transparent;
+border: none;
+cursor: pointer;
+transition: transform 0.2s;
+
+&:hover {
+  transform: scale(1.1);
+}
+`;

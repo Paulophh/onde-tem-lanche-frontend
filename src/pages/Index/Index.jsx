@@ -1,7 +1,11 @@
 import React from 'react';
-import Header from "../../components/Header";
-import BarraDeBusca from '../../components/BarraDeBusca';
+
 import { PageContainer } from './styles';
+
+import Footer from '../../components/Footer'
+import Header from "../../components/Header";
+import Highlights from '../../components/Highlights';
+import BarraDeBusca from '../../components/BarraDeBusca';
 import HighlightsCard from '../../components/HighlightsCard';
 
 const mockedRestaurant = {
@@ -18,10 +22,13 @@ const Index = () => {
       <Header />
       <PageContainer>
         <BarraDeBusca />
+        <Highlights />
       </PageContainer>
       <HighlightsCard
         restaurant={mockedRestaurant}
       />
+      <Footer />
+
     </>
   );
 }

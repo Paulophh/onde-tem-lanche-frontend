@@ -7,9 +7,6 @@ export const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 600px;
-
-  // remover:
-  margin-left: 120px;
 `;
 
 export const RestaurantImageContainer = styled.div`
