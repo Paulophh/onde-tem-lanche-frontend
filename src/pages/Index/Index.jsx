@@ -28,7 +28,7 @@ const Index = () => {
       <PageContainer>
         <BarraDeBusca />
         <Highlights
-          text='Destaques'
+          text='Recomendados'
         />
         <HighlightsCardsContainer>
           {
