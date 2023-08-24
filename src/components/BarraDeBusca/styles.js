@@ -15,6 +15,7 @@ export const SearchBarContainer = styled.div`
   svg {
     color: ${props => props.theme.colors['black']};
     margin-right: 8px;
+    margin-left: 8px;
   }
 
   input {
@@ -23,6 +24,7 @@ export const SearchBarContainer = styled.div`
     font-size: 16px;
     color: ${props => props.theme.colors['black']};
     background-color: transparent;
+    text-align: center;
   }
 `;
 
@@ -32,6 +34,7 @@ background-color: transparent;
 border: none;
 cursor: pointer;
 transition: transform 0.2s;
+
 
 &:hover {
   transform: scale(1.1);
