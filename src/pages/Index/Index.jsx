@@ -40,9 +40,8 @@ const Index = () => {
             ))
           }
         </HighlightsCardsContainer>
-        {/* <Footer /> */}
+        <Footer />
       </PageContainer>
-
     </>
   );
 }

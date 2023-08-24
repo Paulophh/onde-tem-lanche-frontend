@@ -13,7 +13,7 @@ export const HighlightsCardsContainer = styled.div`
   max-width: 100vw;
   overflow-x: scroll;
 
-  margin-top: 20px;
+  margin: 20px 0;
   padding: 10px 20px;
   padding-right: 40px;
 
