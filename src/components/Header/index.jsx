@@ -1,6 +1,12 @@
 import React from 'react';
+import { BiUserCircle } from 'react-icons/bi';
 
-import { HeaderContainer, LogoImg, Nav, UserIcon } from "./styles";
+import {
+  HeaderContainer,
+  LogoImg,
+  Nav,
+  UserIcon
+} from "./styles";
 
 import logo from '../../assets/images/logo.svg';
 
@@ -9,25 +15,37 @@ const Header = () => {
     <HeaderContainer>
       <Nav>
         <ul>
-          <li>
-            <a href='#'>Início</a>
+          <li className='nav-link'>
+            <button >
+              Início
+            </button>
           </li>
-          <li>
-            <a href='#'>Recomendados</a>
+          <li className='nav-link'>
+            <button >
+              Recomendados
+            </button>
           </li>
-          <li>
-            <a href='#'>
+          <li className='nav-link nav-link-logo'>
+            <button>
               <LogoImg src={logo} alt='logo' />
-            </a>
+            </button>
           </li>
-          <li>
-            <a href='#'>Reservas</a>
+          <li className='nav-link'>
+            <button >
+              Reservas
+            </button>
           </li>
-          <li>
-            <a href='#'>Favoritos</a>
+          <li className='nav-link'>
+            <button >
+              Favoritos
+            </button>
           </li>
-          <li>
-            <a href='#'><UserIcon /></a>
+          <li className='nav-link nav-link-profile'>
+            <button >
+              <BiUserCircle
+                size={45}
+              />
+            </button>
           </li>
         </ul>
       </Nav>
