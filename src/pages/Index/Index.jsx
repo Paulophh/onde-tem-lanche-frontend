@@ -22,11 +22,13 @@ const Index = () => {
       <Header />
       <PageContainer>
         <BarraDeBusca />
-        {/* <Highlights />
+        <Highlights
+          text='Destaques'
+        />
         <HighlightsCard
           restaurant={mockedRestaurant}
         />
-        <Footer /> */}
+        {/* <Footer /> */}
       </PageContainer>
 
     </>
