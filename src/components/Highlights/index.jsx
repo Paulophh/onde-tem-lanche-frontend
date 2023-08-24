@@ -2,13 +2,14 @@ import React from 'react';
 import { HighlightsLinhas, DestaquesParagrafo } from "./styles";
 
 
-const Highlights = () => {
+const Highlights = ({ textPlacement = 'left', text }) => {
     return (
-        <HighlightsLinhas>
-            <DestaquesParagrafo>
-                Destaques
+        <>
+            <HighlightsLinhas />
+            <DestaquesParagrafo placement={textPlacement}>
+                {text}
             </DestaquesParagrafo>
-        </HighlightsLinhas>
+        </>
     );
 }
 
