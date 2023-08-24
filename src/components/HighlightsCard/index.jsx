@@ -39,7 +39,7 @@ const HighlightsCard = ({ restaurant }) => {
         </div>
 
         <RestaurantInfoSecondRow>
-          <Description>
+          <Description title={restaurant.description}>
             {restaurant.description}
             {restaurant.description}
             {restaurant.description}
@@ -58,7 +58,7 @@ const HighlightsCard = ({ restaurant }) => {
                 </span>
 
                 <span className='text-container'>
-                  {restaurant.closingTime}
+                  Fecha às {restaurant.closingTime}
                 </span>
               </ClosingTime>
 
