@@ -6,7 +6,7 @@ const Highlights = () => {
     return (
         <HighlightsLinhas>
             <DestaquesParagrafo>
-                Destaques
+                Categoria
             </DestaquesParagrafo>
         </HighlightsLinhas>
     );
