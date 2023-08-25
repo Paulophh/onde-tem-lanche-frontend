@@ -11,7 +11,6 @@ gap:30px;
 flex-direction: column;
 position: fixed; 
 bottom: 0; 
-
 `
 
 export const Paragrafos = styled.div `
