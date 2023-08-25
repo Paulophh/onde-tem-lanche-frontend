@@ -10,7 +10,7 @@ import {
   RestaurantCardInfoContainer,
   RestaurantInfoSecondRow,
   ClosingTimeAndRatingContainer
-} from './styles'; // Note que removi StarIcon, já que você está usando o ícone diretamente
+} from './styles';
 
 import { BiTimeFive } from 'react-icons/bi';
 import { AiFillStar } from 'react-icons/ai';
@@ -52,9 +52,7 @@ const HighlightsCard = ({ restaurant }) => {
             <ClosingTimeAndRatingContainer>
               <ClosingTime>
                 <span className='icon-container'>
-                  <BiTimeFive
-                    size={22}
-                  />
+                  <BiTimeFive />
                 </span>
 
                 <span className='text-container'>
@@ -64,22 +62,18 @@ const HighlightsCard = ({ restaurant }) => {
 
               <StarRating>
                 <span className='icon-container'>
-                  <AiFillStar
-                    size={22}
-                  />
+                  <AiFillStar />
                 </span>
 
                 <span className='text-container'>
-                  {restaurant.starRating}
+                  {restaurant.starRating.toFixed(1)}
                 </span>
               </StarRating>
             </ClosingTimeAndRatingContainer>
 
             <MapLink>
               <span className='icon-container'>
-                <FaDirections
-                  size={22}
-                />
+                <FaDirections />
               </span>
 
               <span className='text-container'>
@@ -90,7 +84,6 @@ const HighlightsCard = ({ restaurant }) => {
         </RestaurantInfoSecondRow>
 
       </RestaurantCardInfoContainer>
-
     </CardWrapper>
   );
 };

@@ -1,17 +1,12 @@
 import React from 'react';
 
-import { PageContainer } from './styles';
-import Highlights from '../../components/Highlights';
-import Footer from '../../components/Footer';
-import FoodCategories from '../../components/FoodCategories';
+import { HighlightsCardsContainer, PageContainer } from './styles';
 
+import Footer from '../../components/Footer'
 import Header from "../../components/Header";
+import Highlights from '../../components/Highlights';
 import BarraDeBusca from '../../components/BarraDeBusca';
 import HighlightsCard from '../../components/HighlightsCard';
-import Category from '../../components/Category';
-import FoodCard from '../../components/FoodCard';
-
- 
 
 const mockedRestaurant = {
   name: 'Nome do Restaurante',
@@ -20,22 +15,34 @@ const mockedRestaurant = {
   starRating: 4
 }
 
+
 const Index = () => {
+  const restaurants = [];
+  for (let i = 0; i <= 9; i++) {
+    restaurants.push(mockedRestaurant);
+  }
 
   return (
     <>
       <Header />
       <PageContainer>
         <BarraDeBusca />
-        <Highlights />
-        <HighlightsCard
-        restaurant={mockedRestaurant}
+        <Highlights
+          text='Destaques'
         />
-        <Category />
-        <FoodCategories/>
-        <FoodCard food={''} />
+        <HighlightsCardsContainer>
+          {
+            restaurants.map((rest, index) => (
+              <HighlightsCard
+                key={`${rest.name}-${index}`}
+                restaurant={rest}
+              />
+            ))
+          }
+        </HighlightsCardsContainer>
+        {/* <Footer /> */}
       </PageContainer>
-      
+
     </>
   );
 }

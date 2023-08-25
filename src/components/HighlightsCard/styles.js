@@ -6,7 +6,13 @@ export const CardWrapper = styled.div`
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  width: 600px;
+  width: 90vw;
+  min-width: 300px;
+  max-width: 400px;
+
+  @media only screen and (min-width: 600px) {
+    min-width: 400px;
+  }
 `;
 
 export const RestaurantImageContainer = styled.div`
@@ -14,9 +20,15 @@ export const RestaurantImageContainer = styled.div`
 
   img {
     width: 100%;
-    height: 300px;
+    height: 220px;
     object-fit: cover;
     border-radius: 6px 6px 0 0;
+  }
+
+  @media only screen and (min-width: 500px) {
+    img {
+      height: 260px;
+    }
   }
 `;
 
@@ -26,7 +38,11 @@ export const RestaurantCardInfoContainer = styled.div`
 
 export const RestaurantNameContainer = styled.div`
   margin: 12px 0;
-  font-size: 1.6rem;
+  font-size: 1.3rem;
+
+  @media only screen and (min-width: 500px) {
+    font-size: 1.7rem;
+  }
 `;
 
 export const RestaurantInfoSecondRow = styled.div`
@@ -36,32 +52,29 @@ export const RestaurantInfoSecondRow = styled.div`
 
 export const Description = styled.p`
   color: #3F3F3F;
-  font-size: 1.4rem;
-  flex: 0.9;
+  font-size: 1.1rem;
+  flex: 0.95;
   max-height: 80px;
+  text-align: justify;
 
   // reticências:
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
   display: -webkit-box;
   overflow: hidden;
+
+  @media only screen and (min-width: 500px) {
+    font-size: 1.3rem;
+  }
 `;
 
 export const ClosingTimeAndRatingContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
   margin-bottom: 10px;
   margin-top: -10px;
-`;
-
-export const CardInfomation = styled.div`
-  display: flex;
-  width: 175.247px;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  gap: 6px 3px;
-  flex-wrap: wrap;
 `;
 
 export const ClosingTime = styled.div`
@@ -70,11 +83,15 @@ export const ClosingTime = styled.div`
 
   .icon-container {
     color: ${props => props.theme.colors.orange};
-    margin-right: 4px;
+    margin-right: 2px;
   }
 
   .text-container {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+  }
+
+  svg {
+    font-size: 1.5rem;
   }
 `;
 
@@ -84,34 +101,44 @@ export const StarRating = styled.div`
 
   .icon-container {
     color: ${props => props.theme.colors.orange};
-    margin-right: 4px;
+    margin-right: 2px;
   }
 
   .text-container {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
-`;
 
-export const StarIcon = styled.img`
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
+  svg {
+    font-size: 1.5rem;
+  }
 `;
 
 export const MapLink = styled.button`
   border-radius: 8px;
   background: #F28705;
   border: none;
-  padding: 10px 30px;
+  padding: 5px 10px;
   color: ${props => props.theme.colors.white};
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
   justify-content: center;
 
   &:hover {
     cursor: pointer;
+  }
+
+  svg {
+    font-size: 1.4rem;
+  }
+
+  @media only screen and (min-width: 500px) {
+    font-size: 1.4rem;
+
+    svg {
+      font-size: 1.6rem;
+    }
   }
 `;
