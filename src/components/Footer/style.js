@@ -7,7 +7,6 @@ export const EstilizarFooter = styled.footer`
     justify-content: center;
     flex-direction: column;
     gap: 20px;
-    /* margin-top: 20px; */
     padding: 20px 10px;
 `
 

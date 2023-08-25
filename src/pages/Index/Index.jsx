@@ -15,9 +15,7 @@ const mockedRestaurant = {
   starRating: 4
 }
 
-
 const Index = () => {
-
   const restaurants = [];
   for (let i = 0; i <= 9; i++) {
     restaurants.push(mockedRestaurant);
