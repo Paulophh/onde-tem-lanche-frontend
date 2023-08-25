@@ -4,12 +4,12 @@ import { PageContainer } from './styles';
 import Highlights from '../../components/Highlights';
 import Footer from '../../components/Footer';
 import FoodCategories from '../../components/FoodCategories';
-import { Main } from './styles';
 
 import Header from "../../components/Header";
 import BarraDeBusca from '../../components/BarraDeBusca';
 import HighlightsCard from '../../components/HighlightsCard';
 import Category from '../../components/Category';
+import FoodCard from '../../components/FoodCard';
 
  
 
@@ -33,8 +33,9 @@ const Index = () => {
         />
         <Category />
         <FoodCategories/>
+        <FoodCard food={''} />
       </PageContainer>
-      <Footer />
+      
     </>
   );
 }
