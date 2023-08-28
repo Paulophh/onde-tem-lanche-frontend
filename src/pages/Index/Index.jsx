@@ -7,6 +7,8 @@ import Header from "../../components/Header";
 import Highlights from '../../components/Highlights';
 import BarraDeBusca from '../../components/BarraDeBusca';
 import HighlightsCard from '../../components/HighlightsCard';
+import RestauranteCard from '../../components/RestaurantCard';
+import FoodCard from '../../components/FoodCard';
 
 const mockedRestaurant = {
   name: 'Nome do Restaurante',
@@ -39,8 +41,13 @@ const Index = () => {
             ))
           }
         </HighlightsCardsContainer>
+
         <Footer />
       </PageContainer>
+
+
+      <RestauranteCard />
+
     </>
   );
 }

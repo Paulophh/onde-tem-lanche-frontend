@@ -14,34 +14,34 @@ import {
 import FoodExampleImage from '../../assets/images/food-images/xSalada.png';
 import { AiFillStar } from 'react-icons/ai';
 
-const FoodCard = ({food}) => {
+const FoodCard = ({ food }) => {
   return (
     <CardWrapper>
-        
-        <FoodImageContainer>
+
+      <FoodImageContainer>
         <img
           src={FoodExampleImage}
           alt=''
         />
-        </FoodImageContainer>
+      </FoodImageContainer>
 
-        <FoodCardInfoContainer>
-          <div>
+      <FoodCardInfoContainer>
+        <div>
           <FoodNameContainer>
             <h2>
               {food.name}
             </h2>
           </FoodNameContainer>
-          </div>
-          
-          <FoodInfoSecondRow>
-            <Description title={food.description}>
-              {food.description}
-            </Description>
+        </div>
 
-            <div className='info-container'>
-              <ClosingTimeAndRatingContainer>
-                <StarRating>
+        <FoodInfoSecondRow>
+          <Description title={food.description}>
+            {food.description}
+          </Description>
+
+          <div className='info-container'>
+            <ClosingTimeAndRatingContainer>
+              <StarRating>
                 <span className='icon-container'>
                   <AiFillStar
                     size={22}
@@ -51,23 +51,23 @@ const FoodCard = ({food}) => {
                 <span className='text-container'>
                   {food.starRating}
                 </span>
-                </StarRating>
+              </StarRating>
 
-                <Price>
-                  <span className='icon-container'>
-                    <p>R$</p>
-                  </span>
-                  <span className='text-container'>
-                    {food.price}
-                  </span>
-                </Price>
+              <Price>
+                <span className='icon-container'>
+                  <p>R$</p>
+                </span>
+                <span className='text-container'>
+                  {food.price}
+                </span>
+              </Price>
 
-              </ClosingTimeAndRatingContainer>
-            </div>
-          </FoodInfoSecondRow>
-        </FoodCardInfoContainer>
+            </ClosingTimeAndRatingContainer>
+          </div>
+        </FoodInfoSecondRow>
+      </FoodCardInfoContainer>
     </CardWrapper>
-    
+
   );
 }
 
