@@ -9,7 +9,6 @@ align-items: center;
 justify-content: center;
 gap:30px;
 flex-direction: column;
-position: fixed; 
 bottom: 0; 
 `
 
