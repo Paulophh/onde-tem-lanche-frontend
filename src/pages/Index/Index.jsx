@@ -41,10 +41,6 @@ const Index = () => {
         </HighlightsCardsContainer>
         <Footer />
       </PageContainer>
-      <HighlightsCard
-        restaurant={mockedRestaurant}
-      />
-      <Footer /> /
 
     </>
   );
