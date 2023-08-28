@@ -10,7 +10,7 @@ const BarraDeBusca = () => {
       <Button>
       <IoMdOptions size={20}/>
       </Button>
-      <input placeholder=" Busque por restaurante ou pratos" />
+      <input placeholder=" Busque por restaurantes ou pratos" />
       <Button>
       <AiOutlineSearch size={20} />
       </Button>
