@@ -24,7 +24,7 @@ const Index = () => {
   return (
     <>
       <Header />
-      <PageContainer>
+      / <PageContainer>
         <BarraDeBusca />
         <Highlights
           text='Recomendados'
@@ -41,6 +41,11 @@ const Index = () => {
         </HighlightsCardsContainer>
         <Footer />
       </PageContainer>
+      <HighlightsCard
+        restaurant={mockedRestaurant}
+      />
+      <Footer /> /
+
     </>
   );
 }
