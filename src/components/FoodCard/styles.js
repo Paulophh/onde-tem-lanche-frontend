@@ -1,71 +1,93 @@
 import styled from 'styled-components';
 
 export const CardWrapper = styled.div`
-  border-radius: 6px;
+  border-radius: 5px;
   background: #FEFEFE;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  width: 320px;
+  width: 90vw;
+  max-width: 320px;
+
+  margin-bottom: 30px;
 `;
 
 export const FoodImageContainer = styled.div` 
-  width: 100%;
-  height: 266;
-  flex-shrink: 0;
-  border-radius: 2px 2px 0px 0px;
+  border-radius: 5px 5px 0px 0px;
+
+  img {
+    width: 100%;
+    border-radius: inherit;
+  }
 `;
 
 export const FoodCardInfoContainer = styled.div`
   padding: 0 10px 10px;
 `;
 
-export const FoodNameContainer = styled.div`
-  margin: 12px 0;
-  font-size: 1.2rem;
-`;
-
-export const FoodInfoSecondRow = styled.div`
+export const TopRowContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-export const Description = styled.p`
-  color: #3F3F3F;
-  font-size: 7rem;
-  flex: 0.9;
-  max-height: 9px;
+export const FoodNameContainer = styled.div`
+  max-width: 180px;
 
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
-  display: -webkit-box;
-  overflow: hidden;
-`;  
+  h2 {
+    margin: 12px 0;
+    font-size: 1.9rem;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
 
 export const ClosingTimeAndRatingContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  margin-top: -10px;
+  gap: 8px;
 `;
 
 export const StarRating = styled.div`
   display: flex;
   align-items: center;
+  gap: 4px;
 
-  .icon-container {
+  .label-container {
     color: ${props => props.theme.colors.orange};
-    margin-right: 4px;
+    font-size: 1.8rem;
+    margin-top: 4px;
   }
 
-  .text-container {
-    font-size: 1.4rem;
+  .value-container {
+    font-size: 1.7rem;
   }
 `;
 
 export const Price = styled.div`
-  font-size: 1.8rem;
   display: flex;
   align-items: center;
+  gap: 4px;
+
+  .label-container {
+    color: ${props => props.theme.colors.orange};
+    font-size: 1.8rem;
+  }
+
+  .value-container {
+    font-size: 1.7rem;
+  }
+`;
+
+export const Description = styled.div`
+  color: ${props => props.theme.colors['text-light-grey']};
+  font-size: 1.4rem;
+  height: 65px;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  overflow: hidden;
 `;
 

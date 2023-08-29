@@ -23,7 +23,11 @@ export const SearchBarContainer = styled.div`
     color: ${props => props.theme.colors['black']};
     background-color: transparent;
     text-align: center;
+<<<<<<< HEAD
     margin-left: -20px;
+=======
+    margin-left: 10px;
+>>>>>>> main
   }
 `;
 
