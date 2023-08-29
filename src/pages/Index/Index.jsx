@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { HighlightsCardsContainer, PageContainer } from './styles';
 
@@ -7,8 +7,7 @@ import Header from "../../components/Header";
 import Highlights from '../../components/Highlights';
 import BarraDeBusca from '../../components/BarraDeBusca';
 import HighlightsCard from '../../components/HighlightsCard';
-import RestauranteCard from '../../components/RestaurantCard';
-import FoodCard from '../../components/FoodCard';
+import FoodCategories from '../../components/FoodCategories';
 
 const mockedRestaurant = {
   name: 'Nome do Restaurante',
@@ -18,6 +17,8 @@ const mockedRestaurant = {
 }
 
 const Index = () => {
+  const [foodCategory, setFoodCategory] = useState('Lanches');
+
   const restaurants = [];
   for (let i = 0; i <= 9; i++) {
     restaurants.push(mockedRestaurant);
@@ -42,13 +43,18 @@ const Index = () => {
           }
         </HighlightsCardsContainer>
 
+        <Highlights
+          text='Categorias'
+          textPlacement='right'
+        />
+
+        <FoodCategories
+          selectedFoodCategory={foodCategory}
+          setSelectedFoodCategory={setFoodCategory}
+        />
+
         <Footer />
       </PageContainer>
-
-      <FoodCard />
-
-      <RestauranteCard />
-
     </>
   );
 }

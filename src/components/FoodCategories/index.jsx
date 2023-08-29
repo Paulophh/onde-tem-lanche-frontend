@@ -1,59 +1,148 @@
 import React from 'react';
 import { Category, CategoryIcon, CategoryTitle, CategoriesContainer } from './styles';
 
-import { LiaHamburgerSolid } from 'react-icons/lia';
-import { PiPizzaLight } from 'react-icons/pi';
-import { TbMeat } from 'react-icons/tb';
-import { BiSushi } from 'react-icons/bi';
-import { CiFries } from 'react-icons/ci';
-import { LuSalad } from 'react-icons/lu';
-import { RiCake3Line } from 'react-icons/ri';
+import Carnes from '../../assets/icons/carnes.svg';
+import CarnesSelecionado from '../../assets/icons/carnes-selecionado.svg';
+import Confeitarias from '../../assets/icons/doces.svg';
+import ConfeitariasSelecionado from '../../assets/icons/doces-selecionado.svg';
+import Japones from '../../assets/icons/japones.svg';
+import JaponesSelecionado from '../../assets/icons/japones-selecionado.svg';
+import Lanche from '../../assets/icons/lanches.svg';
+import LancheSelecionado from '../../assets/icons/lanches-selecionado.svg';
+import Pizza from '../../assets/icons/pizza.svg';
+import PizzaSelecionado from '../../assets/icons/pizza-selecionado.svg';
+import Porcoes from '../../assets/icons/porcoes.svg';
+import PorcoesSelecionado from '../../assets/icons/porcoes-selecionado.svg';
+import Saladas from '../../assets/icons/saladas.svg';
+import SaladasSelecionado from '../../assets/icons/saladas-selecionado.svg';
 
-const FoodCategories = () => {
+const FoodCategories = ({ selectedFoodCategory, setSelectedFoodCategory }) => {
+
+  function handleSelectCategory(category) {
+    setSelectedFoodCategory(category);
+  }
+
   return (
     <CategoriesContainer>
-      <Category>
-        <CategoryIcon>
-          <LiaHamburgerSolid />
+      <Category
+        isSelected={selectedFoodCategory === 'Lanches'}
+        onClick={() => handleSelectCategory('Lanches')}
+      >
+        <CategoryIcon
+          isSelected={selectedFoodCategory === 'Lanches'}
+        >
+          <img
+            src={selectedFoodCategory === 'Lanches' ? LancheSelecionado : Lanche}
+            alt=""
+          />
         </CategoryIcon>
-        <CategoryTitle>Lanches</CategoryTitle>
+        <CategoryTitle isSelected={selectedFoodCategory === 'Lanches'}>
+          Lanches
+        </CategoryTitle>
       </Category>
-      <Category>
-        <CategoryIcon>
-          < PiPizzaLight/>
+
+      <Category
+        isSelected={selectedFoodCategory === 'Pizza'}
+        onClick={() => handleSelectCategory('Pizza')}
+      >
+        <CategoryIcon
+          isSelected={selectedFoodCategory === 'Pizza'}
+        >
+          <img
+            src={selectedFoodCategory === 'Pizza' ? PizzaSelecionado : Pizza}
+            alt=""
+          />
         </CategoryIcon>
-        <CategoryTitle>Pizza</CategoryTitle>
+        <CategoryTitle isSelected={selectedFoodCategory === 'Pizza'}>
+          Pizza
+        </CategoryTitle>
       </Category>
-      <Category>
-        <CategoryIcon>
-          < TbMeat/>
+
+      <Category
+        isSelected={selectedFoodCategory === 'Carnes'}
+        onClick={() => handleSelectCategory('Carnes')}
+      >
+        <CategoryIcon
+          isSelected={selectedFoodCategory === 'Carnes'}
+        >
+          <img
+            src={selectedFoodCategory === 'Carnes' ? CarnesSelecionado : Carnes}
+            alt=""
+          />
         </CategoryIcon>
-        <CategoryTitle>Carnes</CategoryTitle>
+        <CategoryTitle isSelected={selectedFoodCategory === 'Carnes'}>
+          Carnes
+        </CategoryTitle>
       </Category>
-      <Category>
-        <CategoryIcon>
-          < BiSushi/>
+
+      <Category
+        isSelected={selectedFoodCategory === 'Japonês'}
+        onClick={() => handleSelectCategory('Japonês')}
+      >
+        <CategoryIcon
+          isSelected={selectedFoodCategory === 'Japonês'}
+        >
+          <img
+            src={selectedFoodCategory === 'Japonês' ? JaponesSelecionado : Japones}
+            alt=""
+          />
         </CategoryIcon>
-        <CategoryTitle>Japonesa</CategoryTitle>
+        <CategoryTitle isSelected={selectedFoodCategory === 'Japonês'}>
+          Japonês
+        </CategoryTitle>
       </Category>
-      <Category>
-        <CategoryIcon>
-          < CiFries/>
+
+      <Category
+        isSelected={selectedFoodCategory === 'Porções'}
+        onClick={() => handleSelectCategory('Porções')}
+      >
+        <CategoryIcon
+          isSelected={selectedFoodCategory === 'Porções'}
+        >
+          <img
+            src={selectedFoodCategory === 'Porções' ? PorcoesSelecionado : Porcoes}
+            alt=""
+          />
         </CategoryIcon>
-        <CategoryTitle>Porções</CategoryTitle>
+        <CategoryTitle isSelected={selectedFoodCategory === 'Porções'}>
+          Porções
+        </CategoryTitle>
       </Category>
-      <Category>
-        <CategoryIcon>
-          < LuSalad/>
+
+      <Category
+        isSelected={selectedFoodCategory === 'Saladas'}
+        onClick={() => handleSelectCategory('Saladas')}
+      >
+        <CategoryIcon
+          isSelected={selectedFoodCategory === 'Saladas'}
+        >
+          <img
+            src={selectedFoodCategory === 'Saladas' ? SaladasSelecionado : Saladas}
+            alt=""
+          />
         </CategoryIcon>
-        <CategoryTitle>Saladas</CategoryTitle>
+        <CategoryTitle isSelected={selectedFoodCategory === 'Saladas'}>
+          Saladas
+        </CategoryTitle>
       </Category>
-      <Category>
-        <CategoryIcon>
-          < RiCake3Line/>
+
+      <Category
+        isSelected={selectedFoodCategory === 'Confeitarias'}
+        onClick={() => handleSelectCategory('Confeitarias')}
+      >
+        <CategoryIcon
+          isSelected={selectedFoodCategory === 'Confeitarias'}
+        >
+          <img
+            src={selectedFoodCategory === 'Confeitarias' ? ConfeitariasSelecionado : Confeitarias}
+            alt=""
+          />
         </CategoryIcon>
-        <CategoryTitle>Doces</CategoryTitle>
+        <CategoryTitle isSelected={selectedFoodCategory === 'Confeitarias'}>
+          Confeitarias
+        </CategoryTitle>
       </Category>
+
     </CategoriesContainer>
   );
 };
