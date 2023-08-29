@@ -1,6 +1,6 @@
 import React from 'react';
-import { EstilizarFooter, ParagrafosEstilizados, Paragrafos, Icons, Grupo, ParagrafoFooter } from './style';
-import { FaFacebook } from 'react-icons/fa';
+import { EstilizarFooter, ParagrafosEstilizados, Paragrafos, Icons, Grupo } from './style';
+import { RiFacebookCircleLine } from 'react-icons/ri';
 import { BsWhatsapp } from 'react-icons/bs';
 import { AiOutlineInstagram } from 'react-icons/ai';
 import { AiOutlineCopyrightCircle } from 'react-icons/ai'
@@ -12,7 +12,7 @@ const Footer = () => {
          <Icons>
             <BsWhatsapp />
             <AiOutlineInstagram />
-            <FaFacebook />
+            <RiFacebookCircleLine />
          </Icons>
 
          <Paragrafos>

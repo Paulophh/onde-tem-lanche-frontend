@@ -21,9 +21,9 @@ export const Icons = styled.div`
         color: ${props => props.theme.colors.orange};
     }
 
-    & svg:nth-child(2) {
+    & svg:nth-child(2), & svg:nth-child(3) {
         font-size: 3rem;
-    }   
+    }
 `
 
 export const Paragrafos = styled.div`
