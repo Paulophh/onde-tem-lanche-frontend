@@ -29,7 +29,7 @@ const FoodCard = ({ food }) => {
         <TopRowContainer>
           <FoodNameContainer>
             <h2>
-              {'food.name'}
+              {food.name}
             </h2>
           </FoodNameContainer>
 
@@ -40,7 +40,7 @@ const FoodCard = ({ food }) => {
               </span>
 
               <span className='value-container'>
-                3.2
+                {food.rating}
               </span>
             </StarRating>
 
@@ -49,7 +49,7 @@ const FoodCard = ({ food }) => {
                 R$
               </span>
               <span className='value-container'>
-                23,00
+                {food.price}
               </span>
             </Price>
 

@@ -33,3 +33,24 @@ export const HighlightsCardsContainer = styled.div`
     gap: 40px;
   }
 `;
+
+export const FoodsContainer = styled.div`
+  margin-top: 30px;
+  padding-bottom: 30px;
+`;
+
+export const FoodsList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 90vw;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @media only screen and (min-width: 660px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+`;
