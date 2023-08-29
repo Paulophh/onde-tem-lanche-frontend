@@ -45,6 +45,7 @@ const Index = () => {
         <Footer />
       </PageContainer>
 
+      <FoodCard />
 
       <RestauranteCard />
 

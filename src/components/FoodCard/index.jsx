@@ -5,10 +5,10 @@ import {
   Description,
   FoodCardInfoContainer,
   FoodImageContainer,
-  FoodInfoSecondRow,
   FoodNameContainer,
   Price,
-  StarRating
+  StarRating,
+  TopRowContainer
 } from './styles';
 
 import FoodExampleImage from '../../assets/images/food-images/xSalada.png';
@@ -26,45 +26,39 @@ const FoodCard = ({ food }) => {
       </FoodImageContainer>
 
       <FoodCardInfoContainer>
-        <div>
+        <TopRowContainer>
           <FoodNameContainer>
             <h2>
-              {food.name}
+              {'food.name'}
             </h2>
           </FoodNameContainer>
-        </div>
 
-        <FoodInfoSecondRow>
-          <Description title={food.description}>
-            {food.description}
-          </Description>
+          <ClosingTimeAndRatingContainer>
+            <StarRating>
+              <span className='label-container'>
+                <AiFillStar />
+              </span>
 
-          <div className='info-container'>
-            <ClosingTimeAndRatingContainer>
-              <StarRating>
-                <span className='icon-container'>
-                  <AiFillStar
-                    size={22}
-                  />
-                </span>
+              <span className='value-container'>
+                3.2
+              </span>
+            </StarRating>
 
-                <span className='text-container'>
-                  {food.starRating}
-                </span>
-              </StarRating>
+            <Price>
+              <span className='label-container'>
+                R$
+              </span>
+              <span className='value-container'>
+                23,00
+              </span>
+            </Price>
 
-              <Price>
-                <span className='icon-container'>
-                  <p>R$</p>
-                </span>
-                <span className='text-container'>
-                  {food.price}
-                </span>
-              </Price>
+          </ClosingTimeAndRatingContainer>
+        </TopRowContainer>
 
-            </ClosingTimeAndRatingContainer>
-          </div>
-        </FoodInfoSecondRow>
+        <Description title={'food.description'}>
+          Duas carnes, alface, tomate, cebola, queijo e molho caseiro da casa.
+        </Description>
       </FoodCardInfoContainer>
     </CardWrapper>
 
