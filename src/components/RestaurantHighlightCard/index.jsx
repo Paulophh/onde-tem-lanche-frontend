@@ -18,7 +18,7 @@ import { FaDirections } from 'react-icons/fa';
 
 import RestaurantExampleImage from '../../assets/restaurant-images/image-33.png';
 
-const HighlightsCard = ({ restaurant }) => {
+const RestaurantHighlightCard = ({ restaurant }) => {
   return (
     <CardWrapper>
 
@@ -88,4 +88,4 @@ const HighlightsCard = ({ restaurant }) => {
   );
 };
 
-export default HighlightsCard;
+export default RestaurantHighlightCard;

@@ -1,10 +1,11 @@
 import React from 'react';
-import Index from './pages/Index';
+
+import Routers from './routes/index.routes';
 
 function App() {
   return (
     <div className="App">
-      <Index />
+      <Routers />
     </div>
   );
 }

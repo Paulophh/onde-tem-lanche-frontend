@@ -15,7 +15,7 @@ import { FaDirections } from 'react-icons/fa';
 
 import IconBurnesBurger from '../../assets/images/iconsRestaurant/iconBurnesBurger.png';
 
-const RestaurantCard = ({ restaurant }) => {
+const RestaurantSearchCard = ({ restaurant }) => {
   return (
     <CardWrapper>
       <LeftSideContainer>
@@ -70,4 +70,4 @@ const RestaurantCard = ({ restaurant }) => {
   );
 };
 
-export default RestaurantCard;
+export default RestaurantSearchCard;
