@@ -11,7 +11,7 @@ import Footer from '../../components/Footer'
 import Header from "../../components/Header";
 import FoodCard from '../../components/FoodCard';
 import Highlights from '../../components/Highlights';
-import BarraDeBusca from '../../components/BarraDeBusca';
+import SearchBar from '../../components/SearchBar';
 import FoodCategories from '../../components/FoodCategories';
 import RestaurantHighlightCard from '../../components/RestaurantHighlightCard';
 
@@ -56,7 +56,7 @@ const Index = () => {
     <>
       <Header />
       / <PageContainer>
-        <BarraDeBusca
+        <SearchBar
           value={filterInput}
           setFilterInput={setFilterInput}
         />

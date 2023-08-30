@@ -4,7 +4,7 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai'
 import { IoMdOptions } from 'react-icons/io'
 import { Button } from './styles';
 
-const BarraDeBusca = ({ value, setFilterInput }) => {
+const SearchBar = ({ value, setFilterInput }) => {
 
   function handleInputChange(e) {
     const inputValue = e.target.value;
@@ -43,4 +43,4 @@ const BarraDeBusca = ({ value, setFilterInput }) => {
   );
 }
 
-export default BarraDeBusca;
+export default SearchBar;
