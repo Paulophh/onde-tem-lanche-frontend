@@ -31,5 +31,13 @@ export const InputContainer = styled.div`
     @media only screen and (min-width: 400px) {
         gap: 20px;
     }
+`;
 
+export const InputErrorContainer = styled.div`
+    color: red;
+    font-size: 1.4rem;
+    font-style: italic;
+
+    margin-top: 8px;
+    text-align: center;
 `;

@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-/*
-    w - restaurante - 120px;
-    w - cliente - 78px
-*/
-
 export const EntitySelectorContainer = styled.div`
     padding: 8px;
     box-shadow: 0 0 10px 0 ${props => props.theme.colors['grey']};
@@ -12,7 +7,6 @@ export const EntitySelectorContainer = styled.div`
     display: flex;
     gap: 5px;
     width: fit-content;
-    margin: 30px auto 0;
 
     border-radius: 8px;
 
@@ -28,10 +22,10 @@ export const EntitySelectorContainer = styled.div`
         border-radius: 8px;
         top: 8px;
         left: 8px;
-        transform: ${props => props.selectedEntity === 'restaurante' ? 'translateX(0)' : 'translateX(125px)'};
+        transform: ${props => props.selectedEntity === 'restaurant' ? 'translateX(0)' : 'translateX(125px)'};
 
         
-        width: ${props => props.selectedEntity === 'restaurante' ? '120px' : '78px'};
+        width: ${props => props.selectedEntity === 'restaurant' ? '120px' : '78px'};
         transition: .5s;
     }
 

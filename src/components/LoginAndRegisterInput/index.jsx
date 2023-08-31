@@ -2,7 +2,7 @@ import { AiFillLock } from 'react-icons/ai';
 import { IoMdMail } from 'react-icons/io';
 import { FaUserAlt } from 'react-icons/fa';
 
-import { InputContainer, LoginAndRegisterInputContainer } from './styles';
+import { InputContainer, InputErrorContainer, LoginAndRegisterInputContainer } from './styles';
 
 const INPUT_OPTIONS = {
     name: {
@@ -23,7 +23,7 @@ const INPUT_OPTIONS = {
     }
 }
 
-const LoginAndRegisterInput = ({ input }) => {
+const LoginAndRegisterInput = ({ input, type = 'text', register, errorMessage }) => {
     const inputType = INPUT_OPTIONS[input];
     const placeholder = inputType.placeholder;
     const Icon = inputType.icon;
@@ -34,9 +34,19 @@ const LoginAndRegisterInput = ({ input }) => {
                 <span>
                     <Icon />
                 </span>
-                <input placeholder={placeholder} />
+                <input
+                    placeholder={placeholder}
+                    type={type}
+                    {...register(input)}
+                />
             </InputContainer>
 
+            {
+                errorMessage &&
+                <InputErrorContainer>
+                    {errorMessage}
+                </InputErrorContainer>
+            }
         </LoginAndRegisterInputContainer>
     )
 }

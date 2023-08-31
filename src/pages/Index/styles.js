@@ -51,6 +51,8 @@ export const FoodsList = styled.ul`
   @media only screen and (min-width: 660px) {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    justify-content: flex-start;
+    gap: 20px;
   }
 `;
