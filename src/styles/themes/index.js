@@ -4,6 +4,7 @@ export const theme = {
         'white': '#fff',
         'grey': 'rgba(135, 135, 135, 0.25)',
         'light-grey': 'rgba(225, 225, 225, 0.50)',
+        'text-light-grey': '#968a8a',
         'box-shadow': 'rgba(0, 0, 0, 0.25)',
         'orange': '#ff8000'
     }

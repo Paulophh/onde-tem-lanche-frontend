@@ -8,13 +8,19 @@ import { theme } from './styles/themes';
 
 import { GlobalStyles } from './styles/Global';
 
+import { BrowserRouter } from 'react-router-dom';
+
+import CustomerSpecifications from './pages/CustomerSpecifications';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <App />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <CustomerSpecifications/>
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

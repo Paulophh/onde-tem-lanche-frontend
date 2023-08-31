@@ -5,69 +5,63 @@ import {
   Description,
   FoodCardInfoContainer,
   FoodImageContainer,
-  FoodInfoSecondRow,
   FoodNameContainer,
   Price,
-  StarRating
+  StarRating,
+  TopRowContainer
 } from './styles';
 
 import FoodExampleImage from '../../assets/images/food-images/xSalada.png';
 import { AiFillStar } from 'react-icons/ai';
 
-const FoodCard = ({food}) => {
+const FoodCard = ({ food }) => {
   return (
     <CardWrapper>
-        
-        <FoodImageContainer>
+
+      <FoodImageContainer>
         <img
           src={FoodExampleImage}
           alt=''
         />
-        </FoodImageContainer>
+      </FoodImageContainer>
 
-        <FoodCardInfoContainer>
-          <div>
+      <FoodCardInfoContainer>
+        <TopRowContainer>
           <FoodNameContainer>
             <h2>
               {food.name}
             </h2>
           </FoodNameContainer>
-          </div>
-          
-          <FoodInfoSecondRow>
-            <Description title={food.description}>
-              {food.description}
-            </Description>
 
-            <div className='info-container'>
-              <ClosingTimeAndRatingContainer>
-                <StarRating>
-                <span className='icon-container'>
-                  <AiFillStar
-                    size={22}
-                  />
-                </span>
+          <ClosingTimeAndRatingContainer>
+            <StarRating>
+              <span className='label-container'>
+                <AiFillStar />
+              </span>
 
-                <span className='text-container'>
-                  {food.starRating}
-                </span>
-                </StarRating>
+              <span className='value-container'>
+                {food.rating}
+              </span>
+            </StarRating>
 
-                <Price>
-                  <span className='icon-container'>
-                    <p>R$</p>
-                  </span>
-                  <span className='text-container'>
-                    {food.price}
-                  </span>
-                </Price>
+            <Price>
+              <span className='label-container'>
+                R$
+              </span>
+              <span className='value-container'>
+                {food.price}
+              </span>
+            </Price>
 
-              </ClosingTimeAndRatingContainer>
-            </div>
-          </FoodInfoSecondRow>
-        </FoodCardInfoContainer>
+          </ClosingTimeAndRatingContainer>
+        </TopRowContainer>
+
+        <Description title={'food.description'}>
+          Duas carnes, alface, tomate, cebola, queijo e molho caseiro da casa.
+        </Description>
+      </FoodCardInfoContainer>
     </CardWrapper>
-    
+
   );
 }
 

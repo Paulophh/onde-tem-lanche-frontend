@@ -1,22 +1,33 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { BiUserCircle } from 'react-icons/bi';
 
 import {
   HeaderContainer,
   LogoImg,
   Nav,
-  UserIcon
 } from "./styles";
 
 import logo from '../../assets/images/logo.svg';
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  function handleRedirectToLogin() {
+    navigate('/login');
+  }
+
+  function handleRedirectToHome() {
+    navigate('/');
+  }
+
   return (
     <HeaderContainer>
       <Nav>
         <ul>
           <li className='nav-link'>
-            <button >
+            <button onClick={handleRedirectToHome}>
               Início
             </button>
           </li>
@@ -41,7 +52,7 @@ const Header = () => {
             </button>
           </li>
           <li className='nav-link nav-link-profile'>
-            <button >
+            <button onClick={handleRedirectToLogin}>
               <BiUserCircle
                 size={45}
               />

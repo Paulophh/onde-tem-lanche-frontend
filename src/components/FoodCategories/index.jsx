@@ -1,59 +1,37 @@
 import React from 'react';
+
 import { Category, CategoryIcon, CategoryTitle, CategoriesContainer } from './styles';
 
-import { LiaHamburgerSolid } from 'react-icons/lia';
-import { PiPizzaLight } from 'react-icons/pi';
-import { TbMeat } from 'react-icons/tb';
-import { BiSushi } from 'react-icons/bi';
-import { CiFries } from 'react-icons/ci';
-import { LuSalad } from 'react-icons/lu';
-import { RiCake3Line } from 'react-icons/ri';
+import { FOOD_CATEGORIES } from '../../static';
 
-const FoodCategories = () => {
+const FoodCategories = ({ selectedFoodCategory, setSelectedFoodCategory }) => {
+
+  function handleSelectCategory(category) {
+    setSelectedFoodCategory(category);
+  }
+
   return (
     <CategoriesContainer>
-      <Category>
-        <CategoryIcon>
-          <LiaHamburgerSolid />
-        </CategoryIcon>
-        <CategoryTitle>Lanches</CategoryTitle>
-      </Category>
-      <Category>
-        <CategoryIcon>
-          < PiPizzaLight/>
-        </CategoryIcon>
-        <CategoryTitle>Pizza</CategoryTitle>
-      </Category>
-      <Category>
-        <CategoryIcon>
-          < TbMeat/>
-        </CategoryIcon>
-        <CategoryTitle>Carnes</CategoryTitle>
-      </Category>
-      <Category>
-        <CategoryIcon>
-          < BiSushi/>
-        </CategoryIcon>
-        <CategoryTitle>Japonesa</CategoryTitle>
-      </Category>
-      <Category>
-        <CategoryIcon>
-          < CiFries/>
-        </CategoryIcon>
-        <CategoryTitle>Porções</CategoryTitle>
-      </Category>
-      <Category>
-        <CategoryIcon>
-          < LuSalad/>
-        </CategoryIcon>
-        <CategoryTitle>Saladas</CategoryTitle>
-      </Category>
-      <Category>
-        <CategoryIcon>
-          < RiCake3Line/>
-        </CategoryIcon>
-        <CategoryTitle>Doces</CategoryTitle>
-      </Category>
+      {
+        FOOD_CATEGORIES.map(category => (
+          <Category
+            key={category.name}
+            isSelected={selectedFoodCategory === category.name}
+            onClick={() => handleSelectCategory(category.name)}
+          >
+            <CategoryIcon isSelected={selectedFoodCategory === category.name}>
+              <img
+                src={selectedFoodCategory === category.name ? category.selectedIcon : category.icon}
+                alt=""
+              />
+            </CategoryIcon>
+
+            <CategoryTitle >
+              {category.name}
+            </CategoryTitle>
+          </Category>
+        ))
+      }
     </CategoriesContainer>
   );
 };

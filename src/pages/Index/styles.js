@@ -13,7 +13,7 @@ export const HighlightsCardsContainer = styled.div`
   max-width: 100vw;
   overflow-x: scroll;
 
-  margin-top: 20px;
+  margin: 20px 0;
   padding: 10px 20px;
   padding-right: 40px;
 
@@ -31,5 +31,26 @@ export const HighlightsCardsContainer = styled.div`
   @media only screen and (min-width: 830px) {
     padding: 10px 70px;
     gap: 40px;
+  }
+`;
+
+export const FoodsContainer = styled.div`
+  margin-top: 30px;
+  padding-bottom: 30px;
+`;
+
+export const FoodsList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 90vw;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @media only screen and (min-width: 660px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
 `;

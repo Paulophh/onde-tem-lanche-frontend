@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { HighlightsCardsContainer, PageContainer } from './styles';
+import {
+  FoodsContainer,
+  FoodsList,
+  HighlightsCardsContainer,
+  PageContainer
+} from './styles';
 
 import Footer from '../../components/Footer'
 import Header from "../../components/Header";
+import FoodCard from '../../components/FoodCard';
 import Highlights from '../../components/Highlights';
-import BarraDeBusca from '../../components/BarraDeBusca';
-import HighlightsCard from '../../components/HighlightsCard';
-import RestauranteCard from '../../components/RestaurantCard';
+import SearchBar from '../../components/SearchBar';
+import FoodCategories from '../../components/FoodCategories';
+import RestaurantHighlightCard from '../../components/RestaurantHighlightCard';
 
 const mockedRestaurant = {
   name: 'Nome do Restaurante',
@@ -16,41 +22,86 @@ const mockedRestaurant = {
   starRating: 4
 }
 
+const mockerDish = {
+  name: 'X-salada duplo',
+  rating: 4.5,
+  price: 25,
+  description: 'Duas carnes, alface, tomate, cebola, queijo e molho caseiro da casa.'
+}
 
 const Index = () => {
+  const [foodCategory, setFoodCategory] = useState('Lanches');
+  const [filterInput, setFilterInput] = useState('');
+
   const restaurants = [];
+  const dishes = [];
+
   for (let i = 0; i <= 9; i++) {
-    restaurants.push(mockedRestaurant);
+    const newRestaurant = {
+      ...mockedRestaurant,
+      id: `restaurant-${i}`
+    }
+    restaurants.push(newRestaurant);
+  }
+
+  for (let i = 0; i <= 9; i++) {
+    const newDish = {
+      ...mockerDish,
+      id: `dish-${i}`
+    }
+    dishes.push(newDish);
   }
 
   return (
     <>
       <Header />
-      <PageContainer>
-        <BarraDeBusca />
+      / <PageContainer>
+        <SearchBar
+          value={filterInput}
+          setFilterInput={setFilterInput}
+        />
         <Highlights
-          text='Destaques'
+          text='Recomendados'
         />
         <HighlightsCardsContainer>
           {
             restaurants.map((rest, index) => (
-              <HighlightsCard
-                key={`${rest.name}-${index}`}
+              <RestaurantHighlightCard
+                key={rest.id}
                 restaurant={rest}
               />
             ))
           }
         </HighlightsCardsContainer>
 
-        {/* <Footer /> */}
+        <Highlights
+          text='Categorias'
+          textPlacement='right'
+        />
+
+        <FoodCategories
+          selectedFoodCategory={foodCategory}
+          setSelectedFoodCategory={setFoodCategory}
+        />
+
+        <FoodsContainer>
+          <FoodsList>
+            {
+              dishes.map(dish => (
+                <FoodCard
+                  key={dish.id}
+                  food={dish}
+                />
+              ))
+            }
+
+          </FoodsList>
+        </FoodsContainer>
+
+        <Footer />
       </PageContainer>
-
-
-      <RestauranteCard />
-
     </>
   );
 }
 
 export default Index;
-
