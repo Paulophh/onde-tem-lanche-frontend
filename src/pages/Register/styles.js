@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginContainer = styled.div`
+export const RegisterContainer = styled.div`
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -10,37 +10,29 @@ export const MidSectionContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    margin-top: 30px;
     flex: 1;
-
-    margin: 30px 0;
-
-    .entity-selector-container {
-        font-size: 2.0rem;
-        margin-bottom: 20px;
-        color: ${props => props.theme.colors['text-light-grey']};
-        text-align: center;
-    }
 `;
 
 export const FormContainer = styled.form`
-    width: 90vw;
-    max-width: 400px;
-    margin: 30px 0;
-
-    flex: 1;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    flex: 1;
+
+    width: 90vw;
+    max-width: 400px;
 
     .inputs-container {
+        gap: 20px;  
         display: flex;
         flex-direction: column;
-        gap: 30px;
     }
 
-    .bottom-container {  
-        text-align: center;
-        margin-top: 30px;
+    .bottom-container {
+        margin: 30px 0;
     }
 `;
 
@@ -48,21 +40,18 @@ export const RedirectToRegisterContainer = styled.div`
     text-align: center;
     margin-top: 20px;
 
-    span, a {
+    span {
         font-size: 1.6rem;
-    }
-
-    span:first-of-type {
         margin-right: 5px;
     }
 
     a {
+        font-size: 1.6rem;
         font-weight: bold;
         color: ${props => props.theme.colors.orange};
     }
 
     a:hover {
         text-decoration: underline;
-
     }
 `;

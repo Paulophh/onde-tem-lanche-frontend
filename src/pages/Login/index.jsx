@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ReactLoading from 'react-loading';
 
 import { api } from '../../services/api';
 
@@ -19,6 +18,7 @@ import Footer from '../../components/Footer';
 import ErrorPopUp from '../../components/ErrorPopUp';
 import EntitySelector from '../../components/EntitySelector';
 import LoginAndRegisterInput from '../../components/LoginAndRegisterInput';
+import SubmitButton from '../../components/SubmitButton';
 
 const formSchema = yup.object({
     email: yup.string().email('Email inválido').required('Informe o email'),
@@ -39,17 +39,22 @@ const Login = () => {
     }
 
     async function login(url, data) {
+        setIsLoading(true);
+
         try {
-            const response = await api.post(url, data);
+            const response = await api.post(`/${url}/session`, data);
             storeTokenLocally(response.data.token);
 
         } catch (error) {
+            let message = 'Algo deu errado, tente novamente mais tarde';
             if (error.response.status === 404) {
-                setLoginErrorMessage(error.response.data.message)
-                setTimeout(() => {
-                    setLoginErrorMessage('');
-                }, 3000);
+                message = error.response.data.message
             }
+
+            setLoginErrorMessage(message)
+            setTimeout(() => {
+                setLoginErrorMessage('');
+            }, 3000);
 
         } finally {
             setIsLoading(false);
@@ -57,10 +62,8 @@ const Login = () => {
     }
 
     async function handleLoginSubmit(data) {
-        setIsLoading(true);
-        const requestURL = selectedEntity === 'restaurant' ? '/restaurants/session' : '/customers/session';
-        await login(requestURL, data);
-
+        const url = selectedEntity === 'restaurant' ? 'restaurants' : 'customers';
+        await login(url, data);
     }
 
     return (
@@ -105,23 +108,10 @@ const Login = () => {
                     </div>
 
                     <div className='bottom-container'>
-                        <button disabled={isLoading}>
-                            {
-                                isLoading ?
-                                    <span>
-                                        <ReactLoading
-                                            width={20}
-                                            height={20}
-                                            color='#7f7777'
-                                            type='spin'
-                                        />
-                                    </span>
-                                    :
-                                    <span>
-                                        Continuar
-                                    </span>
-                            }
-                        </button>
+                        <SubmitButton
+                            title='Continuar'
+                            isLoading={isLoading}
+                        />
 
                         <RedirectToRegisterContainer>
                             <span>
