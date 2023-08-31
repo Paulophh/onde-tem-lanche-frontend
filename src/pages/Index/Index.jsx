@@ -55,7 +55,7 @@ const Index = () => {
   return (
     <>
       <Header />
-      / <PageContainer>
+      <PageContainer>
         <SearchBar
           value={filterInput}
           setFilterInput={setFilterInput}

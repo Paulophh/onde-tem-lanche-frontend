@@ -20,6 +20,8 @@ import ErrorPopUp from '../../components/ErrorPopUp';
 import EntitySelector from '../../components/EntitySelector';
 import LoginAndRegisterInput from '../../components/LoginAndRegisterInput';
 
+import Carne from '../../assets/icons/carnes.svg'
+
 const formSchema = yup.object({
     email: yup.string().email('Email inválido').required('Informe o email'),
     password: yup.string().min(8, 'Senha deve conter ao menos 8 caractéres').required('Informe a senha')
@@ -65,6 +67,7 @@ const Login = () => {
 
     return (
         <LoginContainer>
+            <Carne />
             <Header />
             <MidSectionContainer>
                 <div className='top'>
