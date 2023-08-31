@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import TasteBudSelector from '../../components/TasteBudSelector';
 import { Descricao, FavoriteCard, Prompt, Insight, RescriptionCard } from './styles';
 import SelectorAlergic from '../../components/SelectorAlergic';
+import Footer from '../../components/Footer';
 
 const CustomerSpecifications = () => {
   return (
@@ -29,6 +30,7 @@ const CustomerSpecifications = () => {
         </Insight>
         <SelectorAlergic/>
       </RescriptionCard>
+      <Footer/>
       </>
   );
 }

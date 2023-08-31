@@ -51,3 +51,7 @@ export const RescriptionCard = styled.div`
   align-items: center;
   margin: 0 auto;
 `;
+
+export const Button = styled.div`
+  
+`;
