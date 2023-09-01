@@ -1,18 +1,19 @@
 import React from 'react';
+
 import { ColumnDivisor, Allergy, AllergySelectorContainer } from './styles';
 
-const AllergiesSelector = ({ allergies, setAllergies }) => {
+const AllergensSelector = ({ allergens, setAllergens }) => {
 
   function handleToggleAllergy(selectedAllergy) {
-    if (allergies.includes(selectedAllergy)) {
-      const removedPreference = allergies.filter(pref => {
+    if (allergens.includes(selectedAllergy)) {
+      const removedPreference = allergens.filter(pref => {
         return pref !== selectedAllergy
       })
 
-      setAllergies(removedPreference);
+      setAllergens(removedPreference);
 
     } else {
-      setAllergies([...allergies, selectedAllergy]);
+      setAllergens([...allergens, selectedAllergy]);
     }
   }
 
@@ -23,7 +24,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Leite')}
-            defaultChecked={allergies.includes('Leite')}
+            defaultChecked={allergens.includes('Leite')}
           />
 
           <span>
@@ -35,7 +36,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Glúten')}
-            defaultChecked={allergies.includes('Glúten')}
+            defaultChecked={allergens.includes('Glúten')}
           />
 
           <span>
@@ -47,7 +48,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Peixe')}
-            defaultChecked={allergies.includes('Peixe')}
+            defaultChecked={allergens.includes('Peixe')}
           />
 
           <span>
@@ -61,7 +62,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Ovos')}
-            defaultChecked={allergies.includes('Ovos')}
+            defaultChecked={allergens.includes('Ovos')}
           />
 
           <span>
@@ -73,7 +74,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Mariscos')}
-            defaultChecked={allergies.includes('Mariscos')}
+            defaultChecked={allergens.includes('Mariscos')}
           />
 
           <span>
@@ -85,7 +86,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Soja')}
-            defaultChecked={allergies.includes('Soja')}
+            defaultChecked={allergens.includes('Soja')}
           />
 
           <span>
@@ -99,7 +100,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Nozes')}
-            defaultChecked={allergies.includes('Nozes')}
+            defaultChecked={allergens.includes('Nozes')}
           />
 
           <span>
@@ -111,7 +112,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Amendoim')}
-            defaultChecked={allergies.includes('Amendoim')}
+            defaultChecked={allergens.includes('Amendoim')}
           />
 
           <span>
@@ -123,7 +124,7 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
           <input
             type="checkbox"
             onChange={() => handleToggleAllergy('Não contém')}
-            defaultChecked={allergies.includes('Não contém')}
+            defaultChecked={allergens.includes('Não contém')}
           />
 
           <span>
@@ -135,4 +136,4 @@ const AllergiesSelector = ({ allergies, setAllergies }) => {
   );
 }
 
-export default AllergiesSelector;
+export default AllergensSelector;

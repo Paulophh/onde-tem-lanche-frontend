@@ -1,16 +1,21 @@
 import styled from 'styled-components';
 
 export const AllergySelectorContainer = styled.div`
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
+  width: fit-content;
+  margin: 30px auto 0;
 
-  gap: 15px;
+  gap: 20px;
 
-  @media only screen and (min-width: 420px) {
+  @media only screen and (min-width: 460px) {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  @media only screen and (min-width: 620px) {
+    gap: 40px;
   }
 `;
 
@@ -18,20 +23,6 @@ export const ColumnDivisor = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-
-  width: 185px;
-
-  @media only screen and (min-width: 522px) and (max-width: 695px) {
-    &:last-of-type {
-      flex-direction: row;
-      width: 100%;
-      justify-content: center;
-
-      label {
-        width: 140px;
-      }
-    }
-  }
 `;
 
 export const Allergy = styled.label`

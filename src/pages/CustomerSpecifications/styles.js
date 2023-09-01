@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const CustomerSpecificationsContainer = styled.div``;
+
+export const PageContentContainer = styled.form`
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+`;
+
 export const Description = styled.div`
   text-align: center;
   margin-top: 34px;

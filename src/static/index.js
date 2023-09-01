@@ -53,3 +53,6 @@ export const FOOD_CATEGORIES = [
 
 // Ainda faltam:
 // ['Açaí/Sorvete', 'Yakisoba', 'Marmitex', 'Esfiha', 'Massas']
+
+export const ALL_PREFERENCES = ['Carnes', 'Massas', 'Pizzas', 'Lanches', 'Porções', 'Saladas', 'Confeitaria', 'Açaí/Sorvete', 'Yakisoba', 'Marmitex', 'Esfiha', 'Japonês'];
+export const ALL_ALLERGENS = ['Soja', 'Peixe', 'Ovos', 'Mariscos', 'Nozes', 'Amendoim', 'Gluten', 'Leite', 'Não contém'];

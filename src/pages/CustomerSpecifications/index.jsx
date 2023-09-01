@@ -1,60 +1,113 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { api } from '../../services/api';
 
 import {
   Description,
   PreferencesCard,
-  AllergiesCard
+  AllergiesCard,
+  PageContentContainer,
+  CustomerSpecificationsContainer
 } from './styles';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import AllergiesSelector from '../../components/AllergiesSelector';
+import ErrorPopUp from '../../components/ErrorPopUp';
+import SubmitButton from '../../components/SubmitButton';
+import AllergensSelector from '../../components/AllergensSelector';
 import PreferencesSelector from '../../components/PreferencesSelector';
 
 const CustomerSpecifications = () => {
   const [preferences, setPreferences] = useState([]);
-  const [allergies, setAllergies] = useState([]);
+  const [allergens, setAllergens] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const navigate = useNavigate();
+
+  async function updateCustomerData(e) {
+    setIsLoading(true);
+    e.preventDefault();
+
+    const token = localStorage.getItem('@onde-tem-lanche:token');
+    const data = {
+      preferences,
+      allergens
+    }
+
+    try {
+      await api.put('/customers', data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      navigate('/');
+
+    } catch (error) {
+      if (error.response.status === 401) {
+        setErrorMessage('Precisa estar logado para atualizar os dados');
+      }
+
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
-    <>
+    <CustomerSpecificationsContainer>
       <Header />
-      <Description>
-        <p>
-          Antes de ver os restaurantes nos conte um pouco mais sobre você!
-        </p>
-      </Description>
+      <PageContentContainer onSubmit={updateCustomerData}>
+        {errorMessage &&
+          <ErrorPopUp
+            message={errorMessage}
+          />
+        }
 
-      <PreferencesCard>
-        <h1>
-          Do que você mais gosta?
-        </h1>
+        <Description>
+          <p>
+            Antes de ver os restaurantes nos conte um pouco mais sobre você!
+          </p>
+        </Description>
 
-        <h2>
-          Saber suas preferencias nos ajuda a escolher melhor quais restaurantes serão exibidos
-        </h2>
+        <PreferencesCard>
+          <h1>
+            Do que você mais gosta?
+          </h1>
 
-        <PreferencesSelector
-          preferences={preferences}
-          setPreferences={setPreferences}
+          <h2>
+            Saber suas preferencias nos ajuda a escolher melhor quais restaurantes serão exibidos
+          </h2>
+
+          <PreferencesSelector
+            preferences={preferences}
+            setPreferences={setPreferences}
+          />
+        </PreferencesCard>
+
+        <AllergiesCard>
+          <h1>
+            Alguma restrição alimentar?
+          </h1>
+
+          <h2>
+            Com essa informação podemos exibir de forma precisa apenas opções que você pode consumir
+          </h2>
+          <AllergensSelector
+            allergens={allergens}
+            setAllergens={setAllergens}
+          />
+        </AllergiesCard>
+
+        <SubmitButton
+          title='Continuar'
+          isLoading={isLoading}
         />
-      </PreferencesCard>
-
-      <AllergiesCard>
-        <h1>
-          Alguma restrição alimentar?
-        </h1>
-
-        <h2>
-          Com essa informação podemos exibir de forma precisa apenas opções que você pode consumir
-        </h2>
-        <AllergiesSelector
-          allergies={allergies}
-          setAllergies={setAllergies}
-        />
-      </AllergiesCard>
+      </PageContentContainer>
       <Footer />
-    </>
+    </CustomerSpecificationsContainer>
   );
 }
 
