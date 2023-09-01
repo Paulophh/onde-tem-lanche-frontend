@@ -10,13 +10,15 @@ import { GlobalStyles } from './styles/Global';
 
 import { BrowserRouter } from 'react-router-dom';
 
+import CustomerSpecifications from './pages/CustomerSpecifications';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <App />
+        <App/>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
