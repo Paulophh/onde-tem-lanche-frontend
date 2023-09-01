@@ -52,7 +52,7 @@ export const FoodsList = styled.ul`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 20px;
   }
 `;
