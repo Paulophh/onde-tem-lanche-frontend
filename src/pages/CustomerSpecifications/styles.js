@@ -1,57 +1,49 @@
 import styled from 'styled-components';
 
-export const Descricao = styled.div`
+export const Description = styled.div`
   text-align: center;
   margin-top: 34px;
   color: #000;
-  font-family: Ubuntu;
-  font-size: 3.2rem;
-  font-style: normal; 
-  font-weight: 400;
+  font-size: 2.0rem;
+
+  @media only screen and (min-width: 900px) {
+    font-size: 2.4rem;
+  }
 `;
 
-export const Prompt = styled.div`
-  text-align: center;
-  margin-top: 48px;
-  color: rgba(0, 0, 0, 0.50);
-  font-family: Ubuntu;
-  font-size: 1.6rem;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-`;
-
-export const Insight = styled.div`
-  margin-top: 8px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.50);
-  font-family: Ubuntu;
-  font-size: 1.6rem;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;  
-`;
-
-export const FavoriteCard = styled.div`
-  width: 1080px;
-  flex-shrink: 0;
+export const PreferencesCard = styled.div`
+  width: 90vw;
+  max-width: 1080px;
   border-radius: 0px 0px 2px 2px;
   background: #FFF;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 3px 6px 2px rgba(0, 0, 0, 0.25);
   align-items: center;
-  margin: 0 auto;
+  margin: 45px auto;
+  padding: 10px;
+
+  text-align: center;
+
+  h1, h2 {
+    color: ${props => props.theme.colors['text-light-grey']};
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 15px;
+  }
+
+  @media only screen and (min-width: 900px) {
+    h1, h2 {
+      font-size: 2.2rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
 `;
 
-export const RescriptionCard = styled.div`
-  width: 1080px;
-  flex-shrink: 0;
-  border-radius: 0px 0px 2px 2px;
-  background: #FFF;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  align-items: center;
-  margin: 0 auto;
-`;
-
-export const Button = styled.div`
-  
+export const AllergiesCard = styled(PreferencesCard)`
 `;
