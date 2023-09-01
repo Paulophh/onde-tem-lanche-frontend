@@ -2,7 +2,7 @@ import ReactLoading from 'react-loading';
 
 import { SubmitButtonsContainer } from './styles';
 
-const SubmitButton = ({ title, isLoading = true }) => {
+const SubmitButton = ({ title, isLoading = false }) => {
     return (
         <SubmitButtonsContainer disabled={isLoading}>
             {
