@@ -9,14 +9,14 @@ const EntitySelector = ({ selectedEntity, setSelectedEntity }) => {
         <EntitySelectorContainer selectedEntity={selectedEntity}>
             <button
                 className='entity entity-restaurant'
-                onClick={() => handleSelectEntity('restaurant')}
+                onClick={() => handleSelectEntity('restaurants')}
             >
                 Restaurante
             </button>
 
             <button
                 className='entity entity-customer'
-                onClick={() => handleSelectEntity('customer')}
+                onClick={() => handleSelectEntity('customers')}
             >
                 Cliente
             </button>

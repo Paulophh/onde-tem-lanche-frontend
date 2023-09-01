@@ -26,7 +26,7 @@ const formSchema = yup.object({
 })
 
 const Login = () => {
-    const [selectedEntity, setSelectedEntity] = useState('restaurant');
+    const [selectedEntity, setSelectedEntity] = useState('restaurants');
     const [isLoading, setIsLoading] = useState(false);
     const [loginErrorMessage, setLoginErrorMessage] = useState('');
 
@@ -38,11 +38,11 @@ const Login = () => {
         localStorage.setItem('@onde-tem-lanche:token', token);
     }
 
-    async function login(url, data) {
+    async function login(entity, data) {
         setIsLoading(true);
 
         try {
-            const response = await api.post(`/${url}/session`, data);
+            const response = await api.post(`/${entity}/session`, data);
             storeTokenLocally(response.data.token);
 
         } catch (error) {
@@ -62,8 +62,7 @@ const Login = () => {
     }
 
     async function handleLoginSubmit(data) {
-        const url = selectedEntity === 'restaurant' ? 'restaurants' : 'customers';
-        await login(url, data);
+        await login(selectedEntity, data);
     }
 
     return (

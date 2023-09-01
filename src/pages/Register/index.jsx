@@ -29,7 +29,7 @@ const registerSchema = yup.object({
 
 const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedEntity, setSelectedEntity] = useState('restaurant');
+  const [selectedEntity, setSelectedEntity] = useState('restaurants'); // 
   const [registerErrorMessage, setRegisterErrorMessage] = useState('');
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -38,11 +38,27 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  async function registerEntity(url, data) {
+  async function loginEntity(entity, data) {
+    const response = await api.post(`/${entity}/session`, data);
+    const token = response.data.token;
+
+    localStorage.setItem('@onde-tem-lanche:token', token);
+  }
+
+  async function registerEntity(entity, data) {
     setIsLoading(true);
     try {
-      await api.post(`/${url}`, data);
-      navigate('/login');
+      await api.post(`/${entity}`, data);
+      await loginEntity(entity, {
+        email: data.email,
+        password: data.password
+      })
+
+      if (entity === 'customers') {
+        navigate('/customer/info');
+      } else {
+        navigate('/login')
+      }
 
     } catch (error) {
       let message = 'Algo deu errado, tente novamente mais tarde';
@@ -61,9 +77,7 @@ const Register = () => {
   }
 
   async function handleRegisterEntity(data) {
-    const url = selectedEntity === 'restaurant' ? 'restaurants' : 'customers';
-
-    await registerEntity(url, data);
+    await registerEntity(selectedEntity, data);
   }
 
   return (

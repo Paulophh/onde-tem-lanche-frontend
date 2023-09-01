@@ -22,10 +22,10 @@ export const EntitySelectorContainer = styled.div`
         border-radius: 8px;
         top: 8px;
         left: 8px;
-        transform: ${props => props.selectedEntity === 'restaurant' ? 'translateX(0)' : 'translateX(125px)'};
+        transform: ${props => props.selectedEntity === 'restaurants' ? 'translateX(0)' : 'translateX(125px)'};
 
         
-        width: ${props => props.selectedEntity === 'restaurant' ? '120px' : '78px'};
+        width: ${props => props.selectedEntity === 'restaurants' ? '120px' : '78px'};
         transition: .5s;
     }
 
