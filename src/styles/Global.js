@@ -22,7 +22,7 @@ export const GlobalStyles = createGlobalStyle`
         font-family: inherit;
     }
     
-    input {
+    input, textarea {
         font-family: inherit;
         outline: none;
     }

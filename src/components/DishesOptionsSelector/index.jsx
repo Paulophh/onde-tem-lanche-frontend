@@ -1,29 +1,29 @@
 import React from 'react';
-import { ColumnDivisor, Preference, PreferencesSelectorContainer } from './styles';
+import { ColumnDivisor, Preference, DishesOptionsSelectorContainer } from './styles';
 
-const PreferencesSelector = ({ preferences, setPreferences }) => {
+const DishesOptionsSelector = ({ selectedDishes, setSelectedDishes }) => {
 
-  function handleTogglePreference(selectedPreference) {
-    if (preferences.includes(selectedPreference)) {
-      const removedPreference = preferences.filter(pref => {
-        return pref !== selectedPreference
+  function handleTogglePreference(dish) {
+    if (selectedDishes.includes(dish)) {
+      const removedPreference = selectedDishes.filter(pref => {
+        return pref !== dish
       })
 
-      setPreferences(removedPreference);
+      setSelectedDishes(removedPreference);
 
     } else {
-      setPreferences([...preferences, selectedPreference]);
+      setSelectedDishes([...selectedDishes, dish]);
     }
   }
 
   return (
-    <PreferencesSelectorContainer>
+    <DishesOptionsSelectorContainer>
       <ColumnDivisor>
         <Preference key={"Carnes"}>
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Carnes')}
-            defaultChecked={preferences.includes('Carnes')}
+            defaultChecked={selectedDishes.includes('Carnes')}
           />
 
           <span>
@@ -35,7 +35,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Porções')}
-            defaultChecked={preferences.includes('Porções')}
+            defaultChecked={selectedDishes.includes('Porções')}
           />
 
           <span>
@@ -47,7 +47,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Lanches')}
-            defaultChecked={preferences.includes('Lanches')}
+            defaultChecked={selectedDishes.includes('Lanches')}
           />
 
           <span>
@@ -61,7 +61,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Marmitex')}
-            defaultChecked={preferences.includes('Marmitex')}
+            defaultChecked={selectedDishes.includes('Marmitex')}
           />
 
           <span>
@@ -73,7 +73,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Massas')}
-            defaultChecked={preferences.includes('Massas')}
+            defaultChecked={selectedDishes.includes('Massas')}
           />
 
           <span>
@@ -85,7 +85,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Saladas')}
-            defaultChecked={preferences.includes('Saladas')}
+            defaultChecked={selectedDishes.includes('Saladas')}
           />
 
           <span>
@@ -99,7 +99,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Yakisoba')}
-            defaultChecked={preferences.includes('Yakisoba')}
+            defaultChecked={selectedDishes.includes('Yakisoba')}
           />
 
           <span>
@@ -111,7 +111,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Confeitaria')}
-            defaultChecked={preferences.includes('Confeitaria')}
+            defaultChecked={selectedDishes.includes('Confeitaria')}
           />
 
           <span>
@@ -123,7 +123,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Pizzas')}
-            defaultChecked={preferences.includes('Pizzas')}
+            defaultChecked={selectedDishes.includes('Pizzas')}
           />
 
           <span>
@@ -137,7 +137,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Esfiha')}
-            defaultChecked={preferences.includes('Esfiha')}
+            defaultChecked={selectedDishes.includes('Esfiha')}
           />
 
           <span>
@@ -149,7 +149,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Japonês')}
-            defaultChecked={preferences.includes('Japonês')}
+            defaultChecked={selectedDishes.includes('Japonês')}
           />
 
           <span>
@@ -161,7 +161,7 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           <input
             type="checkbox"
             onChange={() => handleTogglePreference('Açaí/Sorvete')}
-            defaultChecked={preferences.includes('Açaí/Sorvete')}
+            defaultChecked={selectedDishes.includes('Açaí/Sorvete')}
           />
 
           <span>
@@ -169,8 +169,8 @@ const PreferencesSelector = ({ preferences, setPreferences }) => {
           </span>
         </Preference>
       </ColumnDivisor>
-    </PreferencesSelectorContainer>
+    </DishesOptionsSelectorContainer>
   );
 }
 
-export default PreferencesSelector;
+export default DishesOptionsSelector;

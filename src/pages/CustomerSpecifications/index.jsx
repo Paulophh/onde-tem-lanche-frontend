@@ -17,7 +17,7 @@ import Footer from '../../components/Footer';
 import ErrorPopUp from '../../components/ErrorPopUp';
 import SubmitButton from '../../components/SubmitButton';
 import AllergensSelector from '../../components/AllergensSelector';
-import PreferencesSelector from '../../components/PreferencesSelector';
+import DishesOptionsSelector from '../../components/DishesOptionsSelector';
 
 const CustomerSpecifications = () => {
   const [preferences, setPreferences] = useState([]);
@@ -81,9 +81,9 @@ const CustomerSpecifications = () => {
             Saber suas preferencias nos ajuda a escolher melhor quais restaurantes serão exibidos
           </h2>
 
-          <PreferencesSelector
-            preferences={preferences}
-            setPreferences={setPreferences}
+          <DishesOptionsSelector
+            selectedDishes={preferences}
+            setSelectedDishes={setPreferences}
           />
         </PreferencesCard>
 

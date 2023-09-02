@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const PreferencesSelectorContainer = styled.div`
+export const DishesOptionsSelectorContainer = styled.div`
   margin-top: 30px;
   display: flex;
   flex-direction: column;
@@ -55,7 +55,13 @@ export const Preference = styled.label`
   }
 
   span {
-    font-size: 2.0rem; 
+    font-size: 1.6rem; 
     font-weight: 300;
+  }
+
+  @media only screen and (min-width: 420px) {
+    span {
+      font-size: 2.0rem; 
+    }
   }
 `;
