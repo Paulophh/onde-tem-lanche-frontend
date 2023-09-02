@@ -10,16 +10,18 @@ import { GlobalStyles } from './styles/Global';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import CustomerSpecifications from './pages/CustomerSpecifications';
+import ContextsProvider from './contexts/index';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <App/>
-      </ThemeProvider>
+      <ContextsProvider>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <App />
+        </ThemeProvider>
+      </ContextsProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

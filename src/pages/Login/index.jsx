@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { api } from '../../services/api';
+import { useAuthContext } from '../../contexts/AuthContext';
 
 import {
     FormContainer,
@@ -30,22 +31,21 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [loginErrorMessage, setLoginErrorMessage] = useState('');
 
+    const { storeToken } = useAuthContext();
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
     });
-
-    function storeTokenLocally(token) {
-        localStorage.setItem('@onde-tem-lanche:token', token);
-    }
 
     async function login(entity, data) {
         setIsLoading(true);
 
         try {
             const response = await api.post(`/${entity}/session`, data);
-            storeTokenLocally(response.data.token);
+            storeToken(response.data.token);
 
         } catch (error) {
+            console.log(error);
             let message = 'Algo deu errado, tente novamente mais tarde';
             if (error.response.status === 404) {
                 message = error.response.data.message

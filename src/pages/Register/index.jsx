@@ -6,8 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { useAuthContext } from '../../contexts/AuthContext';
+
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import ErrorPopUp from "../../components/ErrorPopUp";
+import SubmitButton from "../../components/SubmitButton";
 import EntitySelector from "../../components/EntitySelector";
 import LoginAndRegisterInput from "../../components/LoginAndRegisterInput";
 
@@ -17,8 +21,6 @@ import {
   RedirectToRegisterContainer,
   RegisterContainer,
 } from "./styles";
-import ErrorPopUp from "../../components/ErrorPopUp";
-import SubmitButton from "../../components/SubmitButton";
 
 const registerSchema = yup.object({
   name: yup.string().required('Informe o nome'),
@@ -38,11 +40,13 @@ const Register = () => {
 
   const navigate = useNavigate();
 
+  const { storeToken } = useAuthContext();
+
   async function loginEntity(entity, data) {
     const response = await api.post(`/${entity}/session`, data);
     const token = response.data.token;
 
-    localStorage.setItem('@onde-tem-lanche:token', token);
+    storeToken('@onde-tem-lanche:token', token);
   }
 
   async function registerEntity(entity, data) {
