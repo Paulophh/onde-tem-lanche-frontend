@@ -3,9 +3,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { api } from '../../services/api';
+import { useAuthContext } from '../../contexts/AuthContext';
+
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import ErrorPopUp from '../../components/ErrorPopUp';
+import SuccessPopUp from '../../components/SuccessPopUp';
+// import ErrorPopUp from '../../components/ErrorPopUp';
 import SubmitButton from '../../components/SubmitButton';
 import DishesOptionsSelector from '../../components/DishesOptionsSelector';
 import OperationHoursSelector from '../../components/OperationHoursSelector';
@@ -24,8 +28,9 @@ import {
     StandardInputContainer
 } from './styles';
 
-import { SelectAtLeastOneDayError } from '../../errors/selectAtLeastOneDay';
-import { InvalidOperationHoursError } from '../../errors/InvalidOperationHours';
+import { ImageTooBigError } from '../../errors/ImageTooBigError';
+import { SelectAtLeastOneDayError } from '../../errors/selectAtLeastOneDayError';
+import { InvalidOperationHoursError } from '../../errors/InvalidOperationHoursError';
 
 const formSchema = yup.object({
     phone: yup.string().length(11, 'Numero de telefone deve conter o DDD').required('Informe o telefone'),
@@ -94,10 +99,15 @@ const RestaurantSpecifications = () => {
     ])
     const [serves, setServes] = useState([]);
     const [operationHoursError, setOperationHoursError] = useState('');
+    const [selectedImage, setSelectedImage] = useState(FileInputImage);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
     })
+
+    const { token } = useAuthContext();
 
     function validateOperationHours(selectedDays) {
         setOperationHoursError('');
@@ -149,11 +159,50 @@ const RestaurantSpecifications = () => {
         }
     }
 
+    async function handleImageInput(e) {
+        const files = e.target.files;
+        if (files.length === 0) return;
+
+        const fileSize = files[0].size;
+        if (fileSize > 5000000) throw new ImageTooBigError(); // Imagem deve ter até 5 MB
+
+        const file = files[0];
+        const fileURL = URL.createObjectURL(file);
+        setSelectedImage(fileURL);
+
+        const imageForm = new FormData();
+
+        imageForm.append('image', file);
+
+        try {
+            await api.post('/restaurants/image', imageForm, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            setSuccessMessage('Imagem carregada com sucesso!');
+        } catch (error) {
+            if (
+                error.response?.status === 400 ||
+                error.response?.status === 401 ||
+                error.response?.status === 403 ||
+                error.response?.status === 409
+            ) {
+                setErrorMessage(error.message)
+            }
+
+            setErrorMessage('Erro ao enviar a imagem')
+
+        }
+    }
+
     return (
         <RestaurantSpecificationsContainer>
             <Header />
 
             <PageContentContainer onSubmit={handleSubmit(saveRestaurantData)}>
+                {successMessage && <SuccessPopUp message={successMessage} />}
 
                 <div className='title'>
                     Que tal mais algumas informações?
@@ -165,7 +214,7 @@ const RestaurantSpecifications = () => {
 
                 <ImageUploadContainer>
                     <label htmlFor='image'>
-                        <img src={FileInputImage} alt="selecionar imagem" />
+                        <img src={selectedImage} alt="selecionar imagem" />
                         <span>
                             Selecione uma boa imagem para representar seu restaurante!
                         </span>
@@ -176,6 +225,7 @@ const RestaurantSpecifications = () => {
                         id='image'
                         style={{ display: 'none' }}
                         accept="image/png, image/jpeg, image/jpg"
+                        onChange={handleImageInput}
                     />
                 </ImageUploadContainer>
 
