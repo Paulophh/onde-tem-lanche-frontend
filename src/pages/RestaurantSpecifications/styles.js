@@ -60,8 +60,8 @@ export const StandardInput = styled.div`
     align-items: center;
     justify-content: space-between;
     
-
     .required {
+        margin-left: 4px;
         color: red;
     }
 
@@ -115,6 +115,33 @@ export const DishOptionsContainer = styled.div`
     .title {
         font-size: 1.8rem;
         text-align: center;
+    }
+
+    .required {
+        margin-left: 4px;
+        color: red;
+    }
+
+    .sub-title {
+        font-size: 1.3rem;
+        margin-top: 7px;
+        text-align: center;
+    }
+`;
+
+export const OperationHoursContainer = styled.div`
+    padding: 10px;
+    box-shadow: 0 2px 4px 0 ${props => props.theme.colors['box-shadow']};
+    margin: 30px auto;
+    
+    .title {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .required {
+        margin-left: 4px;
+        color: red;
     }
 
     .sub-title {

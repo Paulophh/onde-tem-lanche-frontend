@@ -45,7 +45,6 @@ const Login = () => {
             storeToken(response.data.token);
 
         } catch (error) {
-            console.log(error);
             let message = 'Algo deu errado, tente novamente mais tarde';
             if (error.response.status === 404) {
                 message = error.response.data.message

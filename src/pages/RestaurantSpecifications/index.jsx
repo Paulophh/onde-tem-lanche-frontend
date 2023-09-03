@@ -1,7 +1,10 @@
 import { useState } from 'react';
 
 import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import SubmitButton from '../../components/SubmitButton';
 import DishesOptionsSelector from '../../components/DishesOptionsSelector';
+import OperationHoursSelector from '../../components/OperationHoursSelector';
 
 import FileInputImage from '../../assets/images/file-input-image.png';
 
@@ -9,6 +12,7 @@ import {
     DescriptionContainer,
     DishOptionsContainer,
     ImageUploadContainer,
+    OperationHoursContainer,
     PageContentContainer,
     RestaurantSpecificationsContainer,
     StandardInput,
@@ -17,8 +21,6 @@ import {
 
 const RestaurantSpecifications = () => {
     const [serves, setServes] = useState([]);
-
-    console.log(serves);
 
     return (
         <RestaurantSpecificationsContainer>
@@ -97,7 +99,29 @@ const RestaurantSpecifications = () => {
                         setSelectedDishes={setServes}
                     />
                 </DishOptionsContainer>
+
+                <OperationHoursContainer>
+                    <div className='title'>
+                        Horário de funcionamento
+                        <span className='required'>
+                            *
+                        </span>
+                    </div>
+
+                    <div className='sub-title'>
+                        Preencha os campos com os horários em que seu restaurante atende.
+                    </div>
+
+                    <OperationHoursSelector />
+                </OperationHoursContainer>
+
+                <SubmitButton
+                    title='Criar Conta'
+                />
+
             </PageContentContainer>
+
+            <Footer />
         </RestaurantSpecificationsContainer>
     )
 }
