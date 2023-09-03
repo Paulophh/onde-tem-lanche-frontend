@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const RestaurantSpecificationsContainer = styled.div``;
 
-export const PageContentContainer = styled.div`
+export const PageContentContainer = styled.form`
     margin: 30px auto 0;
     padding-bottom: 20px;
     width: 90vw;
@@ -38,7 +38,6 @@ export const ImageUploadContainer = styled.div`
         text-align: center;
     }
 
-
     img {
         width: 150px;
     }
@@ -56,9 +55,12 @@ export const StandardInput = styled.div`
     font-size: 1.5rem;
     width: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    .input-label-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     
     .required {
         margin-left: 4px;
@@ -75,6 +77,14 @@ export const StandardInput = styled.div`
     input::placeholder {
         color: ${props => props.theme.colors['text-light-grey']};
         font-size: 1.4rem;
+    }
+
+    .input-error-message {
+        color: red;
+        text-align: center;
+        font-size: italic;
+        font-size: 1.2rem;
+        margin-top: 4px;
     }
 `;
 
@@ -102,6 +112,14 @@ export const DescriptionContainer = styled.div`
 
     textarea::placeholder {
         text-align: center;
+    }
+
+    .input-error-message {
+        color: red;
+        text-align: center;
+        font-size: italic;
+        font-size: 1.2rem;
+        margin-top: 4px;
     }
 `;
 
@@ -149,4 +167,11 @@ export const OperationHoursContainer = styled.div`
         margin-top: 7px;
         text-align: center;
     }
+`;
+
+export const OperationHoursError = styled.div`
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: red;
+    font-style: italic;
 `;

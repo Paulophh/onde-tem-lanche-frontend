@@ -27,6 +27,9 @@ export const ErrorPopUpContainer = styled.div`
     border-radius: 10px;
     box-shadow: 0 0 10px 0 #f34343;
 
+    width: 100%;
+    max-width: 500px;
+
     color: #fff;
     font-weight: bold;
     font-size: 1.5rem;
