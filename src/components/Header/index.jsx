@@ -14,6 +14,7 @@ import {
 } from "./styles";
 
 import logo from '../../assets/images/logo.svg';
+import Favorites from '../../pages/Favorites';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -26,6 +27,10 @@ const Header = () => {
 
   function handleRedirectToHome() {
     navigate('/');
+  }
+
+  function handleRedirectToFavorites() {
+    navigate('/favorites');
   }
 
   return (
@@ -53,7 +58,7 @@ const Header = () => {
             </button>
           </li>
           <li className='nav-link'>
-            <button >
+            <button onClick={handleRedirectToFavorites}>
               Favoritos
             </button>
           </li>

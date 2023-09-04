@@ -44,14 +44,6 @@ const Index = () => {
     restaurants.push(newRestaurant);
   }
 
-  for (let i = 0; i <= 9; i++) {
-    const newDish = {
-      ...mockerDish,
-      id: `dish-${i}`
-    }
-    dishes.push(newDish);
-  }
-
   return (
     <>
       <Header />
