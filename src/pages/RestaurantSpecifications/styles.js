@@ -54,6 +54,7 @@ export const StandardInputContainer = styled.div`
 export const StandardInput = styled.div`
     font-size: 1.5rem;
     width: 100%;
+    position: relative;
 
     .input-label-container {
         display: flex;
