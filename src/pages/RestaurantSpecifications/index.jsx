@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -150,17 +150,23 @@ const RestaurantSpecifications = () => {
         setShowAddressSuggestions(false)
     }
 
+    function handleBlurInput() {
+        console.log('Saiu');
+    }
+
     async function handleAddressSuggestion(e) {
         const addressValue = e.target.value;
-        const typedKey = addressValue[addressValue.length - 1];
-        const apiFormattedAddress = addressValue.trim().split(' ').join('+');
+        const previouslyTypedKey = addressValue[addressValue.length - 1];
 
-        if (addressValue.length > 5 && typedKey === ' ') {
+        if (addressValue.length > 5 && previouslyTypedKey === ' ') {
+            const apiFormattedAddress = addressValue.trim().split(' ').join('+')
+
             const url = `/json?address=${apiFormattedAddress}&key=${geocodeApiKey}`;
 
             const response = await geocodeApi.get(url);
 
             const suggestions = response.data.results.map(result => result.formatted_address);
+            console.log('Sugestão -> ', suggestions);
 
             if (suggestions.length > 0) {
                 setAddressSuggestions(response.data.results);
@@ -200,15 +206,13 @@ const RestaurantSpecifications = () => {
                 }
             })
 
-            console.log(selectedOperationDays);
-
-            const response = await api.post('/restaurants/operation_hours', selectedOperationDays, {
+            await api.post('/restaurants/operation_hours', selectedOperationDays, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
 
-            console.log(response);
+
 
         } catch (error) {
             if (
@@ -293,56 +297,59 @@ const RestaurantSpecifications = () => {
                 </ImageUploadContainer>
 
                 <StandardInputContainer>
-                    <StandardInput>
-                        <div className='input-label-container'>
-                            <label htmlFor='address'>
-                                Endereço
-                                <span className='required'> * </span>
-                            </label>
+                    <div className='top-row-container'>
+                        <StandardInput>
+                            <div className='input-label-container input-label-address'>
+                                <label htmlFor='address'>
+                                    Endereço
+                                    <span className='required'> * </span>
+                                </label>
 
-                            <input
-                                placeholder='Endereço'
-                                id='address'
-                                {...register('address')}
-                                onChange={handleAddressSuggestion}
-                            />
-                        </div>
-
-                        {showAddressSuggestions &&
-                            <AddressSuggestions
-                                suggestionsList={addressSuggestions}
-                                onSelect={handleSelectAddressSuggestion}
-                                isShown={setShowAddressSuggestions}
-                            />
-                        }
-
-                        {errors.address &&
-                            <div className='input-error-message'>
-                                {errors.address.message}
+                                <input
+                                    placeholder='Endereço'
+                                    id='address'
+                                    {...register('address')}
+                                    onChange={handleAddressSuggestion}
+                                    onBlur={handleBlurInput}
+                                />
                             </div>
-                        }
-                    </StandardInput>
 
-                    <StandardInput>
-                        <div className='input-label-container'>
-                            <label htmlFor='number'>
-                                Numero
-                                <span className='required'> * </span>
-                            </label>
+                            {showAddressSuggestions &&
+                                <AddressSuggestions
+                                    suggestionsList={addressSuggestions}
+                                    onSelect={handleSelectAddressSuggestion}
+                                    isShown={setShowAddressSuggestions}
+                                />
+                            }
 
-                            <input
-                                placeholder='Número'
-                                id='number'
-                                {...register('number')}
-                            />
-                        </div>
+                            {errors.address &&
+                                <div className='input-error-message'>
+                                    {errors.address.message}
+                                </div>
+                            }
+                        </StandardInput>
 
-                        {errors.number &&
-                            <div className='input-error-message'>
-                                {errors.number.message}
+                        <StandardInput>
+                            <div className='input-label-container'>
+                                <label htmlFor='number'>
+                                    Numero
+                                    <span className='required'> * </span>
+                                </label>
+
+                                <input
+                                    placeholder='Número'
+                                    id='number'
+                                    {...register('number')}
+                                />
                             </div>
-                        }
-                    </StandardInput>
+
+                            {errors.number &&
+                                <div className='input-error-message'>
+                                    {errors.number.message}
+                                </div>
+                            }
+                        </StandardInput>
+                    </div>
 
                     <StandardInput>
                         <div className='input-label-container'>

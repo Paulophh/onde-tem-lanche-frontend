@@ -1,7 +1,32 @@
 import styled from "styled-components";
 
 export const OperationHoursSelectorContainer = styled.div`
-    margin-top: 10px;
+    margin-top: 20px; 
+
+    @media only screen and (min-width: 800px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+`;
+
+export const TopRowContainer = styled.div`
+    @media only screen and (min-width: 800px) {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 40px;
+    }
+`;
+
+export const ColumnContainer = styled.div`
+    @media only screen and (min-width: 800px) {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
 `;
 
 export const DayAndHourContainer = styled.div`
@@ -40,6 +65,12 @@ export const WeekDayContainer = styled.div`
         font-size: 1.5rem;
     }
   }
+
+  @media only screen and (min-width: 700px) {
+    label {
+        font-size: 1.7rem;
+    }
+  }
 `;
 
 export const HoursContainer = styled.div`
@@ -62,6 +93,12 @@ export const HoursContainer = styled.div`
     @media only screen and (min-width: 360px) {
         span, input {
             font-size: 1.5rem;
+        }
+    }
+
+    @media only screen and (min-width: 700px) {
+        span, input {
+            font-size: 1.7rem;
         }
     }
 `;

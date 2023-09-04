@@ -18,13 +18,23 @@ export const PageContentContainer = styled.form`
         margin-top: 7px;
         text-align: center;
     }
+
+    @media only screen and (min-width: 700px) {
+        .title {
+            font-size: 2.1rem;
+        }
+
+        .sub-title {
+            font-size: 1.6rem;
+        }
+    }
 `;
 
 export const ImageUploadContainer = styled.div`
     margin: 20px auto;
     box-shadow: 0 2px 4px 0 ${props => props.theme.colors['box-shadow']};
     padding: 10px;
-    max-width: 800px;
+    max-width: 550px;
 
     label {
         display: flex;
@@ -41,6 +51,17 @@ export const ImageUploadContainer = styled.div`
     img {
         width: 150px;
     }
+
+    @media only screen and (min-width: 700px) {
+        img {
+            width: 250px;
+        }
+
+        label span {
+            font-size: 1.6rem;
+            margin-top: 10px;
+        }
+    }
 `;
 
 export const StandardInputContainer = styled.div`
@@ -48,7 +69,34 @@ export const StandardInputContainer = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    margin: 15px 0;
+    margin: 15px auto;
+    width: 100%;
+    max-width: 350px;
+
+    .top-row-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    @media only screen and (min-width: 700px) {
+        max-width: 100%;
+        align-items: flex-start;
+
+        .top-row-container {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .top-row-container > div:first-of-type {
+            flex: 1;
+        }
+
+        .top-row-container > div + div input {
+            width: 130px;
+        }
+    }
 `;
 
 export const StandardInput = styled.div`
@@ -62,7 +110,6 @@ export const StandardInput = styled.div`
         justify-content: space-between;
     }
 
-    
     .required {
         margin-left: 4px;
         color: red;
@@ -86,6 +133,23 @@ export const StandardInput = styled.div`
         font-size: italic;
         font-size: 1.2rem;
         margin-top: 4px;
+    }
+
+    @media only screen and (min-width: 700px) {
+        width: fit-content;
+
+        .input-label-container {
+            justify-content: flex-start;
+            gap: 15px;
+        }
+
+        .input-label-address {
+            flex: 1;
+
+            input {
+                flex: 1;
+            }
+        }
     }
 `;
 
@@ -122,6 +186,18 @@ export const DescriptionContainer = styled.div`
         font-size: 1.2rem;
         margin-top: 4px;
     }
+
+    @media only screen and (min-width: 700px) {
+        gap: 25px;
+        
+        label {
+            font-size: 2.0rem;
+        }
+
+        textarea {
+        font-size: 1.7rem;
+    }
+    }
 `;
 
 export const DishOptionsContainer = styled.div`
@@ -146,6 +222,16 @@ export const DishOptionsContainer = styled.div`
         margin-top: 7px;
         text-align: center;
     }
+
+    @media only screen and (min-width: 700px) {
+        .title {
+            font-size: 2.1rem;
+        }
+
+        .sub-title {
+            font-size: 1.6rem;
+        }
+    }
 `;
 
 export const OperationHoursContainer = styled.div`
@@ -168,6 +254,16 @@ export const OperationHoursContainer = styled.div`
         margin-top: 7px;
         text-align: center;
     }
+
+    @media only screen and (min-width: 700px) {
+        .title {
+            font-size: 2.1rem;
+        }
+
+        .sub-title {
+            font-size: 1.6rem;
+        }
+    }
 `;
 
 export const OperationHoursError = styled.div`
@@ -175,4 +271,5 @@ export const OperationHoursError = styled.div`
     font-size: 1.2rem;
     color: red;
     font-style: italic;
+    text-align: center;
 `;
