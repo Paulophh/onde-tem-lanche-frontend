@@ -6,6 +6,7 @@ export const AddressSuggestionsContainer = styled.ul`
     position: absolute;
     z-index: 2;
     box-shadow: 0 4px 4px 1px ${props => props.theme.colors['box-shadow']};
+    width: 100%;
 
     li:last-child {
         border-bottom: none;
