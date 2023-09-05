@@ -75,6 +75,11 @@ export const ClosingTimeAndRatingContainer = styled.div`
   gap: 5px;
   margin-bottom: 10px;
   margin-top: -10px;
+
+  .does-not-open {
+    font-size: 1.3rem;
+    color: red;
+  }
 `;
 
 export const ClosingTime = styled.div`

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+
 import {
   CardWrapper,
   RestaurantImageContainer,
@@ -18,7 +20,53 @@ import { FaDirections } from 'react-icons/fa';
 
 import RestaurantExampleImage from '../../assets/restaurant-images/image-33.png';
 
+const WEEK_DAYS = [
+  'Domingo',
+  'Segunda-feira',
+  'Terça-feira',
+  'Quarta-feira',
+  'Quinta-feira',
+  'Sexta-feira',
+  'Sábado'
+];
+
 const RestaurantHighlightCard = ({ restaurant }) => {
+  const [rating, setRating] = useState(null);
+  const [closingTime, setClosingTime] = useState(null);
+
+  function findIfRestaurantIsOpened() {
+    const today = new Date().getDay();
+
+    const weekDay = WEEK_DAYS[today];
+
+    const isRestaurantOpenedToday = restaurant.operation_hour.find(day => {
+      return day.day === weekDay
+    })
+
+    console.log(isRestaurantOpenedToday);
+    if (isRestaurantOpenedToday) {
+      setClosingTime(isRestaurantOpenedToday.closes_at);
+    }
+  }
+
+  function calculateRatingAverage() {
+    const ratingsSum = restaurant.ratings.reduce((acc, curr) => {
+      return acc + curr;
+    }, 0);
+
+    const averageRating = restaurant.ratings.length > 0 ?
+      ratingsSum / restaurant.ratings.length : null
+    setRating(averageRating)
+  }
+
+  useEffect(() => {
+    if (restaurant.ratings) {
+      calculateRatingAverage();
+    }
+
+    findIfRestaurantIsOpened();
+  }, [])
+
   return (
     <CardWrapper>
 
@@ -41,34 +89,37 @@ const RestaurantHighlightCard = ({ restaurant }) => {
         <RestaurantInfoSecondRow>
           <Description title={restaurant.description}>
             {restaurant.description}
-            {restaurant.description}
-            {restaurant.description}
-            {restaurant.description}
-            {restaurant.description}
-            {restaurant.description}
           </Description>
 
           <div className='info-container'>
             <ClosingTimeAndRatingContainer>
-              <ClosingTime>
-                <span className='icon-container'>
-                  <BiTimeFive />
-                </span>
+              {closingTime ?
+                <ClosingTime>
+                  <span className='icon-container'>
+                    <BiTimeFive />
+                  </span>
 
-                <span className='text-container'>
-                  Fecha às {restaurant.closingTime}
-                </span>
-              </ClosingTime>
+                  <span className='text-container'>
+                    Fecha às {closingTime}h
+                  </span>
+                </ClosingTime>
+                :
+                <div className='does-not-open'>
+                  Não abre hoje
+                </div>
+              }
 
-              <StarRating>
-                <span className='icon-container'>
-                  <AiFillStar />
-                </span>
+              {rating !== null &&
+                <StarRating>
+                  <span className='icon-container'>
+                    <AiFillStar />
+                  </span>
 
-                <span className='text-container'>
-                  {restaurant.starRating.toFixed(1)}
-                </span>
-              </StarRating>
+                  <span className='text-container'>
+                    {rating.toFixed(1)}
+                  </span>
+                </StarRating>
+              }
             </ClosingTimeAndRatingContainer>
 
             <MapLink>
