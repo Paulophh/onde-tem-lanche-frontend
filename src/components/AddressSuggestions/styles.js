@@ -29,6 +29,10 @@ export const AddressSuggestionsHeader = styled.div`
         border: none;
         background-color: transparent;
     }
+
+    button:hover {
+        cursor: pointer;
+    }
 `;
 
 export const Suggestion = styled.li`
@@ -36,4 +40,8 @@ export const Suggestion = styled.li`
     font-weight: bold;
     border-bottom: 1px solid #dedede;
     padding: 10px 0;
+
+    &:hover {
+        cursor: pointer;
+    }
 `;

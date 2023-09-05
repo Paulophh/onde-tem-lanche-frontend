@@ -8,6 +8,8 @@ import CustomerSpecifications from '../pages/CustomerSpecifications/index.jsx';
 import RestaurantSpecifications from '../pages/RestaurantSpecifications/index.jsx';
 import Favorites from '../pages/Favorites/index.jsx';
 
+import RestaurantProfile from '../pages/RestaurantProfile/index.jsx';
+
 const Routers = () => {
     return (
         <Routes>
@@ -18,7 +20,8 @@ const Routers = () => {
             <Route path='/customer/info' element={<CustomerSpecifications />} />
             <Route path='/restaurant/info' element={<RestaurantSpecifications />} />
 
-            <Route path='/favorites' element={<Favorites/>} />
+            <Route path='/restaurant/:restaurantId' element={<RestaurantProfile />} />
+            <Route path='/favorites' element={<Favorites/>}/>
         </Routes>
     )
 

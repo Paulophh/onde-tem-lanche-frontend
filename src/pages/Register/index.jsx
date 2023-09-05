@@ -46,7 +46,8 @@ const Register = () => {
     const response = await api.post(`/${entity}/session`, data);
     const token = response.data.token;
 
-    storeToken('@onde-tem-lanche:token', token);
+
+    storeToken(token);
   }
 
   async function registerEntity(entity, data) {
@@ -61,7 +62,7 @@ const Register = () => {
       if (entity === 'customers') {
         navigate('/customer/info');
       } else {
-        navigate('/login')
+        navigate('/restaurant/info')
       }
 
     } catch (error) {

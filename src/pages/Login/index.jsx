@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -32,6 +32,7 @@ const Login = () => {
     const [loginErrorMessage, setLoginErrorMessage] = useState('');
 
     const { storeToken } = useAuthContext();
+    const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
@@ -43,6 +44,8 @@ const Login = () => {
         try {
             const response = await api.post(`/${entity}/session`, data);
             storeToken(response.data.token);
+
+            navigate('/');
 
         } catch (error) {
             let message = 'Algo deu errado, tente novamente mais tarde';

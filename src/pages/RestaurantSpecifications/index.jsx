@@ -1,7 +1,8 @@
 import * as yup from 'yup';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
 
 import { api } from '../../services/api';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -12,6 +13,7 @@ import Footer from '../../components/Footer';
 import ErrorPopUp from '../../components/ErrorPopUp';
 import SuccessPopUp from '../../components/SuccessPopUp';
 import SubmitButton from '../../components/SubmitButton';
+import AddressSuggestions from '../../components/AddressSuggestions';
 import DishesOptionsSelector from '../../components/DishesOptionsSelector';
 import OperationHoursSelector from '../../components/OperationHoursSelector';
 
@@ -30,9 +32,9 @@ import {
 } from './styles';
 
 import { ImageTooBigError } from '../../errors/ImageTooBigError';
+import { WrongAddressError } from '../../errors/WrongAddressError';
 import { SelectAtLeastOneDayError } from '../../errors/selectAtLeastOneDayError';
 import { InvalidOperationHoursError } from '../../errors/InvalidOperationHoursError';
-import AddressSuggestions from '../../components/AddressSuggestions';
 
 const formSchema = yup.object({
     phone: yup.string().length(11, 'Numero de telefone deve conter o DDD').required('Informe o telefone'),
@@ -101,12 +103,15 @@ const RestaurantSpecifications = () => {
         }
     ])
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const [address, setAddress] = useState('');
     const [serves, setServes] = useState([]);
     const [operationHoursError, setOperationHoursError] = useState('');
     const [selectedImage, setSelectedImage] = useState(FileInputImage);
 
     const [errorMessage, setErrorMessage] = useState('');
+    const [addressError, setAddressError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
     const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
@@ -115,6 +120,8 @@ const RestaurantSpecifications = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
     })
+
+    const navigate = useNavigate();
 
     const { token } = useAuthContext();
     const geocodeApiKey = process.env.REACT_APP_GEOCODE_API_KEY;
@@ -150,10 +157,6 @@ const RestaurantSpecifications = () => {
         setShowAddressSuggestions(false)
     }
 
-    function handleBlurInput() {
-        console.log('Saiu');
-    }
-
     async function handleAddressSuggestion(e) {
         const addressValue = e.target.value;
         const previouslyTypedKey = addressValue[addressValue.length - 1];
@@ -184,11 +187,14 @@ const RestaurantSpecifications = () => {
     }
 
     async function saveRestaurantData(formData) {
-        const buildFullAddress = `${address}, ${formData.number}`.trim().split(' ').join('+');
-
-        const coordinates = await getCoordinatesFromAddress(buildFullAddress)
-
         try {
+            setIsLoading(true);
+
+            if (!address) throw new WrongAddressError();
+            const buildFullAddress = `${address}, ${formData.number}`.trim().split(' ').join('+');
+
+            const coordinates = await getCoordinatesFromAddress(buildFullAddress)
+
             const selectedOperationDays = operationHours.filter(days => {
                 return days.selected;
             })
@@ -212,7 +218,7 @@ const RestaurantSpecifications = () => {
                 }
             })
 
-
+            navigate('/');
 
         } catch (error) {
             if (
@@ -222,7 +228,13 @@ const RestaurantSpecifications = () => {
                 setOperationHoursError(error.message);
             }
 
+            if (error instanceof WrongAddressError) {
+                setAddressError(error.message);
+            }
+
             console.log(error);
+        } finally {
+            setIsLoading(true);
         }
     }
 
@@ -294,6 +306,10 @@ const RestaurantSpecifications = () => {
                         accept="image/png, image/jpeg, image/jpg"
                         onChange={handleImageInput}
                     />
+
+                    <button>
+
+                    </button>
                 </ImageUploadContainer>
 
                 <StandardInputContainer>
@@ -310,7 +326,6 @@ const RestaurantSpecifications = () => {
                                     id='address'
                                     {...register('address')}
                                     onChange={handleAddressSuggestion}
-                                    onBlur={handleBlurInput}
                                 />
                             </div>
 
@@ -322,9 +337,9 @@ const RestaurantSpecifications = () => {
                                 />
                             }
 
-                            {errors.address &&
+                            {addressError &&
                                 <div className='input-error-message'>
-                                    {errors.address.message}
+                                    {addressError}
                                 </div>
                             }
                         </StandardInput>
@@ -432,7 +447,7 @@ const RestaurantSpecifications = () => {
 
                 <SubmitButton
                     title='Criar Conta'
-                    isLoading={false}
+                    isLoading={isLoading}
                 />
 
             </PageContentContainer>
