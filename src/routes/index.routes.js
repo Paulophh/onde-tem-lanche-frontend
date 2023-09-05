@@ -7,6 +7,8 @@ import Register from '../pages/Register/index.jsx';
 import CustomerSpecifications from '../pages/CustomerSpecifications/index.jsx';
 import RestaurantSpecifications from '../pages/RestaurantSpecifications/index.jsx';
 
+import RestaurantProfile from '../pages/RestaurantProfile/index.jsx';
+
 const Routers = () => {
     return (
         <Routes>
@@ -16,6 +18,8 @@ const Routers = () => {
 
             <Route path='/customer/info' element={<CustomerSpecifications />} />
             <Route path='/restaurant/info' element={<RestaurantSpecifications />} />
+
+            <Route path='/restaurant/:restaurantId' element={<RestaurantProfile />} />
         </Routes>
     )
 
