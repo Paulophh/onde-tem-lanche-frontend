@@ -1,12 +1,14 @@
 import React from "react";
 import Header from "../../components/Header";
-import CardRestaurant from "../../components/CardRestaurant";
+import Establishmento from "../../components/Establishment";
+
+
 
 const Establishment = () => {
   return (
     <>
       <Header/>
-      <CardRestaurant/>
+      <Establishmento/>
     </>
     
   );
