@@ -9,6 +9,7 @@ import RestaurantSpecifications from '../pages/RestaurantSpecifications/index.js
 import Favorites from '../pages/Favorites/index.jsx';
 
 import RestaurantProfile from '../pages/RestaurantProfile/index.jsx';
+import Establishment from '../pages/Establishment/index.jsx';
 
 const Routers = () => {
     return (
@@ -22,6 +23,10 @@ const Routers = () => {
 
             <Route path='/restaurant/:restaurantId' element={<RestaurantProfile />} />
             <Route path='/favorites' element={<Favorites/>}/>
+
+            <Route path='/establishment' element={<Establishment/>} />
+
+            
         </Routes>
     )
 
