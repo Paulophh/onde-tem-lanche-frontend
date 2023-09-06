@@ -7,7 +7,7 @@ import Register from '../pages/Register/index.jsx';
 import CustomerSpecifications from '../pages/CustomerSpecifications/index.jsx';
 import RestaurantSpecifications from '../pages/RestaurantSpecifications/index.jsx';
 import Favorites from '../pages/Favorites/index.jsx';
-
+import Establishment from '../pages/Establishment/index.jsx'
 import RestaurantProfile from '../pages/RestaurantProfile/index.jsx';
 
 const Routers = () => {
@@ -16,12 +16,11 @@ const Routers = () => {
             <Route path='/' element={<Index />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-
             <Route path='/customer/info' element={<CustomerSpecifications />} />
             <Route path='/restaurant/info' element={<RestaurantSpecifications />} />
-
             <Route path='/restaurant/:restaurantId' element={<RestaurantProfile />} />
             <Route path='/favorites' element={<Favorites/>}/>
+            <Route path='/establishment' element={<Establishment/>}/>
         </Routes>
     )
 
