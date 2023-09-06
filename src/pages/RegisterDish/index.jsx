@@ -13,7 +13,7 @@ import ErrorPopUp from '../../components/ErrorPopUp';
 import SuccessPopUp from '../../components/SuccessPopUp';
 import SubmitButton from '../../components/SubmitButton';
 import DishUnitSelector from '../../components/DishUnitSelector';
-import AllergesSelector from '../../components/AllergensSelector';
+import AllergensSelector from '../../components/AllergensSelector';
 import DishesOptionsSelector from '../../components/DishesOptionsSelector';
 
 import FileInputImage from '../../assets/images/file-input-image.png';
@@ -30,10 +30,10 @@ import {
 } from './styles';
 
 import { ImageTooBigError } from '../../errors/ImageTooBigError';
-import AllergensSelector from '../../components/AllergensSelector';
 
 const formSchema = yup.object({
     name: yup.string().max(25, 'Nome deve ter no máximo 25 caractéres').required('Informe o nome'),
+    price: yup.string().required('Informe o preço'),
     description: yup.string().max(250, 'Máximo de 250 caractéres').optional(),
     size: yup.string().optional()
 })
@@ -79,9 +79,11 @@ const RegisterDish = () => {
     async function saveDishData(formData) {
         const adjustedUnit = validateSizeUnit(formData.size);
         const size = formData.size ? Number(formData.size) : null;
+        const price = Number(formData.price.replace(',', '.'));
         const data = {
             ...formData,
             size,
+            price,
             allergens,
             categories,
             size_unit: adjustedUnit,
@@ -89,25 +91,25 @@ const RegisterDish = () => {
 
         console.log(data);
 
-        try {
-            setIsLoading(true);
+        // try {
+        //     setIsLoading(true);
 
-            const response = await api.post('/dishes', data, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+        //     const response = await api.post('/dishes', data, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`
+        //         }
+        //     })
 
-            console.log(response.data);
+        //     console.log(response.data);
 
-            // navigate('/');
+        //     // navigate('/');
 
-        } catch (error) {
-            console.log(error);
+        // } catch (error) {
+        //     console.log(error);
 
-        } finally {
-            setIsLoading(false);
-        }
+        // } finally {
+        //     setIsLoading(false);
+        // }
     }
 
     async function handleImageInput(e) {
@@ -185,26 +187,49 @@ const RegisterDish = () => {
                 </ImageUploadContainer>
 
                 <StandardInputContainer>
-                    <StandardInput>
-                        <div className='input-label-container'>
-                            <label htmlFor='name'>
-                                Nome
-                                <span className='required'> * </span>
-                            </label>
+                    <div className='top-row-container'>
+                        <StandardInput>
+                            <div className='input-label-container'>
+                                <label htmlFor='name'>
+                                    Nome
+                                    <span className='required'> * </span>
+                                </label>
 
-                            <input
-                                placeholder='Nome'
-                                id='name'
-                                {...register('name')}
-                            />
-                        </div>
-
-                        {errors.name &&
-                            <div className='input-error-message'>
-                                {errors.name.message}
+                                <input
+                                    placeholder='Nome'
+                                    id='name'
+                                    {...register('name')}
+                                />
                             </div>
-                        }
-                    </StandardInput>
+
+                            {errors.name &&
+                                <div className='input-error-message'>
+                                    {errors.name.message}
+                                </div>
+                            }
+                        </StandardInput>
+
+                        <StandardInput>
+                            <div className='input-label-container'>
+                                <label htmlFor='price'>
+                                    Preço (R$)
+                                    <span className='required'> * </span>
+                                </label>
+
+                                <input
+                                    placeholder='R$ 19.90'
+                                    id='price'
+                                    {...register('price')}
+                                />
+                            </div>
+
+                            {errors.name &&
+                                <div className='input-error-message'>
+                                    {errors.name.message}
+                                </div>
+                            }
+                        </StandardInput>
+                    </div>
 
                     <div className='bottom-row-container'>
                         <StandardInput>
@@ -278,7 +303,7 @@ const RegisterDish = () => {
 
                 <SubmitButton
                     title='Cadastrar produto'
-                    isLoading={isLoading}
+                    isLoading={false}
                 />
 
             </PageContentContainer>

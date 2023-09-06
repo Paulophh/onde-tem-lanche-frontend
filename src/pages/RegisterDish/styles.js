@@ -73,25 +73,40 @@ export const StandardInputContainer = styled.div`
     width: 100%;
     max-width: 350px;
 
+    .top-row-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
     .bottom-row-container {
         width: 100%;
     }
 
     @media only screen and (min-width: 700px) {
         max-width: 100%;
-        align-items: center;
+        /* align-items: center;
         flex-direction: row;
-        justify-content: center;
+        justify-content: center; */
 
         > div:first-of-type {
             flex: 1;
         }
 
-        .bottom-row-container {
+        .bottom-row-container, .top-row-container {
             width: fit-content;
             display: flex;
+            flex-direction: row;
             align-items: center;
             gap: 20px;
+        }
+
+        .top-row-container {
+            width: 100%;
+
+            > div:first-of-type {
+                flex: 1;
+            }
         }
     }
 
@@ -115,7 +130,7 @@ export const StandardInput = styled.div`
 
     input {
         border: none;
-        padding: 5px 10px;
+        padding: 8px 10px;
         box-shadow: 0 2px 4px 0 ${props => props.theme.colors['box-shadow']};
         position: relative;
     }
@@ -131,6 +146,16 @@ export const StandardInput = styled.div`
         font-size: italic;
         font-size: 1.2rem;
         margin-top: 4px;
+    }
+
+    .price-input {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+
+    .price-input span {
+        color: rgba(0, 0, 0, 0.5);
     }
 
     @media only screen and (min-width: 700px) {
