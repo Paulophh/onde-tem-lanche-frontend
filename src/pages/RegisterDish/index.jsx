@@ -6,16 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { api } from '../../services/api';
 import { useAuthContext } from '../../contexts/AuthContext';
-import { geocodeApi } from '../../services/geocode-api';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import ErrorPopUp from '../../components/ErrorPopUp';
 import SuccessPopUp from '../../components/SuccessPopUp';
 import SubmitButton from '../../components/SubmitButton';
-import AddressSuggestions from '../../components/AddressSuggestions';
+import DishUnitSelector from '../../components/DishUnitSelector';
 import DishesOptionsSelector from '../../components/DishesOptionsSelector';
-import OperationHoursSelector from '../../components/OperationHoursSelector';
 
 import FileInputImage from '../../assets/images/file-input-image.png';
 
@@ -23,8 +21,6 @@ import {
     DescriptionContainer,
     DishOptionsContainer,
     ImageUploadContainer,
-    OperationHoursContainer,
-    OperationHoursError,
     PageContentContainer,
     RestaurantSpecificationsContainer,
     StandardInput,
@@ -32,90 +28,23 @@ import {
 } from './styles';
 
 import { ImageTooBigError } from '../../errors/ImageTooBigError';
-import { WrongAddressError } from '../../errors/WrongAddressError';
-import { SelectAtLeastOneDayError } from '../../errors/selectAtLeastOneDayError';
-import { InvalidOperationHoursError } from '../../errors/InvalidOperationHoursError';
 
 const formSchema = yup.object({
-    phone: yup.string().length(11, 'Numero de telefone deve conter o DDD').required('Informe o telefone'),
-    address: yup.string().required('Informe o endereço'),
-    description: yup.string().max(250, 'Máximo de 250 caractéres'),
-    number: yup.string().min(2).max(5).required('Informe o numero')
+    name: yup.string().max(25, 'Nome deve ter no máximo 25 caractéres').required('Informe o nome'),
+    description: yup.string().max(250, 'Máximo de 250 caractéres').optional(),
+    size: yup.string().optional()
 })
 
 const RegisterDish = () => {
-    const [operationHours, setOperationHours] = useState([
-        {
-            id: 'monday',
-            order: 1,
-            day: 'Segunda-feira',
-            opens_at: null,
-            closes_at: null,
-            selected: false
-        },
-        {
-            id: 'tuesday',
-            order: 2,
-            day: 'Terça-feira',
-            opens_at: null,
-            closes_at: null,
-            selected: false
-        },
-        {
-            id: 'wednesday',
-            order: 3,
-            day: 'Quarta-feira',
-            opens_at: null,
-            closes_at: null,
-            selected: false
-        },
-        {
-            id: 'thursday',
-            order: 4,
-            day: 'Quinta-feira',
-            opens_at: null,
-            closes_at: null,
-            selected: false
-        },
-        {
-            id: 'friday',
-            order: 5,
-            day: 'Sexta-feira',
-            opens_at: null,
-            closes_at: null,
-            selected: false
-        },
-        {
-            id: 'saturday',
-            order: 6,
-            day: 'Sábado',
-            opens_at: null,
-            closes_at: null,
-            selected: false
-        },
-        {
-            id: 'sunday',
-            order: 7,
-            day: 'Domingo',
-            opens_at: null,
-            closes_at: null,
-            selected: false
-        }
-    ])
-
     const [isLoading, setIsLoading] = useState(false);
 
-    const [address, setAddress] = useState('');
-    const [serves, setServes] = useState([]);
-    const [operationHoursError, setOperationHoursError] = useState('');
+    const [categories, setCategories] = useState([]);
     const [selectedImage, setSelectedImage] = useState(FileInputImage);
+    const [sizeUnit, setSizeUnit] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
-    const [addressError, setAddressError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
-    const [addressSuggestions, setAddressSuggestions] = useState([]);
 
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
@@ -124,119 +53,58 @@ const RegisterDish = () => {
     const navigate = useNavigate();
 
     const { token } = useAuthContext();
-    const geocodeApiKey = process.env.REACT_APP_GEOCODE_API_KEY;
 
-    function validateOperationHours(selectedDays) {
-        setOperationHoursError('');
-
-        const selectedAtLeastOneDay = selectedDays.length > 0;
-
-        if (!selectedAtLeastOneDay) throw new SelectAtLeastOneDayError();
-
-        const invalidOperationDays = selectedDays.find(operationDay => {
-            const { closes_at, opens_at } = operationDay;
-
-            const areOpenAndCloseValueNumbers = closes_at && opens_at;
-
-            const isOpeningTimeLowerThanClosingTime = Number(closes_at) > Number(opens_at);
-
-            const areValuesWithinInterval = Number(closes_at) >= 0 && Number(closes_at) <= 24 && Number(opens_at) >= 0 && Number(opens_at) <= 24;
-
-            return !(
-                areOpenAndCloseValueNumbers &&
-                isOpeningTimeLowerThanClosingTime &&
-                areValuesWithinInterval
-            );
-        })
-
-        if (invalidOperationDays) throw new InvalidOperationHoursError();
+    function handleSelectUnit(e) {
+        const selectedUnit = e.target.value;
+        setSizeUnit(selectedUnit);
     }
 
-    function handleSelectAddressSuggestion(selectedAddress) {
-        setAddress(selectedAddress);
-        setShowAddressSuggestions(false)
+    function validateSizeUnit(size) {
+        const isThereAValue = size !== '';
+
+        if (!isThereAValue) return '';
+
+        const validUnits = ['mg', 'g', 'kg', 'L', 'unidades', 'pedaços'];
+        const isUnitValid = validUnits.includes(sizeUnit);
+
+        if (isUnitValid) return sizeUnit;
+
+        return '';
     }
 
-    async function handleAddressSuggestion(e) {
-        const addressValue = e.target.value;
-        const previouslyTypedKey = addressValue[addressValue.length - 1];
+    async function saveDishData(formData) {
+        console.log(formData);
+        console.log('Categorias -> ', categories);
+        console.log('Unidades -> ', sizeUnit);
 
-        if (addressValue.length > 5 && previouslyTypedKey === ' ') {
-            const apiFormattedAddress = addressValue.trim().split(' ').join('+')
+        const adjustedUnit = validateSizeUnit(formData.size);
+        return;
 
-            const url = `/json?address=${apiFormattedAddress}&key=${geocodeApiKey}`;
+        // try {
+        //     setIsLoading(true);
 
-            const response = await geocodeApi.get(url);
+        //     const data = {
+        //         ...formData,
+        //         serves,
+        //     }
 
-            const suggestions = response.data.results.map(result => result.formatted_address);
-            console.log('Sugestão -> ', suggestions);
+        //     await api.put('/restaurants', data, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`
+        //         }
+        //     })
 
-            if (suggestions.length > 0) {
-                setAddressSuggestions(response.data.results);
-                setShowAddressSuggestions(true);
-            }
-        }
+        //     navigate('/');
+
+        // } catch (error) {
+        //     console.log(error);
+
+        // } finally {
+        //     setIsLoading(true);
+        // }
     }
 
-    async function getCoordinatesFromAddress(address) {
-        const response = await geocodeApi.get(`/json?address=${address}&key=${geocodeApiKey}`);
-
-        const coordinates = response.data.results[0].geometry.location;
-
-        return coordinates;
-    }
-
-    async function saveRestaurantData(formData) {
-        try {
-            setIsLoading(true);
-
-            if (!address) throw new WrongAddressError();
-            const buildFullAddress = `${address}, ${formData.number}`.trim().split(' ').join('+');
-
-            const coordinates = await getCoordinatesFromAddress(buildFullAddress)
-
-            const selectedOperationDays = operationHours.filter(days => {
-                return days.selected;
-            })
-            validateOperationHours(selectedOperationDays);
-
-            const data = {
-                ...formData,
-                ...coordinates,
-                serves,
-            }
-
-            await api.put('/restaurants', data, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            await api.post('/restaurants/operation_hours', selectedOperationDays, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            navigate('/');
-
-        } catch (error) {
-            if (
-                error instanceof InvalidOperationHoursError ||
-                error instanceof SelectAtLeastOneDayError
-            ) {
-                setOperationHoursError(error.message);
-            }
-
-            if (error instanceof WrongAddressError) {
-                setAddressError(error.message);
-            }
-
-            console.log(error);
-        } finally {
-            setIsLoading(true);
-        }
-    }
+    console.log('Errros -> ', errors);
 
     async function handleImageInput(e) {
         const files = e.target.files;
@@ -279,7 +147,7 @@ const RegisterDish = () => {
         <RestaurantSpecificationsContainer>
             <Header />
 
-            <PageContentContainer onSubmit={handleSubmit(saveRestaurantData)}>
+            <PageContentContainer onSubmit={handleSubmit(saveDishData)}>
                 {successMessage && <SuccessPopUp message={successMessage} />}
                 {errorMessage && <ErrorPopUp message={errorMessage} />}
 
@@ -313,49 +181,51 @@ const RegisterDish = () => {
                 </ImageUploadContainer>
 
                 <StandardInputContainer>
-                    <div className='top-row-container'>
-                        <StandardInput>
-                            <div className='input-label-container'>
-                                <label htmlFor='name'>
-                                    Nome
-                                    <span className='required'> * </span>
-                                </label>
-
-                                <input
-                                    placeholder='Nome'
-                                    id='name'
-                                // {...register('name')}
-                                />
-                            </div>
-
-                            {errors.name &&
-                                <div className='input-error-message'>
-                                    {errors.name.message}
-                                </div>
-                            }
-                        </StandardInput>
-                    </div>
-
                     <StandardInput>
                         <div className='input-label-container'>
-                            <label htmlFor='amount'>
-                                Quantidade
+                            <label htmlFor='name'>
+                                Nome
                                 <span className='required'> * </span>
                             </label>
 
                             <input
-                                placeholder='Quantidade'
-                                id='amount'
-                            // {...register('phone')}
+                                placeholder='Nome'
+                                id='name'
+                                {...register('name')}
                             />
                         </div>
 
-                        {errors.amount &&
+                        {errors.name &&
                             <div className='input-error-message'>
-                                {errors.amount.message}
+                                {errors.name.message}
                             </div>
                         }
                     </StandardInput>
+
+                    <div className='bottom-row-container'>
+                        <StandardInput>
+                            <div className='input-label-container'>
+                                <label htmlFor='amount'>
+                                    Quantidade
+                                </label>
+
+                                <input
+                                    placeholder='Quantidade'
+                                    id='amount'
+                                    type='number'
+                                    {...register('size')}
+                                />
+                            </div>
+
+                            {errors.size &&
+                                <div className='input-error-message'>
+                                    {errors.size.message}
+                                </div>
+                            }
+                        </StandardInput>
+
+                        <DishUnitSelector handleSelectUnit={handleSelectUnit} />
+                    </div>
                 </StandardInputContainer>
 
                 <DescriptionContainer>
@@ -385,8 +255,8 @@ const RegisterDish = () => {
                         Marque as alternativas que melhor descrevem esse produto.
                     </div>
                     <DishesOptionsSelector
-                        selectedDishes={serves}
-                        setSelectedDishes={setServes}
+                        selectedDishes={categories}
+                        setSelectedDishes={setCategories}
                         register={register}
                     />
                 </DishOptionsContainer>

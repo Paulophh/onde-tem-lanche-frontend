@@ -73,30 +73,28 @@ export const StandardInputContainer = styled.div`
     width: 100%;
     max-width: 350px;
 
-    .top-row-container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
+    .bottom-row-container {
         width: 100%;
     }
 
     @media only screen and (min-width: 700px) {
         max-width: 100%;
-        align-items: flex-start;
+        align-items: center;
+        flex-direction: row;
+        justify-content: center;
 
-        .top-row-container {
-            flex-direction: row;
-            justify-content: space-between;
-        }
-
-        .top-row-container > div:first-of-type {
+        > div:first-of-type {
             flex: 1;
         }
 
-        .top-row-container > div + div input {
-            width: 130px;
+        .bottom-row-container {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
     }
+
 `;
 
 export const StandardInput = styled.div`
@@ -106,8 +104,8 @@ export const StandardInput = styled.div`
 
     .input-label-container {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column;
+        gap: 5px;
     }
 
     .required {
@@ -204,7 +202,7 @@ export const DishOptionsContainer = styled.div`
     text-align: center;
     box-shadow: 0 2px 4px 0 ${props => props.theme.colors['box-shadow']};
 
-    margin: 30px auto 0;
+    margin: 30px auto 20px;
     padding: 10px;
 
     .title {
@@ -232,44 +230,4 @@ export const DishOptionsContainer = styled.div`
             font-size: 1.6rem;
         }
     }
-`;
-
-export const OperationHoursContainer = styled.div`
-    padding: 10px;
-    box-shadow: 0 2px 4px 0 ${props => props.theme.colors['box-shadow']};
-    margin: 30px auto;
-    
-    .title {
-        font-size: 1.8rem;
-        text-align: center;
-    }
-
-    .required {
-        margin-left: 4px;
-        color: red;
-    }
-
-    .sub-title {
-        font-size: 1.3rem;
-        margin-top: 7px;
-        text-align: center;
-    }
-
-    @media only screen and (min-width: 700px) {
-        .title {
-            font-size: 2.1rem;
-        }
-
-        .sub-title {
-            font-size: 1.6rem;
-        }
-    }
-`;
-
-export const OperationHoursError = styled.div`
-    margin-top: 10px;
-    font-size: 1.2rem;
-    color: red;
-    font-style: italic;
-    text-align: center;
 `;
