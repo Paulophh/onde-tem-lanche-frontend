@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { api } from '../../services/api';
 
 import {
   CardWrapper,
@@ -34,6 +35,18 @@ const RestaurantHighlightCard = ({ restaurant }) => {
   const [rating, setRating] = useState(null);
   const [closingTime, setClosingTime] = useState(null);
 
+  let imagePath = RestaurantExampleImage;
+
+  if (restaurant.images.length > 0) {
+    const restaurantImages = restaurant.images.filter(image => {
+      return !image.path.startsWith('cover') && !image.path.startsWith('logo');
+    })
+
+    if (restaurantImages.length > 0) {
+      imagePath = `${api.defaults.baseURL}/restaurants/image/${restaurantImages[0].path}`
+    }
+  }
+
   function findIfRestaurantIsOpened() {
     const today = new Date().getDay();
 
@@ -43,7 +56,6 @@ const RestaurantHighlightCard = ({ restaurant }) => {
       return day.day === weekDay
     })
 
-    console.log(isRestaurantOpenedToday);
     if (isRestaurantOpenedToday) {
       setClosingTime(isRestaurantOpenedToday.closes_at);
     }
@@ -72,7 +84,7 @@ const RestaurantHighlightCard = ({ restaurant }) => {
 
       <RestaurantImageContainer>
         <img
-          src={RestaurantExampleImage}
+          src={imagePath}
           alt=''
         />
       </RestaurantImageContainer>

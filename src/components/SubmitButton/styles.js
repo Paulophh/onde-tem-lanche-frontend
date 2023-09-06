@@ -14,7 +14,8 @@ export const SubmitButtonsContainer = styled.button`
     display: flex;
     justify-content: center;
     margin: 0 auto;
-    width: 135px;
+    width: fit-content;
+    min-width: 135px;
     
     
     &:hover {

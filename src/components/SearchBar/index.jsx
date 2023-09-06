@@ -4,19 +4,15 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai'
 import { IoMdOptions } from 'react-icons/io'
 import { Button } from './styles';
 
-const SearchBar = ({ value, setFilterInput }) => {
+const SearchBar = ({ value, setFilterInput, handleFilterRestaurants, clearInputAndResetFilter }) => {
 
   function handleInputChange(e) {
     const inputValue = e.target.value;
     setFilterInput(inputValue);
   }
 
-  function clearInput() {
-    setFilterInput('');
-  }
-
   return (
-    <SearchBarContainer>
+    <SearchBarContainer onSubmit={handleFilterRestaurants}>
       <Button>
         <IoMdOptions size={20} />
       </Button>
@@ -30,7 +26,7 @@ const SearchBar = ({ value, setFilterInput }) => {
 
         {
           value &&
-          <button onClick={clearInput}>
+          <button onClick={clearInputAndResetFilter}>
             <AiOutlineClose />
           </button>
         }
