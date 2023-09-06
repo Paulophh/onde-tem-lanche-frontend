@@ -231,3 +231,5 @@ export const DishOptionsContainer = styled.div`
         }
     }
 `;
+
+export const AllergensOptionsContainer = styled(DishOptionsContainer)``;

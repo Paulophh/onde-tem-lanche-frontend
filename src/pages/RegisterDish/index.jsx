@@ -13,11 +13,13 @@ import ErrorPopUp from '../../components/ErrorPopUp';
 import SuccessPopUp from '../../components/SuccessPopUp';
 import SubmitButton from '../../components/SubmitButton';
 import DishUnitSelector from '../../components/DishUnitSelector';
+import AllergesSelector from '../../components/AllergensSelector';
 import DishesOptionsSelector from '../../components/DishesOptionsSelector';
 
 import FileInputImage from '../../assets/images/file-input-image.png';
 
 import {
+    AllergensOptionsContainer,
     DescriptionContainer,
     DishOptionsContainer,
     ImageUploadContainer,
@@ -28,6 +30,7 @@ import {
 } from './styles';
 
 import { ImageTooBigError } from '../../errors/ImageTooBigError';
+import AllergensSelector from '../../components/AllergensSelector';
 
 const formSchema = yup.object({
     name: yup.string().max(25, 'Nome deve ter no máximo 25 caractéres').required('Informe o nome'),
@@ -39,6 +42,7 @@ const RegisterDish = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [categories, setCategories] = useState([]);
+    const [allergens, setAllergens] = useState([]);
     const [selectedImage, setSelectedImage] = useState(FileInputImage);
     const [sizeUnit, setSizeUnit] = useState('');
 
@@ -69,42 +73,42 @@ const RegisterDish = () => {
 
         if (isUnitValid) return sizeUnit;
 
-        return '';
+        return null;
     }
 
     async function saveDishData(formData) {
-        console.log(formData);
-        console.log('Categorias -> ', categories);
-        console.log('Unidades -> ', sizeUnit);
-
         const adjustedUnit = validateSizeUnit(formData.size);
-        return;
+        const size = formData.size ? Number(formData.size) : null;
+        const data = {
+            ...formData,
+            size,
+            allergens,
+            categories,
+            size_unit: adjustedUnit,
+        }
 
-        // try {
-        //     setIsLoading(true);
+        console.log(data);
 
-        //     const data = {
-        //         ...formData,
-        //         serves,
-        //     }
+        try {
+            setIsLoading(true);
 
-        //     await api.put('/restaurants', data, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`
-        //         }
-        //     })
+            const response = await api.post('/dishes', data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
 
-        //     navigate('/');
+            console.log(response.data);
 
-        // } catch (error) {
-        //     console.log(error);
+            // navigate('/');
 
-        // } finally {
-        //     setIsLoading(true);
-        // }
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            setIsLoading(false);
+        }
     }
-
-    console.log('Errros -> ', errors);
 
     async function handleImageInput(e) {
         const files = e.target.files;
@@ -260,6 +264,17 @@ const RegisterDish = () => {
                         register={register}
                     />
                 </DishOptionsContainer>
+
+                <AllergensOptionsContainer>
+                    <div className='title'>
+                        Contem algum alergênico?
+                    </div>
+
+                    <AllergensSelector
+                        allergens={allergens}
+                        setAllergens={setAllergens}
+                    />
+                </AllergensOptionsContainer>
 
                 <SubmitButton
                     title='Cadastrar produto'
