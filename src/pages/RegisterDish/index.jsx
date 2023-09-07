@@ -44,11 +44,11 @@ const RegisterDish = () => {
     const [categories, setCategories] = useState([]);
     const [allergens, setAllergens] = useState([]);
     const [selectedImage, setSelectedImage] = useState(FileInputImage);
+    const [imageFile, setImageFile] = useState(null);
     const [sizeUnit, setSizeUnit] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-
 
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
@@ -76,65 +76,17 @@ const RegisterDish = () => {
         return null;
     }
 
-    async function saveDishData(formData) {
-        const adjustedUnit = validateSizeUnit(formData.size);
-        const size = formData.size ? Number(formData.size) : null;
-        const price = Number(formData.price.replace(',', '.'));
-        const data = {
-            ...formData,
-            size,
-            price,
-            allergens,
-            categories,
-            size_unit: adjustedUnit,
-        }
-
-        console.log(data);
-
-        // try {
-        //     setIsLoading(true);
-
-        //     const response = await api.post('/dishes', data, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`
-        //         }
-        //     })
-
-        //     console.log(response.data);
-
-        //     // navigate('/');
-
-        // } catch (error) {
-        //     console.log(error);
-
-        // } finally {
-        //     setIsLoading(false);
-        // }
-    }
-
-    async function handleImageInput(e) {
-        const files = e.target.files;
-        if (files.length === 0) return; //Não selecionou imagem
-
-        const fileSize = files[0].size;
-        if (fileSize > 5000000) throw new ImageTooBigError(); // Imagem deve ter até 5 MB
-
-        const file = files[0];
-        const fileURL = URL.createObjectURL(file);
-        setSelectedImage(fileURL);
-
+    async function uploadImage(dishId) {
         const imageForm = new FormData();
-
-        imageForm.append('image', file);
+        imageForm.append('image', imageFile);
 
         try {
-            await api.post('/restaurants/image', imageForm, {
+            await api.post(`/dishes/image/${dishId}`, imageForm, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
 
-            setSuccessMessage('Imagem carregada com sucesso!');
         } catch (error) {
             if (
                 error.response?.status === 400 ||
@@ -147,6 +99,86 @@ const RegisterDish = () => {
 
             setErrorMessage('Erro ao enviar a imagem. Tente novamente mais tarde');
         }
+    }
+
+    async function saveDishData(formData) {
+        setIsLoading(true);
+        const adjustedUnit = validateSizeUnit(formData.size);
+        const size = formData.size ? Number(formData.size) : null;
+        const price = Number(formData.price.replace(',', '.'));
+        const data = {
+            ...formData,
+            size,
+            price,
+            allergens,
+            categories,
+            size_unit: adjustedUnit,
+        }
+
+        try {
+            const response = await api.post('/dishes', data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            const newDishId = response.data.dishId;
+
+            if (imageFile) {
+                await uploadImage(newDishId);
+            }
+
+            // navigate('/'); REDIRECIONAR PARA PÁGINA DO PRÓPRIO RESTAURANTE (EM CONSTRUÇÃO)
+
+        } catch (error) {
+            setErrorMessage('Algo deu errado na criação. Tente novamente mais tarde');
+
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 3000);
+
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    async function handleReceiveImageFile(e) {
+        const files = e.target.files;
+        if (files.length === 0) return; //Não selecionou imagem
+
+        const fileSize = files[0].size;
+        if (fileSize > 5000000) throw new ImageTooBigError(); // Imagem deve ter até 5 MB
+
+        const file = files[0];
+        const fileURL = URL.createObjectURL(file);
+
+        setImageFile(file);
+        setSelectedImage(fileURL);
+
+        // const imageForm = new FormData();
+
+        // imageForm.append('image', file);
+
+        // try {
+        //     await api.post('/restaurants/image', imageForm, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`
+        //         }
+        //     })
+
+        //     setSuccessMessage('Imagem carregada com sucesso!');
+        // } catch (error) {
+        //     if (
+        //         error.response?.status === 400 ||
+        //         error.response?.status === 401 ||
+        //         error.response?.status === 403 ||
+        //         error.response?.status === 409
+        //     ) {
+        //         setErrorMessage(error.message)
+        //     }
+
+        //     setErrorMessage('Erro ao enviar a imagem. Tente novamente mais tarde');
+        // }
     }
 
     return (
@@ -178,7 +210,7 @@ const RegisterDish = () => {
                         id='image'
                         style={{ display: 'none' }}
                         accept="image/png, image/jpeg, image/jpg"
-                        onChange={handleImageInput}
+                        onChange={handleReceiveImageFile}
                     />
 
                     <button>
@@ -223,9 +255,9 @@ const RegisterDish = () => {
                                 />
                             </div>
 
-                            {errors.name &&
+                            {errors.price &&
                                 <div className='input-error-message'>
-                                    {errors.name.message}
+                                    {errors.price.message}
                                 </div>
                             }
                         </StandardInput>
@@ -303,7 +335,7 @@ const RegisterDish = () => {
 
                 <SubmitButton
                     title='Cadastrar produto'
-                    isLoading={false}
+                    isLoading={isLoading}
                 />
 
             </PageContentContainer>

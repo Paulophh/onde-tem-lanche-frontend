@@ -23,8 +23,8 @@ const DishUnitSelector = ({ handleSelectUnit }) => {
                 </InputLabelContainer>
 
                 <InputLabelContainer>
-                    <input type="radio" id="mg" name="dish_options" value="mg" onChange={handleSelectUnit} />
-                    <label htmlFor="mg"> mg </label>
+                    <input type="radio" id="g" name="dish_options" value="g" onChange={handleSelectUnit} />
+                    <label htmlFor="g"> g </label>
                 </InputLabelContainer>
             </ColumnSeparator>
 
