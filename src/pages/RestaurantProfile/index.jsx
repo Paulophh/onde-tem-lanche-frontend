@@ -1,9 +1,8 @@
+import jwt_decode from 'jwt-decode';
+import { CiClock2 } from 'react-icons/ci';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
 import { AiOutlineEdit, AiFillStar } from 'react-icons/ai';
-import { GrFavorite } from 'react-icons/gr';
-import { CiClock2 } from 'react-icons/ci';
 
 import { api } from '../../services/api';
 import { geocodeApi } from '../../services/geocode-api';
@@ -12,11 +11,9 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import Header from '../../components/Header';
 import OperationDayAndHour from '../../components/OperationDayAndHour';
 
-import DefaultCover from '../../assets/defaults/restaurant-default-cover.png';
+// import AddImage from '../../assets/add-image.png';
 import DefaultLogo from '../../assets/defaults/restaurant-default-logo.png';
-import AddImage from '../../assets/add-image.png';
-
-import RestaurantDefault from '../../assets/defaults/restaurant-default-image.png';
+import DefaultCover from '../../assets/defaults/restaurant-default-cover.png';
 
 import {
     AddImageButton,
@@ -25,6 +22,7 @@ import {
     EditRatingContainer,
     ImagesContainer,
     LogoContainer,
+    MenuContainer,
     OrangeDivider,
     RatingContainer,
     RestaurantContentContainer,
@@ -34,14 +32,18 @@ import {
     TitleDescription
 } from './styles';
 
+import MenuFoodCard from '../../components/MenuFoodCard';
+import RestaurantImages from '../../components/RestaurantImages';
+
 /*
-restaurantID - eb61b612-18ad-444b-a523-56c3bd4440c1
+restaurantID - eb61b612-18ad-444b-a523-56c3bd4440c1 (proprio)
+74bf592c-8b77-4d7f-9eba-d50ee9e37087
 */
 const RestaurantProfile = () => {
-    const [restaurant, setRestaurant] = useState({});
+    const [restaurant, setRestaurant] = useState(null);
     const [coverImageURL, setCoverImageURL] = useState(DefaultCover);
     const [logoImageURL, setLogoImageURL] = useState(DefaultLogo);
-    const [restaurantImages, setRestaurantImages] = useState([1, 2, 3]);
+    const [restaurantImages, setRestaurantImages] = useState([]);
     const [restaurantAddress, setRestaurantAddress] = useState('');
     const [sortedOperationHours, setSortedOperationHours] = useState([]);
 
@@ -53,6 +55,25 @@ const RestaurantProfile = () => {
     const userId = userInfo.sub;
     const isOwnRestaurant = userId === params.restaurantId;
     // const isOwnRestaurant = false;
+
+    async function handleDeleteRestaurantImage(imageId) {
+        console.log(imageId);
+        const updatedRestaurantImages = restaurantImages.filter(image => {
+            return image.image_id !== imageId
+        });
+
+        setRestaurantImages(updatedRestaurantImages);
+
+        try {
+            await api.delete(`/restaurants/image/${imageId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     function sortOperationDays(days) {
         const orders = {
@@ -127,16 +148,21 @@ const RestaurantProfile = () => {
     }
 
     async function fetchRestaurantData() {
-        const response = await api.get(`/restaurants/${params.restaurantId}`);
+        try {
+            const response = await api.get(`/restaurants/${params.restaurantId}`);
 
-        const responseRestaurant = response.data.restaurant;
+            const responseRestaurant = response.data.restaurant;
 
-        getCoverImage(responseRestaurant.images);
-        getLogoImage(responseRestaurant.images);
-        getRestaurantImages(responseRestaurant.images);
-        getAddressFromCoordinate({ lat: responseRestaurant.lat, lng: responseRestaurant.lng })
-        sortOperationDays(responseRestaurant.operation_hour);
-        setRestaurant(responseRestaurant);
+            getCoverImage(responseRestaurant.images);
+            getLogoImage(responseRestaurant.images);
+            getRestaurantImages(responseRestaurant.images);
+            getAddressFromCoordinate({ lat: responseRestaurant.lat, lng: responseRestaurant.lng })
+            sortOperationDays(responseRestaurant.operation_hour);
+            setRestaurant(responseRestaurant);
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     useEffect(() => {
@@ -160,12 +186,16 @@ const RestaurantProfile = () => {
                                 </LogoContainer>
 
                                 <EditRatingContainer>
-                                    <span>
-                                        {isOwnRestaurant ? <AiOutlineEdit /> : <GrFavorite />}
-                                    </span>
-                                    <span>
-                                        {isOwnRestaurant ? 'Editar' : 'Favoritar'}
-                                    </span>
+                                    {isOwnRestaurant &&
+                                        <>
+                                            <span>
+                                                <AiOutlineEdit />
+                                            </span>
+                                            <span>
+                                                Editar
+                                            </span>
+                                        </>
+                                    }
 
                                     <RatingContainer>
                                         <span>
@@ -178,41 +208,18 @@ const RestaurantProfile = () => {
                                 </EditRatingContainer>
 
                                 <TitleDescription>
-                                    <h1> Pizzeria Liceria </h1>
+                                    <h1> {restaurant.name} </h1>
                                     <div>
-                                        Massa de fermentação natural e apenas ingredientes fresco
-                                        para trazer ao prato o verdadeiro sabor da pizza artesanal italiana.
+                                        {restaurant.description}
                                     </div>
                                 </TitleDescription>
                             </RestaurantContentHeader>
 
-                            <ImagesContainer>
-                                {
-                                    restaurantImages.length === 0 && !isOwnRestaurant &&
-                                    <span className='no-images-message'>
-                                        Esse restaurante não possui imagens =(
-                                    </span>
-                                }
-
-                                {
-                                    restaurantImages.map(image => (
-                                        <RestaurantImage key={image.path}>
-                                            <img
-                                                // src={`${api.defaults.baseURL}/restaurants/image/${image.path}`}
-                                                src={RestaurantDefault}
-                                                alt=''
-                                            />
-                                        </RestaurantImage>
-                                    ))
-                                }
-
-                                {
-                                    isOwnRestaurant && restaurantImages.length < 4 &&
-                                    <AddImageButton>
-                                        <img src={AddImage} alt="" />
-                                    </AddImageButton>
-                                }
-                            </ImagesContainer>
+                            <RestaurantImages
+                                restaurantImages={restaurantImages}
+                                isOwnRestaurant={isOwnRestaurant}
+                                handleDeleteRestaurantImage={handleDeleteRestaurantImage}
+                            />
 
                             <AddressHoursContainer>
                                 <div className='address-container'>
@@ -222,7 +229,7 @@ const RestaurantProfile = () => {
                                 <div className='hours-container'>
                                     <CiClock2 />
 
-                                    <div>
+                                    <div className='hours'>
                                         {
                                             sortedOperationHours.map(operation => (
                                                 <OperationDayAndHour
@@ -238,6 +245,45 @@ const RestaurantProfile = () => {
                             </AddressHoursContainer>
 
                             <OrangeDivider />
+
+                            <MenuContainer>
+                                {
+                                    restaurant.menu.length > 0 ?
+                                        <>
+                                            <MenuFoodCard
+                                                food={restaurant.menu[0]}
+                                            />
+
+                                            <MenuFoodCard
+                                                food={restaurant.menu[0]}
+                                            />
+
+                                            <MenuFoodCard
+                                                food={restaurant.menu[0]}
+                                            />
+
+                                            <MenuFoodCard
+                                                food={restaurant.menu[0]}
+                                            />
+
+                                            <MenuFoodCard
+                                                food={restaurant.menu[0]}
+                                            />
+
+                                            <MenuFoodCard
+                                                food={restaurant.menu[0]}
+                                            />
+
+                                            <MenuFoodCard
+                                                food={restaurant.menu[0]}
+                                            />
+                                        </>
+                                        :
+                                        <div className='no-dishes-message'>
+                                            Esse restaurante não possui pratos cadastrados
+                                        </div>
+                                }
+                            </MenuContainer>
 
                         </RestaurantContentContainer>
 

@@ -1,4 +1,8 @@
 import React from 'react';
+import { AiFillStar } from 'react-icons/ai';
+
+import { api } from '../../services/api';
+
 import {
   CardWrapper,
   ClosingTimeAndRatingContainer,
@@ -11,16 +15,17 @@ import {
   TopRowContainer
 } from './styles';
 
-import FoodExampleImage from '../../assets/images/food-images/xSalada.png';
-import { AiFillStar } from 'react-icons/ai';
+import DishDefaultImage from '../../assets/defaults/dish-default-image.png';
 
 const FoodCard = ({ food }) => {
+  const image = food.images ? `${api.defaults.baseURL}/dishes/image/${food.images}` : DishDefaultImage;
+
   return (
     <CardWrapper>
 
       <FoodImageContainer>
         <img
-          src={FoodExampleImage}
+          src={image}
           alt=''
         />
       </FoodImageContainer>

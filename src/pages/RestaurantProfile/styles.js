@@ -131,75 +131,6 @@ export const RatingContainer = styled.div`
     }
 `;
 
-export const ImagesContainer = styled.div`
-    margin: 20px auto;
-    width: 90vw;
-    max-width: 900px;
-
-    display: flex;
-    gap: 15px;
-    overflow-x: scroll;
-    align-items: center;
-
-    &::-webkit-scrollbar {
-        display: none; // Chrome e Opera
-    }
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-
-    .no-images-message {
-        font-size: 1.4rem;
-    }
-
-    @media only screen and (min-width: 700px) {
-        overflow: hidden;
-    }
-`;
-
-export const RestaurantImage = styled.div`
-    
-    width: 130px;
-
-    img {
-        width: 130px;
-    }
-
-    @media only screen and (min-width: 700px) {
-        width: calc((100% - 45px)/4);
-
-        img {
-            width: 100%;
-        }
-    }
-`;
-
-export const AddImageButton = styled.button`
-    border: none;
-    background-color: transparent;
-    box-shadow: 0px 0px 4px 1px ${props => props.theme.colors['box-shadow']};
-
-    border-radius: 50%;
-
-    padding: 10px;
-    width: 130px;
-    height: 130px;
-
-    img {
-        width: 110px;
-        height: 110px;
-    }
-
-    @media only screen and (min-width: 700px) {
-        width: calc((100% - 50px)/4);
-        height: 90%;
-
-        img {
-            width: 90%;
-            height: 100%;
-        }
-    }
-`;
-
 export const AddressHoursContainer = styled.div`
     margin: 20px auto;
     width: 90vw;
@@ -207,7 +138,7 @@ export const AddressHoursContainer = styled.div`
 
 
     .address-container {
-        text-align: center;
+        
         font-size: 1.3rem;
 
         margin-bottom: 10px;
@@ -222,12 +153,13 @@ export const AddressHoursContainer = styled.div`
             color: ${props => props.theme.colors.orange};
         }
 
-        div {
+        .hours {
             font-size: 1.2rem;
             display: flex;
             flex-wrap: wrap;
             row-gap: 5px;
             column-gap: 2px;
+            flex: 1;
         }
     }
 
@@ -241,7 +173,7 @@ export const AddressHoursContainer = styled.div`
         }
 
         .hours-container {
-            justify-content: flex-end;
+            flex-basis: 60%;
         }
     }
 `;
@@ -249,4 +181,21 @@ export const AddressHoursContainer = styled.div`
 export const OrangeDivider = styled.div`
     border: 1px solid ${props => props.theme.colors.orange};
     margin: 10px 0;
+`;
+
+export const MenuContainer = styled.div`
+    margin: 20px auto;
+    width: 90vw;
+    max-width: 1000px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .no-dishes-message {
+        font-size: 1.4rem;
+        text-align: center;
+        font-style: italic;
+    }
 `;
