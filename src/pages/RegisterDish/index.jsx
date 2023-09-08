@@ -154,31 +154,6 @@ const RegisterDish = () => {
 
         setImageFile(file);
         setSelectedImage(fileURL);
-
-        // const imageForm = new FormData();
-
-        // imageForm.append('image', file);
-
-        // try {
-        //     await api.post('/restaurants/image', imageForm, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`
-        //         }
-        //     })
-
-        //     setSuccessMessage('Imagem carregada com sucesso!');
-        // } catch (error) {
-        //     if (
-        //         error.response?.status === 400 ||
-        //         error.response?.status === 401 ||
-        //         error.response?.status === 403 ||
-        //         error.response?.status === 409
-        //     ) {
-        //         setErrorMessage(error.message)
-        //     }
-
-        //     setErrorMessage('Erro ao enviar a imagem. Tente novamente mais tarde');
-        // }
     }
 
     return (
