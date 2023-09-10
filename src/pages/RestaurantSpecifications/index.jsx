@@ -1,8 +1,9 @@
 import * as yup from 'yup';
 import { useState } from 'react';
+import jwt_decode from 'jwt-decode';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { api } from '../../services/api';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -218,7 +219,10 @@ const RestaurantSpecifications = () => {
                 }
             })
 
-            navigate('/');
+            const tokenData = jwt_decode(token);
+            const restaurantId = tokenData.sub;
+
+            navigate(`/restaurant/${restaurantId}`);
 
         } catch (error) {
             if (

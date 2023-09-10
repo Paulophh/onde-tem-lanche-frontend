@@ -1,7 +1,7 @@
 import Carnes from '../assets/icons/carnes.svg';
 import CarnesSelecionado from '../assets/icons/carnes-selecionado.svg';
-import Confeitarias from '../assets/icons/doces.svg';
-import ConfeitariasSelecionado from '../assets/icons/doces-selecionado.svg';
+import Confeitaria from '../assets/icons/doces.svg';
+import ConfeitariaSelecionado from '../assets/icons/doces-selecionado.svg';
 import Japones from '../assets/icons/japones.svg';
 import JaponesSelecionado from '../assets/icons/japones-selecionado.svg';
 import Lanche from '../assets/icons/lanches.svg';
@@ -45,9 +45,9 @@ export const FOOD_CATEGORIES = [
         selectedIcon: SaladasSelecionado
     },
     {
-        name: 'Confeitarias',
-        icon: Confeitarias,
-        selectedIcon: ConfeitariasSelecionado
+        name: 'Confeitaria',
+        icon: Confeitaria,
+        selectedIcon: ConfeitariaSelecionado
     }
 ];
 

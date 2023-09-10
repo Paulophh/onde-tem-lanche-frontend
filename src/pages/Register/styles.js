@@ -13,6 +13,13 @@ export const MidSectionContainer = styled.div`
 
     margin-top: 30px;
     flex: 1;
+
+    .entity-selector-title {
+        font-size: 2.0rem;
+        margin-bottom: 20px;
+        color: ${props => props.theme.colors['text-light-grey']};
+        text-align: center;
+    }
 `;
 
 export const FormContainer = styled.form`

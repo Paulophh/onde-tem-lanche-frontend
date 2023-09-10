@@ -20,7 +20,7 @@ export const CategoriesContainer = styled.div`
   }
 `;
 
-export const Category = styled.div`
+export const Category = styled.button`
   width: fit-content;
   padding: 10px;
   background-color: ${props => props.theme.colors.white};

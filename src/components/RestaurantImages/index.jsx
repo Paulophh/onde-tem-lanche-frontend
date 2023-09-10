@@ -1,5 +1,7 @@
 import { useState } from "react";
+import Loading from 'react-loading';
 import { AiOutlineClose } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 import { api } from "../../services/api";
 import { useAuthContext } from "../../contexts/AuthContext";
@@ -18,6 +20,8 @@ import { ImageTooBigError } from "../../errors/ImageTooBigError";
 const RestaurantImages = ({ restaurantImages = [], isOwnRestaurant, handleDeleteRestaurantImage }) => {
     const [selectedImagesURL, setSelectedImagesURL] = useState([]);
     const [selectedImagesFiles, setSelectedImagesFiles] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [areThereNewImages, setAreThereNewImages] = useState(false);
 
     const { token } = useAuthContext();
 
@@ -35,16 +39,16 @@ const RestaurantImages = ({ restaurantImages = [], isOwnRestaurant, handleDelete
 
             setSelectedImagesURL([...selectedImagesURL, fileURL]);
             setSelectedImagesFiles([...selectedImagesFiles, file]);
+            setAreThereNewImages(true);
 
-            const form = new FormData();
-            form.append('images', file);
+            // const form = new FormData();
+            // form.append('images', file);
         } catch (error) {
             console.log(error);
         }
     }
 
-    function handleUnelectImage(path, imageIndex) {
-        console.log('Veio');
+    function handleUnselectImage(path, imageIndex) {
         const updatedImagesURL = selectedImagesURL.filter(imageURL => {
             return imageURL !== path;
         })
@@ -55,10 +59,10 @@ const RestaurantImages = ({ restaurantImages = [], isOwnRestaurant, handleDelete
 
         setSelectedImagesURL(updatedImagesURL);
         setSelectedImagesFiles(updatedImagesFiles)
-
     }
 
     async function handleSubmitImages() {
+        setIsLoading(true);
         const imagesFile = new FormData();
 
         selectedImagesFiles.forEach(file => {
@@ -72,8 +76,15 @@ const RestaurantImages = ({ restaurantImages = [], isOwnRestaurant, handleDelete
                 }
             })
 
+            toast.success('Imagens salvas com sucesso');
+
+            setAreThereNewImages(false);
+            isLoading(false)(false);
         } catch (error) {
             console.log(error);
+
+        } finally {
+            setIsLoading(false);
         }
 
     }
@@ -114,7 +125,7 @@ const RestaurantImages = ({ restaurantImages = [], isOwnRestaurant, handleDelete
                             />
 
                             {isOwnRestaurant &&
-                                <button onClick={() => handleUnelectImage(imageURL, imageIndex)}>
+                                <button onClick={() => handleUnselectImage(imageURL, imageIndex)}>
                                     <AiOutlineClose />
                                 </button>
                             }
@@ -143,10 +154,14 @@ const RestaurantImages = ({ restaurantImages = [], isOwnRestaurant, handleDelete
                 }
             </ImagesContainer>
 
-            {selectedImagesURL.length > 0 &&
+            {areThereNewImages &&
                 <SubmitImagesContainer>
-                    <button onClick={handleSubmitImages}>
-                        Enviar Imagens
+                    <button onClick={handleSubmitImages} disabled={isLoading}>
+                        {isLoading ?
+                            <Loading type='spin' width={20} height={20} />
+                            :
+                            'Enviar Imagens'
+                        }
                     </button>
                 </SubmitImagesContainer>
 

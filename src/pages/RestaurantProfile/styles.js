@@ -183,6 +183,11 @@ export const OrangeDivider = styled.div`
     margin: 10px 0;
 `;
 
+export const DishesTitle = styled.h2`
+    text-align: center;
+    font-size: 2.2rem;
+`;
+
 export const MenuContainer = styled.div`
     margin: 20px auto;
     width: 90vw;
@@ -190,6 +195,7 @@ export const MenuContainer = styled.div`
 
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 20px;
 
@@ -197,5 +203,94 @@ export const MenuContainer = styled.div`
         font-size: 1.4rem;
         text-align: center;
         font-style: italic;
+    }
+
+    @media only screen and (min-width: 700px) {
+        justify-content: flex-start;
+    }
+`;
+
+export const EmptyMenuList = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+`;
+
+export const AddImageButton = styled.label`
+    border: none;
+    background-color: transparent;
+    
+    .image-container {
+        width: 100px;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 50%;
+        box-shadow: 0px 0px 4px 1px ${props => props.theme.colors['box-shadow']};
+    }
+
+    img {
+        width: 80px;
+        height: 80px;
+    }
+
+    span {
+        display: block;
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    @media only screen and (min-width: 700px) {
+        .image-container {
+            width: 120px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
+    }
+`;
+
+export const AddDishButton = styled.button`
+    border: none;
+    background-color: transparent;
+    
+    .image-container {
+        width: 100px;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 50%;
+        box-shadow: 0px 0px 4px 1px ${props => props.theme.colors['box-shadow']};
+    }
+
+    img {
+        width: 80px;
+        height: 80px;
+    }
+
+    span {
+        display: block;
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    @media only screen and (min-width: 700px) {
+        .image-container {
+            width: 120px;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+        }
     }
 `;

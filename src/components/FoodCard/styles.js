@@ -7,7 +7,7 @@ export const CardWrapper = styled.li`
   display: flex;
   flex-direction: column;
   width: 90vw;
-  max-width: 320px;
+  max-width: 270px;
 
   margin-bottom: 30px;
 `;
@@ -16,7 +16,10 @@ export const FoodImageContainer = styled.div`
   border-radius: 5px 5px 0px 0px;
 
   img {
-    width: 100%;
+    width: 90vw;
+    max-width: 270px;
+    height: 270px;
+    object-fit: cover;
     border-radius: inherit;
   }
 `;

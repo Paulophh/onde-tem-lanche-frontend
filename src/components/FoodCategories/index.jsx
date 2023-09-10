@@ -4,10 +4,11 @@ import { Category, CategoryIcon, CategoryTitle, CategoriesContainer } from './st
 
 import { FOOD_CATEGORIES } from '../../static';
 
-const FoodCategories = ({ selectedFoodCategory, setSelectedFoodCategory }) => {
+const FoodCategories = ({ selectedFoodCategory, setSelectedFoodCategory, filterDishesByCategories }) => {
 
   function handleSelectCategory(category) {
     setSelectedFoodCategory(category);
+    filterDishesByCategories(category);
   }
 
   return (

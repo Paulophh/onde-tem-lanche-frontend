@@ -59,7 +59,11 @@ export const LoadingRestaurantContainer = styled.div`
 export const FoodsContainer = styled.div`
   margin-top: 30px;
   padding-bottom: 30px;
+  position: relative;
+  min-height: 420px;
 `;
+
+export const LoadingDishesContainer = styled(LoadingRestaurantContainer)``;
 
 export const FoodsList = styled.ul`
   display: flex;
@@ -76,5 +80,14 @@ export const FoodsList = styled.ul`
     justify-content: center;
     justify-content: center;
     gap: 20px;
+  }
+`;
+
+export const NoFoodFoundContainer = styled.div`
+  font-size: 2.0rem;
+  font-style: italic;
+
+  span {
+    font-weight: bold;
   }
 `;

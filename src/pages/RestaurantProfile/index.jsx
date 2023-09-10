@@ -1,7 +1,7 @@
 import jwt_decode from 'jwt-decode';
 import { CiClock2 } from 'react-icons/ci';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { AiOutlineEdit, AiFillStar } from 'react-icons/ai';
 
 import { api } from '../../services/api';
@@ -9,17 +9,23 @@ import { geocodeApi } from '../../services/geocode-api';
 import { useAuthContext } from '../../contexts/AuthContext';
 
 import Header from '../../components/Header';
+import MenuFoodCard from '../../components/MenuFoodCard';
+import RestaurantImages from '../../components/RestaurantImages';
 import OperationDayAndHour from '../../components/OperationDayAndHour';
 
 // import AddImage from '../../assets/add-image.png';
+import AddImage from '../../assets/add-image.png';
 import DefaultLogo from '../../assets/defaults/restaurant-default-logo.png';
 import DefaultCover from '../../assets/defaults/restaurant-default-cover.png';
 
 import {
+    AddDishButton,
     AddImageButton,
     AddressHoursContainer,
     CoverContainer,
+    DishesTitle,
     EditRatingContainer,
+    EmptyMenuList,
     ImagesContainer,
     LogoContainer,
     MenuContainer,
@@ -31,9 +37,6 @@ import {
     RestaurantProfileContainer,
     TitleDescription
 } from './styles';
-
-import MenuFoodCard from '../../components/MenuFoodCard';
-import RestaurantImages from '../../components/RestaurantImages';
 
 /*
 restaurantID - eb61b612-18ad-444b-a523-56c3bd4440c1 (proprio)
@@ -49,12 +52,12 @@ const RestaurantProfile = () => {
 
     const params = useParams();
     const { token } = useAuthContext();
+    const navigate = useNavigate();
     const geocodeApiKey = process.env.REACT_APP_GEOCODE_API_KEY;
 
     const userInfo = token ? jwt_decode(token) : {};
     const userId = userInfo.sub;
     const isOwnRestaurant = userId === params.restaurantId;
-    // const isOwnRestaurant = false;
 
     async function handleDeleteRestaurantImage(imageId) {
         console.log(imageId);
@@ -165,6 +168,10 @@ const RestaurantProfile = () => {
         }
     }
 
+    function handleRedirectToRegisterDish() {
+        navigate('/register/dish');
+    }
+
     useEffect(() => {
         fetchRestaurantData();
     }, [])
@@ -246,42 +253,46 @@ const RestaurantProfile = () => {
 
                             <OrangeDivider />
 
+                            <DishesTitle >
+                                Pratos
+                            </DishesTitle>
+
                             <MenuContainer>
                                 {
                                     restaurant.menu.length > 0 ?
                                         <>
-                                            <MenuFoodCard
-                                                food={restaurant.menu[0]}
-                                            />
+                                            {
+                                                restaurant.menu.map(dish => (
+                                                    <MenuFoodCard
+                                                        food={dish}
+                                                    />
+                                                ))
+                                            }
 
-                                            <MenuFoodCard
-                                                food={restaurant.menu[0]}
-                                            />
-
-                                            <MenuFoodCard
-                                                food={restaurant.menu[0]}
-                                            />
-
-                                            <MenuFoodCard
-                                                food={restaurant.menu[0]}
-                                            />
-
-                                            <MenuFoodCard
-                                                food={restaurant.menu[0]}
-                                            />
-
-                                            <MenuFoodCard
-                                                food={restaurant.menu[0]}
-                                            />
-
-                                            <MenuFoodCard
-                                                food={restaurant.menu[0]}
-                                            />
+                                            <AddImageButton htmlFor='image'>
+                                                <div className='image-container'>
+                                                    <img src={AddImage} alt="" />
+                                                </div>
+                                                <span>
+                                                    Cadastrar prato
+                                                </span>
+                                            </AddImageButton>
                                         </>
                                         :
-                                        <div className='no-dishes-message'>
-                                            Esse restaurante não possui pratos cadastrados
-                                        </div>
+                                        <EmptyMenuList>
+                                            <div className='no-dishes-message'>
+                                                Não existem pratos cadastrados nesse restaurante
+                                            </div>
+
+                                            <AddDishButton onClick={handleRedirectToRegisterDish}>
+                                                <div className='image-container'>
+                                                    <img src={AddImage} alt="" />
+                                                </div>
+                                                <span>
+                                                    Cadastrar prato
+                                                </span>
+                                            </AddDishButton>
+                                        </EmptyMenuList>
                                 }
                             </MenuContainer>
 

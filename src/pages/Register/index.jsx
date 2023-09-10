@@ -90,6 +90,10 @@ const Register = () => {
       <Header />
 
       <MidSectionContainer>
+        <div className='entity-selector-title'>
+          Quero cadastrar um
+        </div>
+
         <EntitySelector
           selectedEntity={selectedEntity}
           setSelectedEntity={setSelectedEntity}

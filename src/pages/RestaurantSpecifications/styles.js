@@ -52,6 +52,10 @@ export const ImageUploadContainer = styled.div`
         width: 150px;
     }
 
+    &:hover {
+        cursor: pointer;
+    }
+
     @media only screen and (min-width: 700px) {
         img {
             width: 250px;

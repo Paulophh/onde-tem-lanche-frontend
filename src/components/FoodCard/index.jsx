@@ -18,7 +18,7 @@ import {
 import DishDefaultImage from '../../assets/defaults/dish-default-image.png';
 
 const FoodCard = ({ food }) => {
-  const image = food.images ? `${api.defaults.baseURL}/dishes/image/${food.images}` : DishDefaultImage;
+  const image = food.images.length > 0 ? `${api.defaults.baseURL}/dishes/image/${food.images[0].path}` : DishDefaultImage;
 
   return (
     <CardWrapper>
@@ -62,7 +62,7 @@ const FoodCard = ({ food }) => {
         </TopRowContainer>
 
         <Description title={'food.description'}>
-          Duas carnes, alface, tomate, cebola, queijo e molho caseiro da casa.
+          {food.description}
         </Description>
       </FoodCardInfoContainer>
     </CardWrapper>

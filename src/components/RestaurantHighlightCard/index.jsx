@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 
 import {
@@ -47,6 +48,8 @@ const RestaurantHighlightCard = ({ restaurant }) => {
     }
   }
 
+  const navigate = useNavigate();
+
   function findIfRestaurantIsOpened() {
     const today = new Date().getDay();
 
@@ -71,6 +74,10 @@ const RestaurantHighlightCard = ({ restaurant }) => {
     setRating(averageRating)
   }
 
+  function handleRedirectToRestaurant() {
+    navigate(`/restaurant/${restaurant.restaurant_id}`)
+  }
+
   useEffect(() => {
     if (restaurant.ratings) {
       calculateRatingAverage();
@@ -80,7 +87,7 @@ const RestaurantHighlightCard = ({ restaurant }) => {
   }, [])
 
   return (
-    <CardWrapper>
+    <CardWrapper onClick={handleRedirectToRestaurant}>
 
       <RestaurantImageContainer>
         <img

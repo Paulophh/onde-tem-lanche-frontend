@@ -15,6 +15,8 @@ import DishDefaultImage from '../../assets/defaults/dish-default-image.png';
 const MenuFoodCard = ({ food }) => {
     const image = food.images ? `${api.defaults.baseURL}/dishes/image/${food.images}` : DishDefaultImage;
 
+    console.log('Food -> ', food);
+
     return (
         <MenuFoodCardContainer>
             <ImageContainer>
@@ -27,14 +29,16 @@ const MenuFoodCard = ({ food }) => {
                         {food.name}
                     </div>
 
-                    <div className='rating'>
-                        <span> <AiFillStar /> </span>
-                        <span> 3.4 </span>
-                    </div>
+                    {food.ratings.length > 0 &&
+                        <div className='rating'>
+                            <span> <AiFillStar /> </span>
+                            <span> 3.4 </span>
+                        </div>
+                    }
 
                     <div className='price'>
                         <span> R$ </span>
-                        <span> 56.70 </span>
+                        <span> {Number(food.price).toFixed(2).replace('.', ',')} </span>
                     </div>
                 </TopRowContainer>
 

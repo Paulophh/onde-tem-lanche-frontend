@@ -116,6 +116,7 @@ export const SubmitImagesContainer = styled.div`
         border: 2px solid ${props => props.theme.colors.orange};
         background-color: transparent;
         padding: 5px 15px;
+        width: 125px;
         color: ${props => props.theme.colors.orange};
         border-radius: 8px;
     }
@@ -124,5 +125,23 @@ export const SubmitImagesContainer = styled.div`
         background-color: ${props => props.theme.colors.orange};
         color: #fff;
         cursor: pointer;
+    }
+
+    button:disabled {
+        background-color: ${props => props.theme.colors.grey};
+        color: #000;
+        cursor: not-allowed;
+
+        div {
+            margin: 0 auto;
+        }
+    }
+
+    &:disabled:hover {
+        box-shadow: 0 2px 4px 1px ${props => props.theme.colors['box-shadow']};
+    }
+
+    &:disabled:active {
+        transform: scale(1);
     }
 `;

@@ -1,8 +1,9 @@
 import * as yup from 'yup';
 import { useState } from 'react';
+import jwt_decode from 'jwt-decode';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 import { api } from '../../services/api';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -48,7 +49,7 @@ const RegisterDish = () => {
     const [sizeUnit, setSizeUnit] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
+    // const [successMessage, setSuccessMessage] = useState('');
 
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
@@ -128,7 +129,10 @@ const RegisterDish = () => {
                 await uploadImage(newDishId);
             }
 
-            // navigate('/'); REDIRECIONAR PARA PÁGINA DO PRÓPRIO RESTAURANTE (EM CONSTRUÇÃO)
+            const tokenData = jwt_decode(token);
+            const restaurantId = tokenData.sub;
+
+            navigate(`/restaurant/${restaurantId}`);
 
         } catch (error) {
             setErrorMessage('Algo deu errado na criação. Tente novamente mais tarde');
@@ -161,7 +165,7 @@ const RegisterDish = () => {
             <Header />
 
             <PageContentContainer onSubmit={handleSubmit(saveDishData)}>
-                {successMessage && <SuccessPopUp message={successMessage} />}
+                {/* {successMessage && <SuccessPopUp message={successMessage} />} */}
                 {errorMessage && <ErrorPopUp message={errorMessage} />}
 
                 <div className='title'>

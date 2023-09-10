@@ -7,7 +7,9 @@ import {
   FoodsContainer,
   FoodsList,
   HighlightsCardsContainer,
+  LoadingDishesContainer,
   LoadingRestaurantContainer,
+  NoFoodFoundContainer,
   PageContainer
 } from './styles';
 
@@ -19,19 +21,15 @@ import SearchBar from '../../components/SearchBar';
 import FoodCategories from '../../components/FoodCategories';
 import RestaurantHighlightCard from '../../components/RestaurantHighlightCard';
 
-const mockerDish = {
-  name: 'X-salada duplo',
-  rating: 4.5,
-  price: 25,
-  description: 'Duas carnes, alface, tomate, cebola, queijo e molho caseiro da casa.'
-}
-
 const Index = () => {
   const [foodCategory, setFoodCategory] = useState('Lanches');
   const [filterInput, setFilterInput] = useState('');
 
   const [restaurants, setRestaurants] = useState([]);
   const [isLoadingRestaurants, setIsLoadingRestaurants] = useState(false);
+
+  const [dishes, setDishes] = useState([]);
+  const [isLoadingDishes, setIsLoadingDishes] = useState(false);
 
   async function handleFilterRestaurants(e) {
     e.preventDefault();
@@ -46,14 +44,21 @@ const Index = () => {
     await fetchRestaurants();
   }
 
-  const dishes = [];
+  async function filterDishesByCategories(category) {
+    setIsLoadingDishes(true);
 
-  for (let i = 0; i <= 9; i++) {
-    const newDish = {
-      ...mockerDish,
-      id: `dish-${i}`
+    try {
+      const response = await api.get(`/dishes/filter?preferences=${category}`)
+
+      const { dishes, totalFound } = response.data;
+
+      setDishes(dishes);
+    } catch (error) {
+      console.log(error);
+
+    } finally {
+      setIsLoadingDishes(false);
     }
-    dishes.push(newDish);
   }
 
   async function fetchRestaurants(queryString = '') {
@@ -69,6 +74,10 @@ const Index = () => {
       fetchRestaurants();
     }
   }, [filterInput])
+
+  useEffect(() => {
+    filterDishesByCategories(foodCategory);
+  }, [foodCategory])
 
   return (
     <>
@@ -118,20 +127,37 @@ const Index = () => {
         <FoodCategories
           selectedFoodCategory={foodCategory}
           setSelectedFoodCategory={setFoodCategory}
+          filterDishesByCategories={filterDishesByCategories}
         />
 
         <FoodsContainer>
-          <FoodsList>
-            {
-              dishes.map(dish => (
-                <FoodCard
-                  key={dish.id}
-                  food={dish}
-                />
-              ))
-            }
+          {isLoadingDishes ?
+            <LoadingDishesContainer>
+              <Loading
+                type='spin'
+                width={20}
+                height={20}
+                color='#333'
+              />
+            </LoadingDishesContainer>
 
-          </FoodsList>
+            :
+
+            <FoodsList>
+              {dishes.length === 0 ?
+                <NoFoodFoundContainer>
+                  Nenhum prato encontrado na categoria <span>{foodCategory}</span>
+                </NoFoodFoundContainer>
+                :
+                dishes.map(dish => (
+                  <FoodCard
+                    key={dish.id}
+                    food={dish}
+                  />
+                ))
+              }
+            </FoodsList>
+          }
         </FoodsContainer>
 
         <Footer />

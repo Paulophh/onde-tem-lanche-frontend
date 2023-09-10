@@ -1,10 +1,12 @@
+import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import { ToastContainer } from 'react-toastify';
 import reportWebVitals from './reportWebVitals';
 
-import { ThemeProvider } from 'styled-components';
 import { theme } from './styles/themes';
+import { ThemeProvider } from 'styled-components';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { GlobalStyles } from './styles/Global';
 
@@ -18,6 +20,10 @@ root.render(
     <BrowserRouter>
       <ContextsProvider>
         <ThemeProvider theme={theme}>
+          <ToastContainer
+            autoClose={3000}
+            closeOnClick
+          />
           <GlobalStyles />
           <App />
         </ThemeProvider>
