@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 import { useAuthContext } from '../../contexts/AuthContext';
 
@@ -18,10 +19,21 @@ import logo from '../../assets/images/logo.svg';
 const Header = () => {
   const navigate = useNavigate();
 
-  const { userType } = useAuthContext();
+  const { userType, token } = useAuthContext();
+
+  const tokenData = jwt_decode(token);
+  const userId = tokenData.sub;
 
   function handleRedirectToLogin() {
     navigate('/login');
+  }
+
+  function handleRedirectToRestaurantProfile() {
+    navigate(`/restaurant/${userId}`);
+  }
+
+  function handleRedirectToCustomerProfile() {
+    console.log('Implementar página do Cliente');
   }
 
   function handleRedirectToHome() {
@@ -58,16 +70,19 @@ const Header = () => {
             </button>
           </li>
           <li className='nav-link nav-link-profile'>
-            <button onClick={handleRedirectToLogin}>
-              {userType === 'RESTAURANT' ?
+            {userType === 'RESTAURANT' ?
+              <button onClick={handleRedirectToRestaurantProfile}>
                 <FaStore size={30} />
-                : userType === 'CUSTOMER' ?
+              </button>
+              : userType === 'CUSTOMER' ?
+                <button onClick={handleRedirectToCustomerProfile}>
                   <BiUserCircle size={45} />
-                  :
+                </button>
+                :
+                <button onClick={handleRedirectToLogin}>
                   <FiLogIn size={30} />
-              }
-
-            </button>
+                </button>
+            }
           </li>
         </ul>
       </Nav>
