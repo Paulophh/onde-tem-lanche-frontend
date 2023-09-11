@@ -103,6 +103,24 @@ export const StandardInputContainer = styled.div`
     }
 `;
 
+export const AddressAutoCompleteContainer = styled.div`
+    .address-input-label {
+        font-size: 1.4rem;
+    }
+
+    .required {
+        color: red;
+    }
+
+    .input-error-message {
+        color: red;
+        text-align: center;
+        font-size: italic;
+        font-size: 1.2rem;
+        margin-top: 4px;
+    }
+`;
+
 export const StandardInput = styled.div`
     font-size: 1.5rem;
     width: 100%;

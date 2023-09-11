@@ -14,13 +14,14 @@ import Footer from '../../components/Footer';
 import ErrorPopUp from '../../components/ErrorPopUp';
 import SuccessPopUp from '../../components/SuccessPopUp';
 import SubmitButton from '../../components/SubmitButton';
-import AddressSuggestions from '../../components/AddressSuggestions';
+import AddressAutoComplete from '../../components/AddressAutoComplete';
 import DishesOptionsSelector from '../../components/DishesOptionsSelector';
 import OperationHoursSelector from '../../components/OperationHoursSelector';
 
 import FileInputImage from '../../assets/images/file-input-image.png';
 
 import {
+    AddressAutoCompleteContainer,
     DescriptionContainer,
     DishOptionsContainer,
     ImageUploadContainer,
@@ -39,9 +40,7 @@ import { InvalidOperationHoursError } from '../../errors/InvalidOperationHoursEr
 
 const formSchema = yup.object({
     phone: yup.string().length(11, 'Numero de telefone deve conter o DDD').required('Informe o telefone'),
-    address: yup.string().required('Informe o endereço'),
     description: yup.string().max(250, 'Máximo de 250 caractéres'),
-    number: yup.string().min(2).max(5).required('Informe o numero')
 })
 
 const RestaurantSpecifications = () => {
@@ -106,6 +105,7 @@ const RestaurantSpecifications = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const [coordinates, setCoordinates] = useState({});
     const [address, setAddress] = useState('');
     const [serves, setServes] = useState([]);
     const [operationHoursError, setOperationHoursError] = useState('');
@@ -114,9 +114,6 @@ const RestaurantSpecifications = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [addressError, setAddressError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-
-    const [showAddressSuggestions, setShowAddressSuggestions] = useState(false);
-    const [addressSuggestions, setAddressSuggestions] = useState([]);
 
     const { handleSubmit, register, formState: { errors } } = useForm({
         resolver: yupResolver(formSchema)
@@ -153,30 +150,8 @@ const RestaurantSpecifications = () => {
         if (invalidOperationDays) throw new InvalidOperationHoursError();
     }
 
-    function handleSelectAddressSuggestion(selectedAddress) {
-        setAddress(selectedAddress);
-        setShowAddressSuggestions(false)
-    }
-
-    async function handleAddressSuggestion(e) {
-        const addressValue = e.target.value;
-        const previouslyTypedKey = addressValue[addressValue.length - 1];
-
-        if (addressValue.length > 5 && previouslyTypedKey === ' ') {
-            const apiFormattedAddress = addressValue.trim().split(' ').join('+')
-
-            const url = `/json?address=${apiFormattedAddress}&key=${geocodeApiKey}`;
-
-            const response = await geocodeApi.get(url);
-
-            const suggestions = response.data.results.map(result => result.formatted_address);
-            console.log('Sugestão -> ', suggestions);
-
-            if (suggestions.length > 0) {
-                setAddressSuggestions(response.data.results);
-                setShowAddressSuggestions(true);
-            }
-        }
+    function validateCoordinates() {
+        if (!coordinates.lat || !coordinates.lng) throw WrongAddressError();
     }
 
     async function getCoordinatesFromAddress(address) {
@@ -188,14 +163,16 @@ const RestaurantSpecifications = () => {
         return coordinates;
     }
 
+    async function handleRegisterAddress(selectedAddress) {
+        const foundCoordinates = await getCoordinatesFromAddress(selectedAddress);
+        if (foundCoordinates) setCoordinates(foundCoordinates);
+    }
+
     async function saveRestaurantData(formData) {
         try {
             setIsLoading(true);
 
-            if (!address) throw new WrongAddressError();
-            const buildFullAddress = `${address}, ${formData.number}`.trim().split(' ').join('+');
-
-            const coordinates = await getCoordinatesFromAddress(buildFullAddress)
+            validateCoordinates();
 
             const selectedOperationDays = operationHours.filter(days => {
                 return days.selected;
@@ -319,56 +296,22 @@ const RestaurantSpecifications = () => {
 
                 <StandardInputContainer>
                     <div className='top-row-container'>
-                        <StandardInput>
-                            <div className='input-label-container input-label-address'>
-                                <label htmlFor='address'>
-                                    Endereço
-                                    <span className='required'> * </span>
-                                </label>
-
-                                <input
-                                    placeholder='Endereço'
-                                    id='address'
-                                    {...register('address')}
-                                    onChange={handleAddressSuggestion}
+                        <AddressAutoCompleteContainer>
+                            <label className='address-input-label'>
+                                Endereço:
+                                <span className='required'> * </span>
+                                <AddressAutoComplete
+                                    value={address}
+                                    setValue={handleRegisterAddress}
                                 />
-                            </div>
-
-                            {showAddressSuggestions &&
-                                <AddressSuggestions
-                                    suggestionsList={addressSuggestions}
-                                    onSelect={handleSelectAddressSuggestion}
-                                    isShown={setShowAddressSuggestions}
-                                />
-                            }
+                            </label>
 
                             {addressError &&
                                 <div className='input-error-message'>
                                     {addressError}
                                 </div>
                             }
-                        </StandardInput>
-
-                        <StandardInput>
-                            <div className='input-label-container'>
-                                <label htmlFor='number'>
-                                    Numero
-                                    <span className='required'> * </span>
-                                </label>
-
-                                <input
-                                    placeholder='Número'
-                                    id='number'
-                                    {...register('number')}
-                                />
-                            </div>
-
-                            {errors.number &&
-                                <div className='input-error-message'>
-                                    {errors.number.message}
-                                </div>
-                            }
-                        </StandardInput>
+                        </AddressAutoCompleteContainer>
                     </div>
 
                     <StandardInput>

@@ -4,7 +4,6 @@ import { InputContainer } from "./styles";
 
 const AddressAutoComplete = ({ value, setValue }) => {
     function handleAddressSelect(e) {
-        console.log(e);
         setValue(e.label);
     }
 

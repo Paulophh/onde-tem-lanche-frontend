@@ -21,50 +21,9 @@ export const LocationSearchContainer = styled.form`
     font-weight: bold;
   }
 
-  .customer-address-container {
-    display: flex;
-    align-items: center;;
-    background-color: ${props => props.theme.colors['light-grey']};
-    padding: 5px;
-    margin: 10px auto 0;
-    gap: 5px;
+  .autocomplete-container {
     max-width: 900px;
-
-    label {
-      color: ${props => props.theme.colors.orange};
-    }
-
-    div {
-      flex: 1;
-      display: flex;
-      gap: 5px;
-      align-items: center;
-
-      button {
-        padding: 0;
-      }
-    }
-
-    input {
-      border: none;
-      background-color: inherit;
-      flex: 1;    
-    }
-
-    input::placeholder {
-      color: ${props => props.theme.colors['light-black']};
-    }
-
-    button {
-      border: none;
-      padding-left: 10px;
-      padding-right: 5px;
-    }
-
-    button:hover {
-      cursor: pointer;
-      transform: scale(1.1);
-    }
+    margin: 0 auto;
   }
 `;
 

@@ -171,7 +171,7 @@ const Index = () => {
             Nos diga onde você está
           </h3>
 
-          <div>
+          <div className='autocomplete-container'>
             <AddressAutoComplete
               value={customerAddress}
               setValue={setCustomerAddress}

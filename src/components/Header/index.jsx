@@ -21,14 +21,14 @@ const Header = () => {
 
   const { userType, token } = useAuthContext();
 
-  const tokenData = jwt_decode(token);
-  const userId = tokenData.sub;
+  const tokenData = token ? jwt_decode(token) : null;
 
   function handleRedirectToLogin() {
     navigate('/login');
   }
 
   function handleRedirectToRestaurantProfile() {
+    const userId = tokenData ? tokenData.sub : '';
     navigate(`/restaurant/${userId}`);
   }
 
