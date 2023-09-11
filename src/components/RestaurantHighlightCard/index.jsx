@@ -35,18 +35,23 @@ const WEEK_DAYS = [
 const RestaurantHighlightCard = ({ restaurant }) => {
   const [rating, setRating] = useState(null);
   const [closingTime, setClosingTime] = useState(null);
+  const [imagePath, setImagePath] = useState(RestaurantExampleImage);
 
-  restaurant.images = restaurant.images ?? [];
+  // let imagePath = RestaurantExampleImage;
 
-  let imagePath = RestaurantExampleImage;
+  // restaurant.images = restaurant.images ?? [];
 
-  if (restaurant.images.length > 0) {
-    const restaurantImages = restaurant.images.filter(image => {
-      return !image.path.startsWith('cover') && !image.path.startsWith('logo');
-    })
+  function getRestaurantImage() {
+    if (restaurant.images.length > 0) {
+      const restaurantImages = restaurant.images.filter(image => {
+        return !image.path.startsWith('cover') && !image.path.startsWith('logo');
+      })
 
-    if (restaurantImages.length > 0) {
-      imagePath = `${api.defaults.baseURL}/restaurants/image/${restaurantImages[0].path}`
+      console.log('Veio -> ', restaurant, restaurantImages);
+
+      if (restaurantImages.length > 0) {
+        setImagePath(`${api.defaults.baseURL}/restaurants/image/${restaurantImages[0].path}`)
+      }
     }
   }
 
@@ -86,7 +91,11 @@ const RestaurantHighlightCard = ({ restaurant }) => {
     }
 
     findIfRestaurantIsOpened();
-  }, [])
+
+    if (restaurant.images) {
+      getRestaurantImage();
+    }
+  }, [restaurant])
 
   return (
     <CardWrapper onClick={handleRedirectToRestaurant}>

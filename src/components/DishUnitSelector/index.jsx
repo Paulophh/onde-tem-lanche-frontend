@@ -35,8 +35,8 @@ const DishUnitSelector = ({ handleSelectUnit }) => {
                 </InputLabelContainer>
 
                 <InputLabelContainer>
-                    <input type="radio" id="unidades" name="dish_options" value="unidades" onChange={handleSelectUnit} />
-                    <label htmlFor="unidades"> Unidades </label>
+                    <input type="radio" id="unidade" name="dish_options" value="unidade" onChange={handleSelectUnit} />
+                    <label htmlFor="unidade"> Unidades </label>
                 </InputLabelContainer>
             </ColumnSeparator>
         </DishUnitSelectorContainer>

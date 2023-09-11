@@ -20,6 +20,8 @@ import { FaDirections } from 'react-icons/fa';
 
 import IconBurnesBurger from '../../assets/images/iconsRestaurant/iconBurnesBurger.png';
 import RestaurantSearchFoodCard from '../RestaurantSearchFoodCard';
+import DefaultLogo from '../../assets/defaults/restaurant-default-logo.png';
+import { api } from '../../services/api';
 
 const WEEK_DAYS = [
   'Domingo',
@@ -35,6 +37,7 @@ const WEEK_DAYS = [
 const RestaurantSearchCard = ({ restaurant }) => {
   const [rating, setRating] = useState(null);
   const [closingTime, setClosingTime] = useState(null);
+  const [restauranteLogo, setRestaurantLogo] = useState(DefaultLogo);
 
   const navigate = useNavigate();
 
@@ -66,12 +69,25 @@ const RestaurantSearchCard = ({ restaurant }) => {
     setRating(averageRating)
   }
 
+  function getRestaurantLogo() {
+    const logoImage = restaurant.images.filter(image => {
+      return image.path.startsWith('logo');
+    })
+
+    if (logoImage.length > 0) {
+      const logoPath = `${api.defaults.baseURL}/restaurants/image/logo/${logoImage[0].path}`
+      setRestaurantLogo(logoPath)
+    }
+
+  }
+
   useEffect(() => {
     if (restaurant.ratings) {
       calculateRatingAverage();
     }
 
     findIfRestaurantIsOpened();
+    getRestaurantLogo();
   }, [])
 
   return (
@@ -79,7 +95,7 @@ const RestaurantSearchCard = ({ restaurant }) => {
       <CardHeaderWrapper>
         <LeftSideContainer>
           <RestaurantImageContainer>
-            <img src={IconBurnesBurger} alt='' />
+            <img src={restauranteLogo} alt='' />
           </RestaurantImageContainer>
 
           <NameAndDescriptionContainer>

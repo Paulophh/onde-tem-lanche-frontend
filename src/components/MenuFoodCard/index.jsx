@@ -13,7 +13,7 @@ import {
 import DishDefaultImage from '../../assets/defaults/dish-default-image.png';
 
 const MenuFoodCard = ({ food }) => {
-    const image = food.images ? `${api.defaults.baseURL}/dishes/image/${food.images}` : DishDefaultImage;
+    const image = food.images ? `${api.defaults.baseURL}/dishes/image/${food.images[0].path}` : DishDefaultImage;
 
     return (
         <MenuFoodCardContainer>
@@ -41,7 +41,7 @@ const MenuFoodCard = ({ food }) => {
                 </TopRowContainer>
 
                 <DescriptionContainer>
-                    Pepperoni, azeitona preta, cogumelos e rodelas de pimentão amarelo.
+                    {food.description}
                 </DescriptionContainer>
 
             </FoodInfoContainer>

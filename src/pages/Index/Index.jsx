@@ -210,12 +210,13 @@ const Index = () => {
 
             <NearbyCardsContainer>
               {
-                nearbyRestaurants.map(res => (
-                  <RestaurantHighlightCard
+                nearbyRestaurants.map(res => {
+                  console.log('restaurante', res);
+                  return <RestaurantHighlightCard
                     key={`nearby-${res.restaurant_id}`}
                     restaurant={res}
                   />
-                ))
+                })
               }
             </NearbyCardsContainer>
           </div>

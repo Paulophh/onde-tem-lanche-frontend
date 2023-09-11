@@ -236,7 +236,7 @@ const RestaurantSpecifications = () => {
         imageForm.append('image', file);
 
         try {
-            await api.post('/restaurants/image', imageForm, {
+            await api.post('/restaurants/image/cover', imageForm, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

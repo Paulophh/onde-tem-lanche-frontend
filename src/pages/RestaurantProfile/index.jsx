@@ -1,6 +1,7 @@
 import jwt_decode from 'jwt-decode';
 import { CiClock2 } from 'react-icons/ci';
 import { useState, useEffect } from 'react';
+import Loading from 'react-loading';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AiOutlineEdit, AiFillStar } from 'react-icons/ai';
 
@@ -13,7 +14,6 @@ import MenuFoodCard from '../../components/MenuFoodCard';
 import RestaurantImages from '../../components/RestaurantImages';
 import OperationDayAndHour from '../../components/OperationDayAndHour';
 
-// import AddImage from '../../assets/add-image.png';
 import AddImage from '../../assets/add-image.png';
 import DefaultLogo from '../../assets/defaults/restaurant-default-logo.png';
 import DefaultCover from '../../assets/defaults/restaurant-default-cover.png';
@@ -26,6 +26,7 @@ import {
     DishesTitle,
     EditRatingContainer,
     EmptyMenuList,
+    LoadingContainer,
     LogoContainer,
     MenuContainer,
     OrangeDivider,
@@ -300,7 +301,7 @@ const RestaurantProfile = () => {
                                                 ))
                                             }
 
-                                            <AddImageButton htmlFor='image'>
+                                            <AddImageButton onClick={handleRedirectToRegisterDish}>
                                                 <div className='image-container'>
                                                     <img src={AddImage} alt="" />
                                                 </div>
@@ -333,13 +334,16 @@ const RestaurantProfile = () => {
 
                     :
 
-                    <div> Carregando </div>
+                    <LoadingContainer>
+                        <Loading
+                            width={22}
+                            height={22}
+                            color='#000'
+                            type='spin'
+                        />
+                    </LoadingContainer>
                 }
             </div>
-
-
-
-
         </div>
     )
 }

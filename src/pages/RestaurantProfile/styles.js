@@ -301,3 +301,12 @@ export const AddDishButton = styled.button`
         }
     }
 `;
+
+export const LoadingContainer = styled.div`
+    min-height: 100vh;
+    background-color: #cacaca;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;

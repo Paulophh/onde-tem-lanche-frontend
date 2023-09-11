@@ -69,7 +69,7 @@ const RegisterDish = () => {
 
         if (!isThereAValue) return '';
 
-        const validUnits = ['mg', 'g', 'kg', 'L', 'unidades', 'pedaços'];
+        const validUnits = ['mg', 'g', 'kg', 'L', 'unidade', 'pedaços'];
         const isUnitValid = validUnits.includes(sizeUnit);
 
         if (isUnitValid) return sizeUnit;
@@ -103,6 +103,8 @@ const RegisterDish = () => {
     }
 
     async function saveDishData(formData) {
+        console.log(formData);
+
         setIsLoading(true);
         const adjustedUnit = validateSizeUnit(formData.size);
         const size = formData.size ? Number(formData.size) : null;
@@ -115,6 +117,7 @@ const RegisterDish = () => {
             categories,
             size_unit: adjustedUnit,
         }
+
 
         try {
             const response = await api.post('/dishes', data, {
