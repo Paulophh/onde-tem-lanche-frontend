@@ -6,6 +6,10 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
     const storedToken = localStorage.getItem('@onde-tem-lanche:token');
     const [token, setToken] = useState(storedToken ?? '');
+    const [userCoordinates, setUserCoordinates] = useState({
+        lat: -24.0442818,
+        lng: -52.3760713
+    })
 
     const userType = token ? jwt_decode(token).type : null;
 
@@ -19,7 +23,7 @@ export const AuthContextProvider = ({ children }) => {
         <AuthContext.Provider value={{
             token,
             userType,
-
+            userCoordinates,
             storeToken
         }}>
             {children}
