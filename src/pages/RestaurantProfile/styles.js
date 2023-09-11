@@ -56,6 +56,10 @@ export const LogoContainer = styled.label`
         object-fit: cover;
         border-radius: 50%;
     }
+
+    &:hover {
+        cursor: pointer
+    }
 `;
 
 export const TitleDescription = styled.div`

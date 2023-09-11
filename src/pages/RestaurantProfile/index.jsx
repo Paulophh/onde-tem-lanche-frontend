@@ -41,7 +41,6 @@ const RestaurantProfile = () => {
     const [restaurant, setRestaurant] = useState(null);
     const [coverImageURL, setCoverImageURL] = useState(DefaultCover);
     const [logoImageURL, setLogoImageURL] = useState(DefaultLogo);
-    const [logoImageFile, setLogoImageFile] = useState(null);
     const [restaurantImages, setRestaurantImages] = useState([]);
     const [restaurantAddress, setRestaurantAddress] = useState('');
     const [sortedOperationHours, setSortedOperationHours] = useState([]);
@@ -211,14 +210,17 @@ const RestaurantProfile = () => {
 
                         <RestaurantContentContainer>
                             <RestaurantContentHeader>
-                                <LogoContainer htmlFor='logo-image'>
+                                <LogoContainer htmlFor='logo-image' isOwnRestaurant={isOwnRestaurant}>
                                     <img src={logoImageURL} alt="" />
-                                    <input
-                                        type='file'
-                                        style={{ display: 'none' }}
-                                        id='logo-image'
-                                        onChange={handleSelectLogoImage}
-                                    />
+                                    {
+                                        isOwnRestaurant &&
+                                        <input
+                                            type='file'
+                                            style={{ display: 'none' }}
+                                            id='logo-image'
+                                            onChange={handleSelectLogoImage}
+                                        />
+                                    }
                                 </LogoContainer>
 
                                 <EditRatingContainer>
