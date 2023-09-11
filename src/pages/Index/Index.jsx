@@ -5,6 +5,7 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
 import { api } from '../../services/api';
+import { geocodeApi } from '../../services/geocode-api';
 
 import {
   FoodsContainer,
@@ -21,11 +22,12 @@ import {
 import Footer from '../../components/Footer'
 import Header from "../../components/Header";
 import FoodCard from '../../components/FoodCard';
-import Highlights from '../../components/Highlights';
 import SearchBar from '../../components/SearchBar';
+import Highlights from '../../components/Highlights';
+import SubmitButton from '../../components/SubmitButton';
 import FoodCategories from '../../components/FoodCategories';
+import AddressAutoComplete from '../../components/AddressAutoComplete';
 import RestaurantHighlightCard from '../../components/RestaurantHighlightCard';
-import { geocodeApi } from '../../services/geocode-api';
 
 const Index = () => {
   const [foodCategory, setFoodCategory] = useState('Lanches');
@@ -110,6 +112,7 @@ const Index = () => {
 
   async function fetchNearbyRestaurants(e) {
     if (e) e.preventDefault();
+
     if (!customerAddress) return;
 
     try {
@@ -135,13 +138,14 @@ const Index = () => {
 
     } finally {
       setIsLoadingNearbyRestaurants(false);
+      setCustomerAddress('');
     }
   }
 
-  function clearAddressInputAndResetFilter() {
-    setCustomerAddress('');
-    setNearbyRestaurants([]);
-  }
+  // function clearAddressInputAndResetFilter() {
+  //   setCustomerAddress('');
+  //   setNearbyRestaurants([]);
+  // }
 
   useEffect(() => {
     if (filterInput === '') {
@@ -167,35 +171,19 @@ const Index = () => {
             Nos diga onde você está
           </h3>
 
-          <div className='customer-address-container'>
-            <label htmlFor='customer-address'>
-              <MdLocationPin size={22} />
-            </label>
+          <div>
+            <AddressAutoComplete
+              value={customerAddress}
+              setValue={setCustomerAddress}
+            />
 
-            <div>
-              <input
-                placeholder='Av. Irmãos Pereira, 670'
-                id='customer-address'
-                onChange={e => setCustomerAddress(e.target.value)}
-                value={customerAddress}
-                disabled={isLoadingNearbyRestaurants}
+            {customerAddress &&
+              <SubmitButton
+                onClick={fetchNearbyRestaurants}
+                title='Buscar'
+                isLoading={isLoadingNearbyRestaurants}
               />
-
-              {customerAddress &&
-                <button type='button' onClick={clearAddressInputAndResetFilter}>
-                  <AiOutlineClose size={18} />
-                </button>
-              }
-
-            </div>
-
-            <button>
-              {
-                isLoadingNearbyRestaurants ?
-                  <Loading type='spin' width={20} height={20} color='#000' /> :
-                  <AiOutlineSearch size={18} />
-              }
-            </button>
+            }
           </div>
         </LocationSearchContainer>
 

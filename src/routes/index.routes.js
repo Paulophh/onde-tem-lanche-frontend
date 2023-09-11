@@ -24,6 +24,7 @@ const Routers = () => {
             <Route path='/restaurant/:restaurantId' element={<RestaurantProfile />} />
 
             <Route path='/register/dish' element={<RegisterDish />} />
+
         </Routes>
     )
 
