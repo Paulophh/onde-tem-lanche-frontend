@@ -88,6 +88,18 @@ export const HoursContainer = styled.div`
         border: none;
         border-bottom: 1px solid black;
         text-align: end;
+
+        /* Chrome, Safari, Edge, Opera */
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }       
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     }
 
     @media only screen and (min-width: 360px) {
