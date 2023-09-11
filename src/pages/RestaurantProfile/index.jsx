@@ -26,26 +26,22 @@ import {
     DishesTitle,
     EditRatingContainer,
     EmptyMenuList,
-    ImagesContainer,
     LogoContainer,
     MenuContainer,
     OrangeDivider,
     RatingContainer,
     RestaurantContentContainer,
     RestaurantContentHeader,
-    RestaurantImage,
     RestaurantProfileContainer,
     TitleDescription
 } from './styles';
+import { ImageTooBigError } from '../../errors/ImageTooBigError';
 
-/*
-restaurantID - eb61b612-18ad-444b-a523-56c3bd4440c1 (proprio)
-74bf592c-8b77-4d7f-9eba-d50ee9e37087
-*/
 const RestaurantProfile = () => {
     const [restaurant, setRestaurant] = useState(null);
     const [coverImageURL, setCoverImageURL] = useState(DefaultCover);
     const [logoImageURL, setLogoImageURL] = useState(DefaultLogo);
+    const [logoImageFile, setLogoImageFile] = useState(null);
     const [restaurantImages, setRestaurantImages] = useState([]);
     const [restaurantAddress, setRestaurantAddress] = useState('');
     const [sortedOperationHours, setSortedOperationHours] = useState([]);
@@ -60,7 +56,6 @@ const RestaurantProfile = () => {
     const isOwnRestaurant = userId === params.restaurantId;
 
     async function handleDeleteRestaurantImage(imageId) {
-        console.log(imageId);
         const updatedRestaurantImages = restaurantImages.filter(image => {
             return image.image_id !== imageId
         });
@@ -73,6 +68,34 @@ const RestaurantProfile = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function handleSelectLogoImage(e) {
+        try {
+            const files = e.target.files
+
+            if (!files || files.length === 0) return;
+
+            const fileSize = files[0].size;
+            if (fileSize > 5000000) throw new ImageTooBigError(); // Imagem deve ter até 5 MB
+
+            const file = files[0];
+            const fileURL = URL.createObjectURL(file);
+
+            setLogoImageURL(fileURL);
+
+            const form = new FormData();
+            form.append('image', file);
+
+            await api.post(`/restaurants/image/logo`, form, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
         } catch (error) {
             console.log(error);
         }
@@ -188,8 +211,14 @@ const RestaurantProfile = () => {
 
                         <RestaurantContentContainer>
                             <RestaurantContentHeader>
-                                <LogoContainer>
+                                <LogoContainer htmlFor='logo-image'>
                                     <img src={logoImageURL} alt="" />
+                                    <input
+                                        type='file'
+                                        style={{ display: 'none' }}
+                                        id='logo-image'
+                                        onChange={handleSelectLogoImage}
+                                    />
                                 </LogoContainer>
 
                                 <EditRatingContainer>

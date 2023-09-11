@@ -54,7 +54,7 @@ const FoodCard = ({ food }) => {
                 R$
               </span>
               <span className='value-container'>
-                {food.price}
+                {Number(food.price).toFixed(2).replace('.', ',')}
               </span>
             </Price>
 

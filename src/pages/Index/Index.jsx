@@ -1,8 +1,6 @@
 import Loading from 'react-loading';
-import React, { useState, useEffect } from 'react';
-import { MdLocationPin } from 'react-icons/md';
-import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
+import React, { useState, useEffect } from 'react';
 
 import { api } from '../../services/api';
 import { geocodeApi } from '../../services/geocode-api';
@@ -131,6 +129,10 @@ const Index = () => {
 
       if (foundRestaurants.length > 0) {
         setNearbyRestaurants(foundRestaurants)
+      } else {
+        toast.warning('Não foram encontrados restaurantes próximos a você');
+        setNearbyRestaurants([]);
+        return;
       }
 
     } catch (error) {
@@ -141,11 +143,6 @@ const Index = () => {
       setCustomerAddress('');
     }
   }
-
-  // function clearAddressInputAndResetFilter() {
-  //   setCustomerAddress('');
-  //   setNearbyRestaurants([]);
-  // }
 
   useEffect(() => {
     if (filterInput === '') {

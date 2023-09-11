@@ -45,13 +45,16 @@ export const RestaurantContentHeader = styled.div`
     }
 `;
 
-export const LogoContainer = styled.div`
+export const LogoContainer = styled.label`
     text-align: center;
+    border: none;
+    border-radius: 50%;
 
     img {
         width: 100%;
         max-width: 100px;
         object-fit: cover;
+        border-radius: 50%;
     }
 `;
 

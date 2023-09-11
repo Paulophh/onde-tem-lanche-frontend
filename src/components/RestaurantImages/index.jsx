@@ -41,8 +41,6 @@ const RestaurantImages = ({ restaurantImages = [], isOwnRestaurant, handleDelete
             setSelectedImagesFiles([...selectedImagesFiles, file]);
             setAreThereNewImages(true);
 
-            // const form = new FormData();
-            // form.append('images', file);
         } catch (error) {
             console.log(error);
         }
