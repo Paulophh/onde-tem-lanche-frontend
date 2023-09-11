@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import Loading from 'react-loading';
 
 import { api } from '../../services/api';
 import { useAuthContext } from '../../contexts/AuthContext';
@@ -13,7 +14,7 @@ import { PageContentContainer, RestaurantSearchResultContainer } from './styles'
 const RestaurantSearchResult = () => {
     const [foundRestaurants, setFoundRestaurants] = useState([]);
     const [nearbyFoundRestaurants, setNearbyFoundRestaurants] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const [searchParams] = useSearchParams();
     const query = searchParams.get('q').toLowerCase().trim();
@@ -28,7 +29,7 @@ const RestaurantSearchResult = () => {
         const fromRadian = (Math.PI * from.lat) / 180
         const toRadian = (Math.PI * to.lat) / 180
 
-        const theta = from.lng - to.longitude
+        const theta = from.lng - to.lng
         const radTheta = (Math.PI * theta) / 180
 
         let dist =
@@ -48,13 +49,15 @@ const RestaurantSearchResult = () => {
     }
 
     async function filterNearbyRestaurants(foundByQuery) {
+
         const fromUser = {
-            lat: Number(userCoordinates.lat),
-            lng: Number(userCoordinates.lng)
+            lat: Number(userCoordinates.lat.toFixed(7)),
+            lng: Number(userCoordinates.lng.toFixed(7))
         };
 
         const nearby = foundByQuery.filter(rest => {
             if (!rest.lat || !rest.lng) return false;
+
 
             const toRestaraunt = {
                 lat: Number(rest.lat),
@@ -62,7 +65,7 @@ const RestaurantSearchResult = () => {
             }
 
             const distance = getDistanceBetweenCoordinates(fromUser, toRestaraunt)
-
+            console.log('Distancia  -> ', distance);
             return distance <= 10 // Km
         })
 
@@ -93,35 +96,56 @@ const RestaurantSearchResult = () => {
             <Header />
 
             <PageContentContainer>
-                <Highlights
-                    text='Próximos a você'
-                    textPlacement='left'
-                />
-                <div className='restaurant-list-container'>
-                    {
-                        nearbyFoundRestaurants.map(rest => (
-                            <RestaurantSearchCard
-                                restaurant={rest}
-                            />
-                        ))
-                    }
-                </div>
+                {isLoading ?
+                    <div className='loading'>
+                        <Loading
+                            width={22}
+                            height={22}
+                            color='#000'
+                            type='spin'
+                        />
+                    </div>
+                    :
+                    <>
+                        <Highlights
+                            text='Próximos a você'
+                            textPlacement='left'
+                        />
+                        {
+                            nearbyFoundRestaurants.length !== 0 ?
+                                <div className='restaurant-list-container'>
+                                    {
+                                        nearbyFoundRestaurants.map(rest => (
+                                            <RestaurantSearchCard
+                                                restaurant={rest}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                                :
+                                <div className='no-nearby-restaurant'>
+                                    Não há restaurantes próximo a você que se enquadrem na pesquisa
+                                </div>
 
-                <Highlights
-                    text='Outros resultados'
-                    textPlacement='right'
-                />
+                        }
 
-                <div className='restaurant-list-container'>
-                    {
-                        foundRestaurants.map(rest => (
-                            <RestaurantSearchCard
-                                restaurant={rest}
-                            />
+                        <Highlights
+                            text='Outros resultados'
+                            textPlacement='right'
+                        />
 
-                        ))
-                    }
-                </div>
+                        <div className='restaurant-list-container'>
+                            {
+                                foundRestaurants.map(rest => (
+                                    <RestaurantSearchCard
+                                        restaurant={rest}
+                                    />
+
+                                ))
+                            }
+                        </div>
+                    </>
+                }
             </PageContentContainer>
 
             <Footer />

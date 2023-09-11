@@ -160,6 +160,13 @@ export const DishesListContainer = styled.div`
   gap: 10px;
   overflow-x: scroll;
 
+  // Esconde barra de rolagem
+  &::-webkit-scrollbar {
+    display: none; // Chrome e Opera
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+
   .no-dishes {
     text-align: center;
     font-size: 1.5rem;
@@ -168,6 +175,7 @@ export const DishesListContainer = styled.div`
 
     width: 100%;
     padding-bottom: 10px;
+    overflow-x: hidden;
   }
 `;
 
@@ -176,7 +184,7 @@ export const DishesList = styled.div`
   gap: 10px;
   overflow-x: scroll;
 
-   // Esconde barra de rolagem
+  // Esconde barra de rolagem
   &::-webkit-scrollbar {
     display: none; // Chrome e Opera
   }

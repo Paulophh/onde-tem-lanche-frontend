@@ -14,6 +14,11 @@ export const AuthContextProvider = ({ children }) => {
 
     const userType = token ? jwt_decode(token).type : null;
 
+    function logout() {
+        localStorage.removeItem('@onde-tem-lanche:token');
+        setToken('');
+    }
+
     function storeCustomerCoordinates(newCoordinates) {
         setUserCoordinates(newCoordinates);
 
@@ -31,6 +36,7 @@ export const AuthContextProvider = ({ children }) => {
             token,
             userType,
             userCoordinates,
+            logout,
             storeToken,
             storeCustomerCoordinates
         }}>

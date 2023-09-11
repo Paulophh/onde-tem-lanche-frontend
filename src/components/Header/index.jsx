@@ -1,10 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 
 import { useAuthContext } from '../../contexts/AuthContext';
 
-import { BiUserCircle } from 'react-icons/bi';
+import { BiUserCircle, BiLogOut } from 'react-icons/bi';
 import { FaStore } from 'react-icons/fa';
 import { FiLogIn } from 'react-icons/fi';
 
@@ -18,10 +18,15 @@ import logo from '../../assets/images/logo.svg';
 
 const Header = () => {
   const navigate = useNavigate();
+  const params = useParams();
 
-  const { userType, token } = useAuthContext();
+  const restaurantId = params.restaurantId;
 
-  const tokenData = token ? jwt_decode(token) : null;
+  const { userType, token, logout } = useAuthContext();
+
+  const tokenData = token ? jwt_decode(token) : {};
+
+  const isOwnRestaurant = tokenData.sub === restaurantId;
 
   function handleRedirectToLogin() {
     navigate('/login');
@@ -37,6 +42,12 @@ const Header = () => {
   }
 
   function handleRedirectToHome() {
+    navigate('/');
+  }
+
+  function handleLogout() {
+    logout();
+
     navigate('/');
   }
 
@@ -69,19 +80,24 @@ const Header = () => {
               Favoritos
             </button>
           </li>
+
           <li className='nav-link nav-link-profile'>
-            {userType === 'RESTAURANT' ?
+            {userType === 'RESTAURANT' && !isOwnRestaurant ?
               <button onClick={handleRedirectToRestaurantProfile}>
                 <FaStore size={30} />
               </button>
-              : userType === 'CUSTOMER' ?
-                <button onClick={handleRedirectToCustomerProfile}>
-                  <BiUserCircle size={45} />
+              : userType === 'RESTAURANT' && isOwnRestaurant ?
+                <button onClick={handleLogout}>
+                  <BiLogOut size={26} />
                 </button>
-                :
-                <button onClick={handleRedirectToLogin}>
-                  <FiLogIn size={30} />
-                </button>
+                : userType === 'CUSTOMER' ?
+                  <button onClick={handleRedirectToCustomerProfile}>
+                    <BiUserCircle size={45} />
+                  </button>
+                  :
+                  <button onClick={handleRedirectToLogin}>
+                    <FiLogIn size={30} />
+                  </button>
             }
           </li>
         </ul>
