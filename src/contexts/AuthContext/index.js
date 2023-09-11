@@ -5,13 +5,20 @@ const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const storedToken = localStorage.getItem('@onde-tem-lanche:token');
+    const storedCoordinates = localStorage.getItem('@onde-tem-lanche:coordinates');
+
     const [token, setToken] = useState(storedToken ?? '');
-    const [userCoordinates, setUserCoordinates] = useState({
-        lat: -24.0442818,
-        lng: -52.3760713
-    })
+    const [userCoordinates, setUserCoordinates] = useState(
+        storedCoordinates ? JSON.parse(storedCoordinates) : null
+    )
 
     const userType = token ? jwt_decode(token).type : null;
+
+    function storeCustomerCoordinates(newCoordinates) {
+        setUserCoordinates(newCoordinates);
+
+        localStorage.setItem('@onde-tem-lanche:coordinates', JSON.stringify(newCoordinates));
+    }
 
     function storeToken(newToken) {
         setToken(newToken);
@@ -24,7 +31,8 @@ export const AuthContextProvider = ({ children }) => {
             token,
             userType,
             userCoordinates,
-            storeToken
+            storeToken,
+            storeCustomerCoordinates
         }}>
             {children}
         </AuthContext.Provider>

@@ -1,9 +1,12 @@
 import Loading from 'react-loading';
 import { toast } from 'react-toastify';
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { api } from '../../services/api';
 import { geocodeApi } from '../../services/geocode-api';
+
+import { useAuthContext } from '../../contexts/AuthContext';
 
 import {
   FoodsContainer,
@@ -43,11 +46,16 @@ const Index = () => {
 
   const geocodeApiKey = process.env.REACT_APP_GEOCODE_API_KEY;
 
+  const navigate = useNavigate();
+  const { storeCustomerCoordinates, userCoordinates } = useAuthContext();
+
   async function handleFilterRestaurants(e) {
     e.preventDefault();
 
     const filterQuery = filterInput ? `?q=${filterInput}` : '';
-    await fetchRestaurants(filterQuery);
+    if (!filterQuery) return;
+
+    navigate(`restaurants/${filterQuery}`);
   }
 
   async function clearInputAndResetFilter() {
@@ -74,26 +82,9 @@ const Index = () => {
     }
   }
 
-  function filterWithinNearbyRestaurants(query) {
-    const queryValue = query.trim().toLowerCase().split('=')[1];
-
-    const filteredNearbyRestaurants = nearbyRestaurants.filter(res => {
-      const restaurantName = res.name.toLowerCase().trim();
-      const restaurantDescription = res.description ? res.description.toLowerCase().trim() : '';
-
-      return restaurantName.includes(queryValue) || restaurantDescription.includes(queryValue);
-    })
-
-    setNearbyRestaurants(filteredNearbyRestaurants);
-  }
-
   async function fetchRestaurants(queryString = '') {
     setIsLoadingRestaurants(true);
     const response = await api.get(`/restaurants${queryString}`);
-
-    if (nearbyRestaurants.length > 0 && queryString) {
-      filterWithinNearbyRestaurants(queryString);
-    }
 
     setIsLoadingRestaurants(false);
     setRestaurants(response.data.restaurants);
@@ -116,6 +107,7 @@ const Index = () => {
     try {
       setIsLoadingNearbyRestaurants(true);
       const coordinates = await getCoordinatesFromAddress(customerAddress);
+      storeCustomerCoordinates(coordinates);
 
       if (!coordinates) {
         toast.warning('Não foram encontrados restaurantes próximos a você');
@@ -144,6 +136,15 @@ const Index = () => {
     }
   }
 
+  async function getAddressFromCoordinate({ lat, lng }) {
+    try {
+      const response = await geocodeApi.get(`/json?latlng=${lat},${lng}&key=${geocodeApiKey}`);
+      setCustomerAddress(response.data.results[0].formatted_address ?? 'Endereço não encontrado');
+    } catch (error) {
+      setCustomerAddress('Endereço não encontrado');
+    }
+  }
+
   useEffect(() => {
     if (filterInput === '') {
       fetchRestaurants();
@@ -153,6 +154,15 @@ const Index = () => {
   useEffect(() => {
     filterDishesByCategories(foodCategory);
   }, [foodCategory])
+
+  useEffect(() => {
+    if (userCoordinates) {
+      getAddressFromCoordinate({
+        lat: userCoordinates.lat,
+        lng: userCoordinates.lng
+      })
+    }
+  }, [])
 
   return (
     <>

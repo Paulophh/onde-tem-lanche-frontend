@@ -1,14 +1,21 @@
 import styled from 'styled-components';
 
-export const CardWrapper = styled.div`
+export const CardContainer = styled.div`
+  width: 90vw;
+  max-width: 1100px;
+  margin: 20px auto;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const CardHeaderWrapper = styled.div`
   background-color: #fff;
   display: flex;
   flex-direction: column;
   padding: 20px;
   align-items: center;
-  width: 90vw;
-  max-width: 1100px;
-  margin: 0 auto;
 
   @media only screen and (min-width: 950px) {
     justify-content: space-between;
@@ -146,4 +153,33 @@ export const MapLink = styled.button`
       font-size: 1.7rem;
     }
   }
+`;
+
+export const DishesListContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+
+  .no-dishes {
+    text-align: center;
+    font-size: 1.5rem;
+    font-style: italic;
+    border-bottom: 1px solid ${props => props.theme.colors['box-shadow']};
+
+    width: 100%;
+    padding-bottom: 10px;
+  }
+`;
+
+export const DishesList = styled.div`
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+
+   // Esconde barra de rolagem
+  &::-webkit-scrollbar {
+    display: none; // Chrome e Opera
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 `;

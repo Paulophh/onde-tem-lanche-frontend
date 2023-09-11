@@ -10,6 +10,7 @@ import RestaurantSpecifications from '../pages/RestaurantSpecifications/index.js
 import RestaurantProfile from '../pages/RestaurantProfile/index.jsx';
 
 import RegisterDish from '../pages/RegisterDish/index.jsx';
+import RestaurantSearchResult from '../pages/RestaurantSearchResult/index.jsx';
 
 const Routers = () => {
     return (
@@ -22,6 +23,7 @@ const Routers = () => {
             <Route path='/restaurant/info' element={<RestaurantSpecifications />} />
 
             <Route path='/restaurant/:restaurantId' element={<RestaurantProfile />} />
+            <Route path='/restaurants' element={<RestaurantSearchResult />} />
 
             <Route path='/register/dish' element={<RegisterDish />} />
 

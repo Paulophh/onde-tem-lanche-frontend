@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useNavigationType } from 'react-router-dom';
+
 import {
-  CardWrapper,
+  CardHeaderWrapper,
   LeftSideContainer,
   RightSideContainer,
   NameAndDescriptionContainer,
   RestaurantImageContainer,
   RestaurantInfoContainer,
-  MapLink
+  MapLink,
+  CardContainer,
+  DishesListContainer,
+  DishesList,
 } from './styles';
 
 import { BiTimeFive } from 'react-icons/bi';
@@ -14,59 +19,137 @@ import { AiFillStar } from 'react-icons/ai';
 import { FaDirections } from 'react-icons/fa';
 
 import IconBurnesBurger from '../../assets/images/iconsRestaurant/iconBurnesBurger.png';
+import RestaurantSearchFoodCard from '../RestaurantSearchFoodCard';
+
+const WEEK_DAYS = [
+  'Domingo',
+  'Segunda-feira',
+  'Terça-feira',
+  'Quarta-feira',
+  'Quinta-feira',
+  'Sexta-feira',
+  'Sábado'
+];
+
 
 const RestaurantSearchCard = ({ restaurant }) => {
+  const [rating, setRating] = useState(null);
+  const [closingTime, setClosingTime] = useState(null);
+
+  const navigate = useNavigate();
+
+  function redirectToRestaurantPage() {
+    navigate(`/restaurant/${restaurant.restaurant_id}`)
+  }
+
+  function findIfRestaurantIsOpened() {
+    const today = new Date().getDay();
+
+    const weekDay = WEEK_DAYS[today];
+
+    const isRestaurantOpenedToday = restaurant.operation_hour.find(day => {
+      return day.day === weekDay
+    })
+
+    if (isRestaurantOpenedToday) {
+      setClosingTime(isRestaurantOpenedToday.closes_at);
+    }
+  }
+
+  function calculateRatingAverage() {
+    const ratingsSum = restaurant.ratings.reduce((acc, curr) => {
+      return acc + curr;
+    }, 0);
+
+    const averageRating = restaurant.ratings.length > 0 ?
+      ratingsSum / restaurant.ratings.length : null
+    setRating(averageRating)
+  }
+
+  useEffect(() => {
+    if (restaurant.ratings) {
+      calculateRatingAverage();
+    }
+
+    findIfRestaurantIsOpened();
+  }, [])
+
   return (
-    <CardWrapper>
-      <LeftSideContainer>
-        <RestaurantImageContainer>
-          <img src={IconBurnesBurger} alt='' />
-        </RestaurantImageContainer>
+    <CardContainer onClick={redirectToRestaurantPage}>
+      <CardHeaderWrapper>
+        <LeftSideContainer>
+          <RestaurantImageContainer>
+            <img src={IconBurnesBurger} alt='' />
+          </RestaurantImageContainer>
 
-        <NameAndDescriptionContainer>
-          <div className='name-container'>
-            <h2>Nome do restaurante</h2>
-          </div>
+          <NameAndDescriptionContainer>
+            <div className='name-container'>
+              <h2>{restaurant.name}</h2>
+            </div>
 
-          <div className='description-container'>
-            <p>
-              Descrição do restaurante
-              Descrição do restaurante
-              Descrição do restaurante
-            </p>
-          </div>
-        </NameAndDescriptionContainer>
-      </LeftSideContainer>
+            <div className='description-container'>
+              <p>
+                {restaurant.description}
+              </p>
+            </div>
+          </NameAndDescriptionContainer>
+        </LeftSideContainer>
 
-      <RightSideContainer>
-        <RestaurantInfoContainer>
-          <span className='icon-container'>
-            <BiTimeFive />
-          </span>
-          <span className='text-container'>
-            Fecha às 22h
-          </span>
-        </RestaurantInfoContainer>
+        <RightSideContainer>
+          {closingTime ?
+            <RestaurantInfoContainer>
+              <span className='icon-container'>
+                <BiTimeFive />
+              </span>
+              <span className='text-container'>
+                Fecha às {closingTime}h
+              </span>
+            </RestaurantInfoContainer>
+            :
+            <div>
+              Não abre hoje
+            </div>
+          }
 
-        <RestaurantInfoContainer>
-          <span className='icon-container'>
-            <AiFillStar />
-          </span>
-          <span className='text-container'>
-            4.5
-          </span>
-        </RestaurantInfoContainer>
+          {rating !== null &&
+            <RestaurantInfoContainer>
+              <span className='icon-container'>
+                <AiFillStar />
+              </span>
+              <span className='text-container'>
+                4.5
+              </span>
+            </RestaurantInfoContainer>}
 
-        <MapLink>
-          <span className='icon-container'>
-            <FaDirections />
-          </span>
-          <span className='text-container'>
-            Ver no mapa
-          </span>
-        </MapLink>
-      </RightSideContainer>
-    </CardWrapper>
+          <MapLink>
+            <span className='icon-container'>
+              <FaDirections />
+            </span>
+            <span className='text-container'>
+              Ver no mapa
+            </span>
+          </MapLink>
+        </RightSideContainer>
+      </CardHeaderWrapper>
+
+      <DishesListContainer>
+        {
+          restaurant.menu.length > 0 ?
+            <DishesList>
+              {restaurant.menu.map(dish => (
+                <RestaurantSearchFoodCard
+                  food={dish}
+                />
+              ))}
+            </DishesList>
+            :
+            <div className='no-dishes'>
+              Esse restaurante não possui pratos cadastrados
+            </div>
+
+        }
+      </DishesListContainer>
+    </CardContainer>
   );
 };
 
