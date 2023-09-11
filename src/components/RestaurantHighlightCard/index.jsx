@@ -36,6 +36,8 @@ const RestaurantHighlightCard = ({ restaurant }) => {
   const [rating, setRating] = useState(null);
   const [closingTime, setClosingTime] = useState(null);
 
+  restaurant.images = restaurant.images ?? [];
+
   let imagePath = RestaurantExampleImage;
 
   if (restaurant.images.length > 0) {

@@ -5,6 +5,69 @@ export const PageContainer = styled.div`
   flex-direction: column;
 `;
 
+export const LocationSearchContainer = styled.form`
+  width: 90vw;
+  padding: 10px;
+  margin: 10px auto;
+
+  h2, h3 {
+    text-align: center;
+    font-weight: normal;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  .customer-address-container {
+    display: flex;
+    align-items: center;;
+    background-color: ${props => props.theme.colors['light-grey']};
+    padding: 5px;
+    margin: 10px auto 0;
+    gap: 5px;
+    max-width: 900px;
+
+    label {
+      color: ${props => props.theme.colors.orange};
+    }
+
+    div {
+      flex: 1;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      button {
+        padding: 0;
+      }
+    }
+
+    input {
+      border: none;
+      background-color: inherit;
+      flex: 1;    
+    }
+
+    input::placeholder {
+      color: ${props => props.theme.colors['light-black']};
+    }
+
+    button {
+      border: none;
+      padding-left: 10px;
+      padding-right: 5px;
+    }
+
+    button:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  }
+`;
+
 export const HighlightsCardsContainer = styled.div`
   display: flex;
   align-items: center;
@@ -42,6 +105,8 @@ export const HighlightsCardsContainer = styled.div`
     gap: 40px;
   }
 `;
+
+export const NearbyCardsContainer = styled(HighlightsCardsContainer)``;
 
 export const LoadingRestaurantContainer = styled.div`
   position: absolute;

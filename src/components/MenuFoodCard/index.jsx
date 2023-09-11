@@ -15,8 +15,6 @@ import DishDefaultImage from '../../assets/defaults/dish-default-image.png';
 const MenuFoodCard = ({ food }) => {
     const image = food.images ? `${api.defaults.baseURL}/dishes/image/${food.images}` : DishDefaultImage;
 
-    console.log('Food -> ', food);
-
     return (
         <MenuFoodCardContainer>
             <ImageContainer>

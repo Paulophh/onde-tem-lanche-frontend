@@ -182,6 +182,7 @@ const RestaurantSpecifications = () => {
     async function getCoordinatesFromAddress(address) {
         const response = await geocodeApi.get(`/json?address=${address}&key=${geocodeApiKey}`);
 
+        if (response.data.results.length === 0) return null;
         const coordinates = response.data.results[0].geometry.location;
 
         return coordinates;
